@@ -24,30 +24,42 @@
 📂 Yliko/
 ├── 📂 Gymnasio/
 │   ├── 📂 A_Gymnasiou/
-│   │   ├── 📂 Nea_Ellinika/
+│   │   ├── 📂 Nea_Ellinika_Logotexnia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   │   ├── 📂 Arxaia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   │   ├── 📂 Istoria/
 │   │   │   ├── 📄 ... (αρχεία PDF)
-│   │   └── 📂 Logotexnia/
+│   │   └── 📂 Odisseia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   ├── 📂 B_Gymnasiou/
-│   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
+│   │   ├── 📂 Nea_Ellinika_Logotexnia/
+│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   ├── 📂 Arxaia/
+│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   ├── 📂 Istoria/
+│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   └── 📂 Iliada/
+│   │   │   ├── 📄 ... (αρχεία PDF)
 │   └── 📂 G_Gymnasiou/
-│       └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
+│   │   ├── 📂 Nea_Ellinika_Logotexnia/
+│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   ├── 📂 Arxaia/
+│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   ├── 📂 Istoria/
+│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   └── 📂 Eleni/
+│           └── 📄 ... (αρχεία PDF)
 │
 ├── 📂 Lykeio/
 │   ├── 📂 A_Lykeiou/
-│   │   ├── 📂 Nea_Ellinika/
+│   │   ├── 📂 Nea_Ellinika_Logotexnia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   │   ├── 📂 Arxaia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   │   ├── 📂 Istoria/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   │   ├── 📂 Latinika/
-│   │   │   ├── 📄 ... (αρχεία PDF)
-│   │   └── 📂 Logotexnia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   ├── 📂 B_Lykeiou/
 │   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
@@ -56,9 +68,7 @@
 │
 └── 📂 EPAL/
 │   ├── 📂 A_EPAL/
-│   │   ├── 📂 Nea_Ellinika/
-│   │   │   ├── 📄 ... (αρχεία PDF)
-│   │   └── 📂 Logotexnia/
+│   │   ├── 📂 Nea_Ellinika_Logotexnia/
 │   │   │   ├── 📄 ... (αρχεία PDF)
 │   ├── 📂 B_EPAL/
 │   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
