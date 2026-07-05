@@ -13,11 +13,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" type="image/png">
     
+    <!-- 1. Απαραίτητο jQuery για το DearFlip -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
+    <!-- 2. DearFlip CSS & Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/dflip.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/themify-icons.min.css">
     
+    <!-- 3. DearFlip Core JS -->
     <script src="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/js/dflip.min.js"></script>
 
     <style>
@@ -29,6 +32,13 @@
             --primary-glow: rgba(176, 39, 99, 0.25);
             --primary-soft: #F5E6EE;
             --primary-bg: #faf0f6;
+            
+            /* --- ΝΕΑ ΧΡΩΜΑΤΙΚΗ ΠΑΛΕΤΑ (ACCENTS) --- */
+            --accent-blue: #3b82f6;   /* Επαγγελματικό Μπλε/Γαλάζιο */
+            --accent-blue-glow: rgba(59, 130, 246, 0.4); /* Ημιδιάφανο για απαλό hover εφέ */
+            --accent-purple: #8b5cf6; /* Απαλό Μωβ */
+            --accent-gold: #f59e0b;   /* Ζεστό Χρυσό/Κίτρινο */
+
             --bg: #faf0f6;
             --bg-section: #faf0f6; 
             --bg-card: #ffffff;
@@ -60,6 +70,12 @@
             --shadow: rgba(0, 0, 0, 0.4);
             --shadow-hover: rgba(176, 39, 99, 0.35);
             --primary-soft: #2d1a25;
+            
+            /* Σκούρες αποχρώσεις για τα νέα χρώματα */
+            --accent-blue: #60a5fa;
+            --accent-blue-glow: rgba(96, 165, 250, 0.4);
+            --accent-purple: #a78bfa;
+            --accent-gold: #fbbf24;
         }
 
         [data-theme="dark"] .pdf-link { background: var(--bg-card); color: var(--text); border-color: var(--border); }
@@ -86,10 +102,12 @@
             .carousel-container { order: -1; margin-bottom: -10px; } 
         }
 
+        /* Υπογράμμιση Τίτλων με Ντεγκραντέ προς το Μωβ */
         .section-title { color: var(--primary-dark); font-size: 2.2rem; text-align: center; margin-bottom: 40px; position: relative; }
-        .section-title::after { content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary-light)); border-radius: 2px; }
+        .section-title::after { content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--accent-purple)); border-radius: 2px; }
 
-        header { background: linear-gradient(to right, var(--primary), var(--primary-dark)); padding: 10px 0; text-align: center; color: var(--text-inverse); border-bottom:1px solid rgba(255,255,255,.12); position: relative; z-index: 1002; }
+        /* --- ΠΙΟ ΑΝΟΙΧΤΟΧΡΩΜΑ BANNERS --- */
+        header { background: linear-gradient(135deg, #cc3675, #b02763); padding: 10px 0; text-align: center; color: var(--text-inverse); border-bottom:1px solid rgba(255,255,255,.12); position: relative; z-index: 1002; }
         .header-content { display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
         .header-content .logo { height: 110px; filter: drop-shadow(0 8px 20px rgba(0,0,0,.25)); cursor: pointer; transition: transform var(--transition); }
         .header-content .logo:hover { transform: scale(1.03); }
@@ -97,31 +115,34 @@
         .header-text .subtitle { font-weight: 300; font-size: 1.4rem; color: rgba(255,255,255,0.9); margin-top: 4px; }
         .header-text .tagline { font-weight: 400; font-size: 1.1rem; color: var(--accent-light); margin-top: 2px; letter-spacing: 1px; }
 
-        .nav { background: linear-gradient(135deg,#9c2157,#7a1a42); position: sticky; top: 0; z-index: 1000; border-top: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
-        .nav-content { display: flex; justify-content: center; align-items: center; padding: 0 20px; }
+        /* Πιο ανοιχτόχρωμο μενού και διόρθωση Padding για να μην ακουμπάει στο πάνω border */
+        .nav { background: linear-gradient(135deg, #b02763, #941f52); position: sticky; top: 0; z-index: 1000; border-top: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
+        .nav-content { display: flex; justify-content: center; align-items: center; padding: 6px 20px; } 
         .nav-content ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
-        .nav-content ul li a { display: block; color: var(--text-inverse); font-weight: 600; font-size: 1rem; padding: 14px 18px; border-radius: 8px; transition: all var(--transition); position: relative; }
+        .nav-content ul li a { display: block; color: var(--text-inverse); font-weight: 600; font-size: 1rem; padding: 12px 18px; border-radius: 8px; transition: all var(--transition); position: relative; }
         .nav-content ul li a:hover, .nav-content ul li a.active { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-        .nav-content ul li a::after { content: ""; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: var(--accent); border-radius: 2px; transition: width var(--transition); }
+        .nav-content ul li a::after { content: ""; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: var(--accent-blue); border-radius: 2px; transition: width var(--transition); }
         .nav-content ul li a:hover::after, .nav-content ul li a.active::after { width: 60%; }
 
-        .theme-toggle, .back-to-top { position: fixed; z-index: 999; width: 48px; height: 48px; border-radius: var(--radius-circle); background: var(--primary); color: white; border: 2.5px solid rgba(255,255,255,0.7); box-shadow: 0 4px 20px var(--shadow-hover); cursor: pointer; transition: all var(--transition); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+        .theme-toggle, .back-to-top { position: fixed; z-index: 999; width: 48px; height: 48px; border-radius: var(--radius-circle); background: var(--primary); color: white; border: 2.5px solid var(--accent-blue); box-shadow: 0 4px 20px var(--shadow-hover); cursor: pointer; transition: all var(--transition); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
         .theme-toggle { bottom: 30px; left: 30px; }
         .back-to-top { bottom: 30px; right: 30px; opacity: 0; visibility: hidden; }
         .back-to-top.show { opacity: 1; visibility: visible; }
         .theme-toggle:hover, .back-to-top:hover { transform: translateY(-3px) scale(1.05); }
 
-        .carousel-container { position: relative; overflow: hidden; border-radius: var(--radius); box-shadow: 0 8px 30px var(--shadow); background: var(--bg-card); width: 100%; height: 320px; touch-action: pan-y; }
+        .carousel-container { position: relative; overflow: hidden; border-radius: var(--radius); box-shadow: 0 8px 30px var(--shadow); background: var(--bg-card); width: 100%; height: 320px; touch-action: pan-y; transition: box-shadow var(--transition); }
+        /* ΚΑΡΟΥΖΕΛ HOVER - Απαλό γαλάζιο περίγραμμα */
+        .carousel-container:hover { box-shadow: 0 8px 30px var(--shadow), 0 0 0 1px var(--accent-blue-glow); }
         .carousel-slide { display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         .carousel-image { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; background-color: var(--bg-section); }
         .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.5); border-radius: var(--radius-circle); background: rgba(176, 39, 99, 0.8); color: white; cursor: pointer; z-index: 10; opacity: 0; display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
         .carousel-container:hover .carousel-arrow { opacity: 1; }
         .carousel-arrow.prev { left: 10px; }
         .carousel-arrow.next { right: 10px; }
-        .carousel-counter { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 4px 14px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .carousel-counter { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(59, 130, 246, 0.15); backdrop-filter: blur(4px); color: var(--accent-blue); padding: 2px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10; border: 1px solid rgba(59, 130, 246, 0.3); }
 
         .mobile-media-title { display: none; color: var(--primary-dark); text-align: center; font-size: 1.8rem; margin-bottom: 40px; position: relative; }
-        .mobile-media-title::after { content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary-light)); border-radius: 2px; }
+        .mobile-media-title::after { content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--accent-purple)); border-radius: 2px; }
 
         .media-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-height: 580px; overflow-y: auto; padding-right: 8px; padding-bottom: 20px; }
         .media-grid::-webkit-scrollbar { width: 6px; }
@@ -129,66 +150,76 @@
         .media-grid::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
         .media-item { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px var(--shadow); aspect-ratio: 1; border: 2px solid var(--border); transition: box-shadow var(--transition); cursor: pointer; position: relative; }
         .media-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.4s ease; }
-        .media-item:hover { box-shadow: 0 8px 20px var(--shadow-hover); }
-        .media-play-btn { position: absolute; bottom: 10px; right: 10px; color: white; font-size: 1.3rem; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 50%; backdrop-filter: blur(2px); transition: var(--transition); }
+        /* ΦΩΤΟΓΡΑΦΙΕΣ HOVER - Απαλό γαλάζιο περίγραμμα */
+        .media-item:hover { box-shadow: 0 8px 20px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
+        .media-play-btn { position: absolute; bottom: 10px; right: 10px; color: white; font-size: 1.3rem; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 50%; backdrop-filter: blur(2px); transition: var(--transition); border: 1.5px solid var(--accent-blue); }
         .media-item:hover .media-play-btn { transform: scale(1.1); background: var(--primary); }
 
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .thumbnail { padding: 20px 10px; text-align: center; background: var(--bg-card); border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); }
-        .thumbnail:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover); border-color: var(--border); }
-        .thumbnail .stats, .thumbnail .infinity-symbol { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        /* ΣΤΑΤΙΣΤΙΚΑ HOVER - Απαλό γαλάζιο περίγραμμα */
+        .thumbnail:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
+        .thumbnail .stats, .thumbnail .infinity-symbol { font-size: 2.2rem; font-weight: 700; margin-bottom: 4px; }
         .thumbnail h4 { font-size: 0.95rem; color: var(--secondary-dark); margin: 6px 0 2px; }
         .thumbnail p { font-size: 0.8rem; color: var(--text-light); margin: 0; }
 
         .post-it-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
         .post-it { flex: 1 1 280px; max-width: 350px; padding: 28px 24px; background: var(--bg-card); border-radius: var(--radius); box-shadow: 0 4px 20px var(--shadow); border-left: 5px solid var(--primary-light); transition: all var(--transition); position: relative; overflow: hidden; }
         .post-it::before { content: ""; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, transparent 50%, var(--primary-light)); opacity: 0.1; border-radius: 0 0 0 60px; }
-        .post-it:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover); }
+        /* POST-IT HOVER - Απαλό γαλάζιο περίγραμμα */
+        .post-it:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
         .post-it b { font-size: 1.2rem; color: var(--primary-dark); display: block; margin-bottom: 8px; }
-        .post-it .icon { font-size: 2rem; color: var(--primary); margin-bottom: 10px; display: block; }
+        .post-it .icon { font-size: 2rem; margin-bottom: 10px; display: block; }
         
+        /* ΚΑΡΤΑ ΚΑΘΗΓΗΤΩΝ - Απαλό γαλάζιο περίγραμμα */
         .teacher-card { background: var(--bg-card); border-radius: var(--radius); padding: 30px 24px; text-align: center; box-shadow: 0 4px 20px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); width: 100%; max-width: 400px; margin: 0 auto; cursor: default;}
-        .teacher-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover); border-color: var(--border); }
+        .teacher-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
         .teacher-name { color: var(--primary-dark); font-size: 1.4rem; margin-bottom: 4px; }
         .teacher-subject { color: var(--secondary-dark); font-weight: 600; font-size: 0.95rem; margin-bottom: 10px; }
         .teacher-bio { color: var(--text-light); font-size: 0.95rem; line-height: 1.6; }
-        .teacher-badge { display: inline-block; background: var(--primary-light); color: var(--primary-dark); padding: 2px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 8px; }
+        .teacher-badge { display: inline-block; background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); padding: 2px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 8px; border: 1px solid rgba(59, 130, 246, 0.2); }
 
         .accordion-wrapper { display: flex; flex-direction: column; gap: 15px; }
         .acc-level-1 { border: 2px solid var(--border); border-radius: 12px; overflow: hidden; transition: var(--transition); background: var(--bg-card); }
+        /* ΚΑΤΗΓΟΡΙΕΣ Εκπαιδευτικού Υλικού & Προγράμματος Σπουδών - Ελαφρύ γαλάζιο περίγραμμα */
+        #yliko .acc-level-1, #program .acc-level-1 { border-color: var(--accent-blue-glow); }
         .acc-btn { width: 100%; text-align: left; padding: 16px 20px; background: var(--primary-soft); color: var(--primary-dark); border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
         .acc-btn:hover { background: var(--primary-light); color: white; }
         .acc-btn i { transition: transform 0.3s; }
         .acc-btn.active i { transform: rotate(180deg); }
         .acc-content { display: none; padding: 15px; background: var(--bg-card); flex-direction: column; gap: 10px; }
         
-        .acc-level-2 { border-left: 3px solid var(--primary); margin-left: 10px; border-radius: 0 8px 8px 0; overflow: hidden; background: var(--bg); }
+        /* Χρωματική Ιεραρχία: Επίπεδο 2 Μπλε, Επίπεδο 3 Μωβ */
+        .acc-level-2 { border-left: 3px solid var(--accent-blue); margin-left: 10px; border-radius: 0 8px 8px 0; overflow: hidden; background: var(--bg); }
         .acc-btn-2 { width: 100%; text-align: left; padding: 12px 15px; background: transparent; color: var(--secondary-dark); border: none; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .acc-btn-2:hover { color: var(--primary); background: rgba(176,39,99,0.05); }
+        .acc-btn-2:hover { color: var(--primary); background: rgba(59,130,246,0.05); } 
         .acc-content-2 { display: none; padding: 15px; flex-direction: column; gap: 8px; }
 
-        .acc-level-3 { border-left: 3px solid var(--secondary-light); margin-left: 10px; margin-top: 8px; border-radius: 0 6px 6px 0; overflow: hidden; background: transparent; }
-        .acc-btn-3 { width: 100%; text-align: left; padding: 10px 15px; background: rgba(155, 107, 142, 0.05); color: var(--secondary-dark); border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
-        .acc-btn-3:hover { color: var(--primary); background: rgba(176,39,99,0.1); }
+        .acc-level-3 { border-left: 3px solid var(--accent-purple); margin-left: 10px; margin-top: 8px; border-radius: 0 6px 6px 0; overflow: hidden; background: transparent; }
+        .acc-btn-3 { width: 100%; text-align: left; padding: 10px 15px; background: rgba(139, 92, 246, 0.05); color: var(--secondary-dark); border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
+        .acc-btn-3:hover { color: var(--primary); background: rgba(139, 92, 246, 0.15); }
         .acc-content-3 { display: none; padding: 12px; flex-direction: column; gap: 8px; }
 
         [data-theme="dark"] .acc-btn-3 { color: var(--text-light); background: rgba(255,255,255,0.02); }
-        [data-theme="dark"] .acc-btn-3:hover { color: var(--primary-light); background: rgba(176,39,99,0.15); }
+        [data-theme="dark"] .acc-btn-3:hover { color: var(--primary-light); background: rgba(139, 92, 246, 0.15); }
         
+        /* ΚΟΥΜΠΙΑ ΑΡΧΕΙΩΝ & ΥΛΙΚΟΥ - Απαλό γαλάζιο περίγραμμα */
         .pdf-link { display: inline-flex; align-items: center; gap: 10px; padding: 10px 15px; background: white; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 2px 5px var(--shadow); }
         .pdf-link i { color: #E53935; font-size: 1.2rem; }
-        .pdf-link:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); box-shadow: 0 5px 15px var(--shadow-hover); }
+        .pdf-link:hover { transform: translateY(-2px); border-color: var(--accent-blue-glow); color: var(--accent-blue); box-shadow: 0 5px 15px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
 
         .pdf-search-input { width: 100%; padding: 10px 15px; margin-bottom: 5px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); color: var(--text); font-family: var(--font); font-size: 0.95rem; outline: none; transition: var(--transition); }
-        .pdf-search-input:focus { border-color: var(--primary); box-shadow: 0 0 8px var(--primary-glow); }
+        .pdf-search-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue-glow); }
         .no-files-msg { font-size: 0.9rem; color: var(--text-light); font-style: italic; padding: 5px 10px; }
 
         .program-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
         .program-btn { justify-content: center; text-align: center; }
         .program-grid .program-btn { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--border); }
-        .program-grid .program-btn:hover { background: var(--primary-light); color: white; }
+        /* Κουμπιά Προγραμμάτων - Απαλό γαλάζιο περίγραμμα */
+        .program-grid .program-btn:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3), 0 0 0 1px var(--accent-blue-glow); }
+        
         [data-theme="dark"] .program-grid .program-btn { background: rgba(176, 39, 99, 0.15); color: var(--primary-light); }
-        [data-theme="dark"] .program-grid .program-btn:hover { background: var(--primary); color: white; }
+        [data-theme="dark"] .program-grid .program-btn:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4), 0 0 0 1px var(--accent-blue-glow); }
 
         .services-section { background: linear-gradient(to bottom, var(--bg) 0%, var(--bg) 20px, var(--primary-light) 60px, var(--secondary-light) calc(100% - 60px), var(--bg) calc(100% - 20px), var(--bg) 100%); padding: 80px 0 120px; }
         [data-theme="dark"] .services-section { background: linear-gradient(to bottom, var(--bg) 0%, var(--bg) 20px, #5a2e45 60px, #4a3245 calc(100% - 60px), var(--bg) calc(100% - 20px), var(--bg) 100%); }
@@ -196,15 +227,18 @@
         
         .books-section { padding: 50px 0; }
         .books-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
-        .book-card { flex: 1 1 200px; max-width: 260px; background: var(--bg-card); border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 15px var(--shadow); transition: all var(--transition); cursor: pointer; text-align: center; border: 1px solid var(--border); }
-        .book-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover); border-color: var(--border); }
+        /* ΚΑΡΤΑ ΒΙΒΛΙΟΥ - Απαλό γαλάζιο περίγραμμα */
+        .book-card { flex: 1 1 200px; max-width: 260px; background: var(--bg-card); border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 15px var(--shadow); transition: all var(--transition); cursor: pointer; text-align: center; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center;}
+        .book-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
         .book-cover { width: 100%; height: 280px; object-fit: contain; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border); background: var(--bg-section); }
         .book-title { color: var(--primary-dark); font-size: 1.1rem; margin: 0; }
+        .book-badge { display: inline-block; background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); padding: 2px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 8px; border: 1px solid rgba(139, 92, 246, 0.2); text-transform: uppercase; letter-spacing: 1px;}
 
         .reviews-section { padding: 50px 0; background: var(--bg-section); }
         .reviews-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
+        /* ΑΞΙΟΛΟΓΗΣΕΙΣ - Απαλό γαλάζιο περίγραμμα */
         .review-card { flex: 1 1 280px; max-width: 340px; background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 15px var(--shadow); transition: all var(--transition); border-top: 4px solid var(--primary-light); }
-        .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover); }
+        .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
         .review-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
         .review-info .review-name { font-weight: 600; color: var(--primary-dark); }
         .review-info .review-date { font-size: 0.8rem; color: var(--text-light); }
@@ -218,8 +252,9 @@
         
         .footer_banner { background: var(--bg-section); padding: 50px 0 30px; }
         .footer-columns { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        /* ΣΤΗΛΕΣ FOOTER - Απαλό γαλάζιο περίγραμμα */
         .footer_column { flex: 1 1 170px; max-width: 220px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); }
-        .footer_column:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover); }
+        .footer_column:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
         .footer_column h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
         .footer_column p { font-size: 0.9rem; margin: 8px 0; }
         .footer_column a { color: var(--secondary-dark); }
@@ -227,10 +262,12 @@
         .social-icons { display: flex; gap: 16px; align-items: center; margin-top: 12px; }
         .social-icons a { font-size: 1.6rem; color: var(--primary); transition: all var(--transition); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
         .map-container { max-width: 1200px; margin: 40px auto 0; padding: 0 20px; display: block; }
-        .map-container iframe { display: block; width: 100%; height: 400px; border-radius: var(--radius); box-shadow: 0 8px 30px var(--shadow); border: 4px solid var(--bg-card); background: #e0e0e0; }
+        .map-container iframe { display: block; width: 100%; height: 400px; border-radius: var(--radius); box-shadow: 0 8px 30px var(--shadow); border: 4px solid var(--bg-card); background: #e0e0e0; transition: box-shadow var(--transition); }
+        /* ΧΑΡΤΗΣ HOVER - Απαλό γαλάζιο περίγραμμα */
+        .map-container iframe:hover { box-shadow: 0 8px 30px var(--shadow), 0 0 0 1px var(--accent-blue-glow); }
         .copyright { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; text-align: center; padding: 20px 0; font-size: 0.9rem; line-height: 1.6;}
 
-        /* --- MODALS & 3D FLIPBOOK (DEARFLIP CSS) --- */
+        /* --- MODALS & 3D FLIPBOOK --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         
         .modal-container { width: 95vw; height: 90vh; display: block; position: relative; border-radius: 8px; background: transparent; margin-top: 20px; }
@@ -249,7 +286,7 @@
             align-items: center; 
             justify-content: center; 
             transition: var(--transition); 
-            border: 2px solid white; 
+            border: 2px solid var(--accent-blue); 
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
             padding: 0; 
             background: var(--primary); 
@@ -426,7 +463,7 @@
                     <h2 class="section-title">Για εμάς</h2>
                     <div class="post-it-container">
                         <div class="post-it">
-                            <span class="icon"><i class="fas fa-book-open"></i></span>
+                            <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-book-open"></i></span>
                             <b>Φροντιστήριο Λόγος</b>
                             <p>Το φροντιστήριό μας λειτουργεί με αγάπη για τη γνώση και μοναδικό στόχο την επιτυχία σου!</p>
                             <p style="margin-top:12px;">
@@ -437,7 +474,7 @@
                             </p>
                         </div>
                         <div class="post-it">
-                            <span class="icon"><i class="fas fa-lightbulb"></i></span>
+                            <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-lightbulb"></i></span>
                             <b>Η Φιλοσοφία μας</b>
                             <p>Πιστεύουμε ότι κάθε μαθητής είναι μοναδικός. Γι' αυτό προσαρμόζουμε τη διδασκαλία μας στις ανάγκες του κάθε μαθητή, δημιουργώντας ένα περιβάλλον όπου η μάθηση γίνεται ευχάριστη και δημιουργική.</p>
                         </div>
@@ -514,22 +551,22 @@
 
                 <div class="stats-grid">
                     <div class="thumbnail">
-                        <div class="stats" data-target="15">0</div>
+                        <div class="stats" data-target="15" style="color: var(--primary);">0</div>
                         <h4>ΒΙΒΛΙΑ</h4>
                         <p>Διαθέσιμα για τους μαθητές</p>
                     </div>
                     <div class="thumbnail">
-                        <div class="stats" data-target="4">0</div>
+                        <div class="stats" data-target="4" style="color: var(--primary);">0</div>
                         <h4>ΜΑΘΗΜΑΤΑ</h4>
                         <p>Διαφορετικά μαθήματα</p>
                     </div>
                     <div class="thumbnail">
-                        <div class="stats" data-target="30">0</div>
+                        <div class="stats" data-target="30" style="color: var(--primary);">0</div>
                         <h4>ΕΤΗ</h4>
                         <p>Εμπειρίας</p>
                     </div>
                     <div class="thumbnail">
-                        <span class="infinity-symbol">∞</span>
+                        <span class="infinity-symbol" style="color: var(--primary);">∞</span>
                         <h4>ΑΦΟΣΙΩΣΗ</h4>
                         <p>Στην επιτυχία σας</p>
                     </div>
@@ -543,12 +580,12 @@
                 <h2 class="section-title">Υπηρεσίες</h2>
                 <div class="post-it-container">
                     <div class="post-it">
-                        <span class="icon"><i class="fas fa-user-graduate"></i></span>
+                        <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-user-graduate"></i></span>
                         <b>Εξατομικευμένη Διδασκαλία</b>
                         <p>Προσφέρουμε εξατομικευμένα προγράμματα σπουδών για κάθε μαθητή ανάλογα με τις ανάγκες του.</p>
                     </div>
                     <div class="post-it">
-                        <span class="icon"><i class="fas fa-trophy"></i></span>
+                        <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-trophy"></i></span>
                         <b>Προετοιμασία για Πανελλήνιες</b>
                         <p>Ειδικά προγράμματα προετοιμασίας με έμφαση στις απαιτήσεις των πανελληνίων εξετάσεων.</p>
                         <p style="margin-top:8px;font-size:0.9rem;">
@@ -558,13 +595,13 @@
                         </p>
                     </div>
                     <div class="post-it">
-                        <span class="icon"><i class="fas fa-book"></i></span>
+                        <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-book"></i></span>
                         <b>Βιβλία</b>
                         <p>Το φροντιστήριό μας διαθέτει νέα βιβλία πλούσια με υλικό κατάλληλα για τις απαιτήσεις και την κατανόηση των μαθημάτων και της θεωρίας.<br>
                         <strong style="color:var(--primary);">Όλα τα βιβλία παρέχονται δωρεάν!</strong></p>
                     </div>
                     <div class="post-it">
-                        <span class="icon"><i class="fas fa-laptop-house"></i></span>
+                        <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-laptop-house"></i></span>
                         <b>Διαδικτυακά Μαθήματα</b>
                         <p>Πλέον μπορείτε να μαθαίνετε από οπουδήποτε!</p>
                         <p style="margin-top:8px;font-size:0.9rem;">
@@ -572,10 +609,10 @@
                             • Εξατομικευμένη προσοχή<br>
                             • Κατόπιν συνεννόησης
                         </p>
-                        <p><a href="#contact" style="font-weight:600;">Επικοινωνήστε μαζί μας</a></p>
+                        <p><a href="#contact" style="font-weight:600; color: var(--accent-purple);">Επικοινωνήστε μαζί μας</a></p>
                     </div>
                     <div class="post-it">
-                        <span class="icon"><i class="fas fa-users"></i></span>
+                        <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-users"></i></span>
                         <b>Ολιγομελή Τμήματα</b>
                         <p>Μικρές ομάδες για μεγαλύτερη προσοχή!</p>
                         <p style="margin-top:8px;font-size:0.9rem;">
@@ -585,7 +622,7 @@
                         </p>
                     </div>
                     <div class="post-it">
-                        <span class="icon"><i class="fas fa-clock"></i></span>
+                        <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-clock"></i></span>
                         <b>Έναρξη Μαθημάτων</b>
                         <p style="margin-top:8px;font-size:0.9rem;">
                             • Γυμνάσιο: 13 Σεπτεμβρίου<br>
@@ -605,6 +642,7 @@
                     <div class="book-card" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.pdf">
                         <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.png" alt="Εξώφυλλο βιβλίου Τεστ" class="book-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\' fill=\'%23F5E6EE\'><rect width=\'200\' height=\'300\'/></svg>'">
                         <h3 class="book-title">Βιβλίο Τεστ</h3>
+                        <span class="book-badge">ΔΕΙΓΜΑ</span>
                     </div>
                 </div>
             </div>
@@ -689,15 +727,18 @@
         <div class="container"><p>© <span id="currentYear"></span> - Φιλολογικό Φροντιστήριο ΛΟΓΟΣ<br>Όλα τα δικαιώματα διατηρούνται</p></div>
     </section>
 
+    <!-- ΝΕΟ DEARFLIP MODAL -->
     <div class="modal-overlay" id="pdfModal">
         <div class="modal-container">
             
+            <!-- Πάνω Δεξιά: Μόνο το κλείσιμο -->
             <div class="modal-controls-right">
                 <button class="modal-btn btn-close" onclick="closeFlipbook()" title="Κλείσιμο">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
 
+            <!-- Κάτω Δεξιά (Desktop) -> Πάνω Αριστερά (Mobile): Επιλογές Αρχείων -->
             <div class="modal-controls-bottom">
                 <button class="modal-btn" onclick="openClassicPdf()" title="Άνοιγμα κλασικού PDF σε νέα καρτέλα">
                     <i class="fas fa-external-link-alt"></i>
@@ -711,17 +752,19 @@
         </div>
     </div>
 
+    <!-- ΕΙΚΟΝΕΣ LIGHTBOX -->
     <div class="modal-overlay" id="imageModal" style="z-index: 3000;">
-        <div class="modal-container" style="background: transparent; box-shadow: none; height: auto;">
+        <div class="modal-container" style="background: transparent; box-shadow: none; height: auto; width: auto; max-width: 95vw; display: flex; align-items: center; justify-content: center;">
             <div class="modal-controls-right">
                 <button class="modal-btn btn-close" onclick="closeImageModal()" title="Κλείσιμο">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <img id="lightboxImg" src="" style="max-width: 100%; max-height: 85vh; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); object-fit: contain;">
+            <img id="lightboxImg" src="" style="max-width: 100%; max-height: 85vh; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); object-fit: contain; margin: 0 auto; display: block;">
         </div>
     </div>
 
+    <!-- Όμορφο μήνυμα ειδοποίησης (Toast) -->
     <div id="custom-toast" class="custom-toast">
         <i class="fas fa-exclamation-circle"></i>
         <span id="toast-message">Το αρχείο δεν βρέθηκε.</span>
@@ -875,7 +918,6 @@
                         const link = document.createElement('div');
                         link.className = 'pdf-link';
                         link.setAttribute('data-pdf', getRawUrl(file.path));
-                        // ΑΛΛΑΓΗ ΕΙΚΟΝΙΔΙΟΥ ΣΤΙΣ ΛΙΣΤΕΣ ΣΕ fa-file-lines ΓΙΑ ΝΑ ΜΗΝ ΜΟΙΑΖΕΙ ΜΕ PNG
                         link.innerHTML = `<i class="fas fa-file-lines"></i> ${displayName}`;
                         container.appendChild(link);
                     }
@@ -1002,7 +1044,6 @@
             document.body.style.overflow = '';
         }
 
-        // Συνάρτηση εμφάνισης Custom Toast αντί για alert
         function showCustomToast(msg) {
             const toast = document.getElementById('custom-toast');
             document.getElementById('toast-message').textContent = msg;
@@ -1018,7 +1059,6 @@
             document.getElementById('pdfModal').style.display = 'flex'; 
             document.body.style.overflow = 'hidden';
             
-            // Έλεγχος: Κρύβουμε το Word αν είναι Πρόγραμμα Σπουδών
             const wordBtn = document.getElementById('wordBtn');
             if (pdfUrl.includes('Programma_Spoudon')) {
                 wordBtn.style.display = 'none';
@@ -1048,23 +1088,20 @@
             
             const wordIcon = document.getElementById('wordIcon');
             const originalClass = wordIcon.className;
-            wordIcon.className = 'fas fa-spinner fa-spin'; // Εμφάνιση loading spinner
+            wordIcon.className = 'fas fa-spinner fa-spin'; 
 
             const docxUrl = activePdfUrl.replace(/\.pdf$/i, '.docx');
             const docUrl = activePdfUrl.replace(/\.pdf$/i, '.doc');
             
             try {
-                // Έλεγχος αν υπάρχει το .docx αρχείο στο GitHub
                 let response = await fetch(docxUrl, { method: 'HEAD' });
                 let finalUrl = docxUrl;
 
                 if (!response.ok) {
-                    // Αν δεν υπάρχει, δοκιμάζουμε το .doc
                     response = await fetch(docUrl, { method: 'HEAD' });
                     if (response.ok) {
                         finalUrl = docUrl;
                     } else {
-                        // Αν δεν υπάρχει κανένα, βγάζουμε το ΟΜΟΡΦΟ μήνυμα Toast
                         showCustomToast('Το αντίστοιχο αρχείο Word δεν βρέθηκε.');
                         wordIcon.className = originalClass;
                         return;
