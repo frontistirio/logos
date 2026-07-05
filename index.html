@@ -169,7 +169,56 @@
         /* POST-IT HOVER - Απαλό γαλάζιο περίγραμμα */
         .post-it:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
         .post-it b { font-size: 1.2rem; color: var(--primary-dark); display: block; margin-bottom: 8px; }
-        .post-it .icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .post-it .icon { font-size: 2rem; margin-bottom: 10px; display: block; perspective: 200px; }
+        /* Έξυπνη, στοχευμένη κίνηση μόνο όπου ταιριάζει νοηματικά στην ενότητα Υπηρεσίες */
+        /* Ρολόι "Έναρξη Μαθημάτων" - απαλό tick-tock σαν δείκτης ρολογιού */
+        .services-section .post-it .icon .fa-clock { display: inline-block; transform-origin: 50% 60%; animation: clockTick 2.4s infinite ease-in-out; }
+        @keyframes clockTick {
+            0%, 100% { transform: rotate(0deg); }
+            10%      { transform: rotate(12deg); }
+            20%      { transform: rotate(-6deg); }
+            30%, 60% { transform: rotate(0deg); }
+            70%      { transform: rotate(10deg); }
+            80%      { transform: rotate(-5deg); }
+            90%      { transform: rotate(0deg); }
+        }
+        /* Βιβλίο "Βιβλία" - απαλό φύλλωμα σελίδας, σαν να ξεφυλλίζεις */
+        .services-section .post-it .icon .fa-book { display: inline-block; transform-origin: 50% 90%; animation: bookSway 3.2s infinite ease-in-out; }
+        @keyframes bookSway {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            25%      { transform: rotate(-6deg) translateY(-1px); }
+            50%      { transform: rotate(0deg) translateY(-2px); }
+            75%      { transform: rotate(6deg) translateY(-1px); }
+        }
+        /* Πτυχιούχος "Εξατομικευμένη Διδασκαλία" - απαλό ζεστό καλωσόρισμα, ελαφρύ ζωντάνεμα */
+        .services-section .post-it .icon .fa-user-graduate { display: inline-block; transform-origin: 50% 100%; animation: graduateNod 2.8s infinite ease-in-out; }
+        @keyframes graduateNod {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            20%      { transform: translateY(-3px) rotate(-4deg); }
+            40%      { transform: translateY(0) rotate(0deg); }
+            60%      { transform: translateY(-2px) rotate(3deg); }
+            80%      { transform: translateY(0) rotate(0deg); }
+        }
+        /* Κύπελλο "Προετοιμασία για Πανελλήνιες" - νικηφόρο ελαφρύ ανασήκωμα/λάμψη */
+        .services-section .post-it .icon .fa-trophy { display: inline-block; transform-origin: 50% 100%; animation: trophyLift 2.6s infinite ease-in-out; }
+        @keyframes trophyLift {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            30%      { transform: translateY(-4px) scale(1.08) rotate(-3deg); }
+            50%      { transform: translateY(-5px) scale(1.1) rotate(3deg); }
+            70%      { transform: translateY(-4px) scale(1.08) rotate(-2deg); }
+        }
+        /* Laptop "Διαδικτυακά Μαθήματα" - απαλό αιώρημα σαν οθόνη σε βίντεοκλήση */
+        .services-section .post-it .icon .fa-laptop-house { display: inline-block; transform-origin: 50% 100%; animation: laptopFloat 3s infinite ease-in-out; }
+        @keyframes laptopFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-4px); }
+        }
+        /* Ομάδα "Ολιγομελή Τμήματα" - απαλό συσπείρωμα, σαν να πλησιάζουν */
+        .services-section .post-it .icon .fa-users { display: inline-block; transform-origin: 50% 50%; animation: usersHuddle 2.8s infinite ease-in-out; }
+        @keyframes usersHuddle {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.1); }
+        }
         
         /* ΚΑΡΤΑ ΚΑΘΗΓΗΤΩΝ - Απαλό γαλάζιο περίγραμμα */
         .teacher-card { background: var(--bg-card); border-radius: var(--radius); padding: 30px 24px; text-align: center; box-shadow: 0 4px 20px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); width: 100%; max-width: 400px; margin: 0 auto; cursor: default;}
@@ -240,12 +289,18 @@
         .review-card { flex: 1 1 280px; max-width: 340px; background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 15px var(--shadow); transition: all var(--transition); border-top: 4px solid var(--primary-light); }
         .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
         .review-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-        .review-info .review-name { font-weight: 600; color: var(--primary-dark); }
-        .review-info .review-date { font-size: 0.8rem; color: var(--text-light); }
+        .review-info .review-name { font-weight: 600; color: var(--accent-blue); }
+        .review-info .review-date { font-size: 0.8rem; color: var(--accent-purple); }
         .review-stars { color: var(--accent); font-size: 1.1rem; margin-bottom: 8px; }
         .review-text { color: var(--text); font-size: 0.95rem; font-style: italic; line-height: 1.7; }
         .review-text::before { content: '"'; color: var(--primary-light); font-size: 1.4rem; }
         .review-text::after { content: '"'; color: var(--primary-light); font-size: 1.4rem; }
+
+        /* ΚΟΥΜΠΙ ΑΞΙΟΛΟΓΗΣΗΣ GOOGLE */
+        .google-review-cta { display: flex; justify-content: center; margin-top: 35px; }
+        .google-review-btn { display: inline-flex; align-items: center; gap: 12px; padding: 14px 28px; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-circle); font-weight: 700; font-size: 1rem; box-shadow: 0 4px 15px var(--shadow); transition: all var(--transition); }
+        .google-review-btn i { font-size: 1.3rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .google-review-btn:hover { transform: translateY(-3px); color: var(--text); box-shadow: 0 8px 25px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
 
         .contact-intro { padding: 40px 0 20px; text-align: center; }
         .contact-intro p { font-size: 1.15rem; color: var(--text-light); max-width: 700px; margin: 0 auto; }
@@ -331,26 +386,59 @@
             .modal-container { margin-top: 60px; height: calc(100vh - 80px); }
         }
 
-        /* --- BANNER ΥΠΟ ΚΑΤΑΣΚΕΥΗ --- */
-        .construction-banner { background: linear-gradient(45deg, var(--accent), #ffeb3b); color: #333; text-align: center; padding: 12px 40px 12px 20px; position: relative; z-index: 1005; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: flex; justify-content: center; align-items: center; }
-        [data-theme="dark"] .construction-banner { background: linear-gradient(45deg, #ccaa00, #b39500); color: #fff; }
-        .construction-content { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; }
-        .construction-content i { font-size: 1.3rem; animation: hammer 1.5s infinite alternate ease-in-out; }
-        .construction-close { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: inherit; font-size: 1.4rem; cursor: pointer; opacity: 0.6; transition: opacity 0.3s; padding: 0; line-height: 0; }
-        .construction-close:hover { opacity: 1; }
-        @keyframes hammer { 0% { transform: rotate(0deg); } 100% { transform: rotate(-30deg); } }
-        @media screen and (max-width: 768px) { .construction-content { font-size: 0.9rem; text-align: left; } .construction-banner { padding: 10px 40px 10px 15px; } }
+        /* ============================================================
+           SITE BANNER — Μπάρα ανακοινώσεων (πάνω-πάνω στη σελίδα)
+           ------------------------------------------------------------
+           Γενικό, επαναχρησιμοποιήσιμο μπάνερ. Προς το παρόν δείχνει
+           μήνυμα "υπό κατασκευή" (θέμα .banner-warning), αλλά μπορεί να
+           ξαναχρησιμοποιηθεί για οποιαδήποτε μελλοντική ανακοίνωση.
+
+           ΠΩΣ ΝΑ ΤΟ ΑΛΛΑΞΕΙΣ ΣΤΟ ΜΕΛΛΟΝ:
+           1) Άλλαξε το κείμενο μέσα στο <span> του .site-banner (στο HTML).
+           2) Άλλαξε το εικονίδιο (π.χ. fa-tools -> fa-bullhorn, fa-star, fa-gift).
+           3) Διάλεξε θέμα χρώματος αλλάζοντας το class στο #site-banner:
+                .banner-warning       -> Κίτρινο  (τρέχον, "υπό κατασκευή")
+                .banner-info          -> Μπλε     (γενική ενημέρωση)
+                .banner-announcement  -> Μωβ      (ανακοίνωση / νέα)
+                .banner-success       -> Πράσινο  (π.χ. επιτυχία/καλά νέα)
+           Απλά άλλαξε το class στο #site-banner (π.χ. class="site-banner banner-info"). */
+        .site-banner { text-align: center; padding: 12px 40px 12px 20px; position: relative; z-index: 1005; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: flex; justify-content: center; align-items: center; transition: background var(--transition), color var(--transition); }
+        .site-banner-content { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; }
+        .site-banner-content i { font-size: 1.3rem; animation: bannerIconPulse 1.5s infinite alternate ease-in-out; }
+        .site-banner-close { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: inherit; font-size: 1.4rem; cursor: pointer; opacity: 0.6; transition: opacity 0.3s; padding: 0; line-height: 0; }
+        .site-banner-close:hover { opacity: 1; }
+        @keyframes bannerIconPulse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-30deg); } }
+        @media screen and (max-width: 768px) { .site-banner-content { font-size: 0.9rem; text-align: left; } .site-banner { padding: 10px 40px 10px 15px; } }
+
+        /* --- Θέματα χρώματος του banner --- */
+        .site-banner.banner-warning { background: linear-gradient(45deg, var(--accent), #ffeb3b); color: #333; }
+        [data-theme="dark"] .site-banner.banner-warning { background: linear-gradient(45deg, #ccaa00, #b39500); color: #fff; }
+
+        .site-banner.banner-info { background: linear-gradient(45deg, var(--accent-blue), #60a5fa); color: #fff; }
+        [data-theme="dark"] .site-banner.banner-info { background: linear-gradient(45deg, #1d4ed8, #2563eb); color: #fff; }
+
+        .site-banner.banner-announcement { background: linear-gradient(45deg, var(--accent-purple), #a78bfa); color: #fff; }
+        [data-theme="dark"] .site-banner.banner-announcement { background: linear-gradient(45deg, #6d28d9, #7c3aed); color: #fff; }
+
+        .site-banner.banner-success { background: linear-gradient(45deg, #16a34a, #22c55e); color: #fff; }
+        [data-theme="dark"] .site-banner.banner-success { background: linear-gradient(45deg, #15803d, #16a34a); color: #fff; }
     </style>
 </head>
 
 <body>
 
-    <div id="construction-banner" class="construction-banner">
-        <div class="construction-content">
+    <!-- 
+        SITE BANNER: Για μελλοντική ανακοίνωση, άλλαξε απλώς:
+        - το class "banner-warning" σε "banner-info" / "banner-announcement" / "banner-success"
+        - το εικονίδιο fa-tools σε ό,τι ταιριάζει
+        - το κείμενο μέσα στο <span>
+    -->
+    <div id="site-banner" class="site-banner banner-warning">
+        <div class="site-banner-content">
             <i class="fas fa-tools"></i>
             <span>Η ιστοσελίδα βρίσκεται υπό κατασκευή. Ορισμένες λειτουργίες ενδέχεται να μην είναι πλήρως διαθέσιμες.</span>
         </div>
-        <button class="construction-close" onclick="document.getElementById('construction-banner').style.display='none'" title="Κλείσιμο"><i class="fas fa-times"></i></button>
+        <button class="site-banner-close" onclick="document.getElementById('site-banner').style.display='none'" title="Κλείσιμο"><i class="fas fa-times"></i></button>
     </div>
     
     <header class="full-width">
@@ -482,10 +570,10 @@
                 </section>
 
                 <section id="teacher">
-                    <h2 class="section-title">Οι Καθηγητές Μας</h2>
+                    <h2 class="section-title">Καθηγητές</h2>
                     <div class="teacher-card">
                         <h3 class="teacher-name">Γεώργιος Μελισσίδης</h3>
-                        <p class="teacher-subject">Νέα Ελληνικά · Αρχαία Ελληνικά<br>Λογοτεχνία · Λατινικά · Ιστορία</p>
+                        <p class="teacher-subject"><span style="color: var(--accent-blue);">Νέα Ελληνικά</span> · <span style="color: var(--accent-purple);">Αρχαία Ελληνικά</span><br><span style="color: var(--accent-blue);">Λογοτεχνία</span> · <span style="color: var(--accent-purple);">Λατινικά</span> · <span style="color: var(--accent-blue);">Ιστορία</span></p>
                         <p class="teacher-bio">Φιλόλογος Α.Π.Θ.<br>Με πολυετή εμπειρία στη διδασκαλία</p>
                         <span class="teacher-badge">30 έτη εμπειρίας</span>
                     </div>
@@ -598,7 +686,7 @@
                         <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-book"></i></span>
                         <b>Βιβλία</b>
                         <p>Το φροντιστήριό μας διαθέτει νέα βιβλία πλούσια με υλικό κατάλληλα για τις απαιτήσεις και την κατανόηση των μαθημάτων και της θεωρίας.<br>
-                        <strong style="color:var(--primary);">Όλα τα βιβλία παρέχονται δωρεάν!</strong></p>
+                        <strong style="color:var(--accent-purple);">Όλα τα βιβλία παρέχονται δωρεάν!</strong></p>
                     </div>
                     <div class="post-it">
                         <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-laptop-house"></i></span>
@@ -644,6 +732,11 @@
                         <h3 class="book-title">Βιβλίο Τεστ</h3>
                         <span class="book-badge">ΔΕΙΓΜΑ</span>
                     </div>
+                    <div class="book-card" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.pdf">
+                        <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.png" alt="Εξώφυλλο βιβλίου Τεστ" class="book-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\' fill=\'%23F5E6EE\'><rect width=\'200\' height=\'300\'/></svg>'">
+                        <h3 class="book-title">Βιβλίο Τεστ</h3>
+                        <span class="book-badge">ΒΙΒΛΙΟ</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -676,6 +769,12 @@
                         </div>
                         <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του μαθητή/-τριας.</p>
                     </div>
+                </div>
+                <div class="google-review-cta">
+                    <a href="https://search.google.com/local/writereview?placeid=ChIJ2a_9kO-rrhQR-p3-XvrsxME" target="_blank" rel="noopener" class="google-review-btn">
+                        <i class="fab fa-google"></i>
+                        <span>Αξιολογήστε μας στο Google</span>
+                    </a>
                 </div>
             </div>
         </section>
