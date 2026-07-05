@@ -135,7 +135,7 @@
         .carousel-container:hover { box-shadow: 0 8px 30px var(--shadow), 0 0 0 1px var(--accent-blue-glow); }
         .carousel-slide { display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         .carousel-image { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; background-color: var(--bg-section); }
-        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.5); border-radius: var(--radius-circle); background: rgba(176, 39, 99, 0.8); color: white; cursor: pointer; z-index: 10; opacity: 0; display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 2.5px solid var(--accent-blue); border-radius: var(--radius-circle); background: rgba(176, 39, 99, 0.8); color: white; cursor: pointer; z-index: 10; opacity: 0; display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
         .carousel-container:hover .carousel-arrow { opacity: 1; }
         .carousel-arrow.prev { left: 10px; }
         .carousel-arrow.next { right: 10px; }
@@ -219,6 +219,24 @@
             0%, 100% { transform: scale(1); }
             50%      { transform: scale(1.1); }
         }
+
+        /* Έξυπνη, στοχευμένη κίνηση μόνο όπου ταιριάζει νοηματικά στην ενότητα Για εμάς - πολύ ήπια, σαν στην ενότητα Υπηρεσίες */
+        /* Ανοιχτό Βιβλίο "Φροντιστήριο Λόγος" - απαλό φύλλωμα σελίδας */
+        #about .post-it .icon .fa-book-open { display: inline-block; transform-origin: 50% 90%; animation: bookOpenSway 3.2s infinite ease-in-out; }
+        @keyframes bookOpenSway {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            25%      { transform: rotate(-4deg) translateY(-1px); }
+            50%      { transform: rotate(0deg) translateY(-2px); }
+            75%      { transform: rotate(4deg) translateY(-1px); }
+        }
+        /* Λάμπα "Η Φιλοσοφία μας" - απαλό, ζεστό αναλαμπάρισμα σαν ιδέα που ανάβει */
+        #about .post-it .icon .fa-lightbulb { display: inline-block; transform-origin: 50% 100%; animation: lightbulbGlow 2.6s infinite ease-in-out; }
+        @keyframes lightbulbGlow {
+            0%, 100%   { transform: scale(1) rotate(0deg); opacity: 1; }
+            35%        { transform: scale(1.08) rotate(-3deg); opacity: 0.85; }
+            50%        { transform: scale(1.12) rotate(0deg); opacity: 1; }
+            65%        { transform: scale(1.08) rotate(3deg); opacity: 0.85; }
+        }
         
         /* ΚΑΡΤΑ ΚΑΘΗΓΗΤΩΝ - Απαλό γαλάζιο περίγραμμα */
         .teacher-card { background: var(--bg-card); border-radius: var(--radius); padding: 30px 24px; text-align: center; box-shadow: 0 4px 20px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); width: 100%; max-width: 400px; margin: 0 auto; cursor: default;}
@@ -284,17 +302,61 @@
         .book-badge { display: inline-block; background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); padding: 2px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 8px; border: 1px solid rgba(139, 92, 246, 0.2); text-transform: uppercase; letter-spacing: 1px;}
 
         .reviews-section { padding: 50px 0; background: var(--bg-section); }
-        .reviews-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            align-items: stretch;
+        }
+        /* Όταν υπάρχουν λίγες κριτικές, μην τεντώνουμε τις κάρτες σε ολόκληρο το πλάτος */
+        .reviews-grid[data-count="1"] { grid-template-columns: minmax(280px, 400px); justify-content: center; }
+        .reviews-grid[data-count="2"] { grid-template-columns: repeat(2, minmax(280px, 360px)); justify-content: center; }
+        .reviews-grid[data-count="3"] { grid-template-columns: repeat(auto-fit, minmax(280px, 340px)); justify-content: center; }
+
         /* ΑΞΙΟΛΟΓΗΣΕΙΣ - Απαλό γαλάζιο περίγραμμα */
-        .review-card { flex: 1 1 280px; max-width: 340px; background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 15px var(--shadow); transition: all var(--transition); border-top: 4px solid var(--primary-light); }
+        .review-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: all var(--transition);
+            border-top: 4px solid var(--primary-light);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
         .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
         .review-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-        .review-info .review-name { font-weight: 600; color: var(--accent-blue); }
+        .review-info .review-name { font-weight: 600; color: var(--accent-blue); overflow-wrap: anywhere; }
         .review-info .review-date { font-size: 0.8rem; color: var(--accent-purple); }
         .review-stars { color: var(--accent); font-size: 1.1rem; margin-bottom: 8px; }
-        .review-text { color: var(--text); font-size: 0.95rem; font-style: italic; line-height: 1.7; }
+        .review-text {
+            color: var(--text);
+            font-size: 0.95rem;
+            font-style: italic;
+            line-height: 1.7;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .review-text::before { content: '"'; color: var(--primary-light); font-size: 1.4rem; }
         .review-text::after { content: '"'; color: var(--primary-light); font-size: 1.4rem; }
+
+        /* Κουμπί "Περισσότερες αξιολογήσεις" όταν πληθαίνουν οι κριτικές */
+        .reviews-more-wrap { display: flex; justify-content: center; margin-top: 30px; }
+        .reviews-more-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 26px; background: var(--primary-soft); color: var(--primary-dark);
+            border: 1px solid var(--border); border-radius: var(--radius-circle);
+            font-weight: 700; font-size: 0.95rem; cursor: pointer;
+            transition: all var(--transition);
+        }
+        .reviews-more-btn:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); box-shadow: 0 6px 18px var(--accent-blue-glow); transform: translateY(-2px); }
+        .reviews-more-btn i { transition: transform 0.3s; }
+        .reviews-more-btn.expanded i { transform: rotate(180deg); }
+        .review-card.review-hidden { display: none; }
 
         /* ΚΟΥΜΠΙ ΑΞΙΟΛΟΓΗΣΗΣ GOOGLE */
         .google-review-cta { display: flex; justify-content: center; margin-top: 35px; }
@@ -640,22 +702,22 @@
                 <div class="stats-grid">
                     <div class="thumbnail">
                         <div class="stats" data-target="15" style="color: var(--primary);">0</div>
-                        <h4>ΒΙΒΛΙΑ</h4>
+                        <h4 style="color: var(--accent-blue);">ΒΙΒΛΙΑ</h4>
                         <p>Διαθέσιμα για τους μαθητές</p>
                     </div>
                     <div class="thumbnail">
                         <div class="stats" data-target="4" style="color: var(--primary);">0</div>
-                        <h4>ΜΑΘΗΜΑΤΑ</h4>
+                        <h4 style="color: var(--accent-purple);">ΜΑΘΗΜΑΤΑ</h4>
                         <p>Διαφορετικά μαθήματα</p>
                     </div>
                     <div class="thumbnail">
                         <div class="stats" data-target="30" style="color: var(--primary);">0</div>
-                        <h4>ΕΤΗ</h4>
+                        <h4 style="color: var(--accent-purple);">ΕΤΗ</h4>
                         <p>Εμπειρίας</p>
                     </div>
                     <div class="thumbnail">
                         <span class="infinity-symbol" style="color: var(--primary);">∞</span>
-                        <h4>ΑΦΟΣΙΩΣΗ</h4>
+                        <h4 style="color: var(--accent-blue);">ΑΦΟΣΙΩΣΗ</h4>
                         <p>Στην επιτυχία σας</p>
                     </div>
                 </div>
@@ -744,7 +806,7 @@
         <section class="reviews-section full-width" id="reviews">
             <div class="container">
                 <h2 class="section-title">Αξιολογήσεις Μαθητών</h2>
-                <div class="reviews-grid">
+                <div class="reviews-grid" id="reviewsGrid">
                     <div class="review-card">
                         <div class="review-header">
                             <div class="review-info"><div class="review-name">Ονοματεπώνυμο</div><div class="review-date">Μήνας Έτος</div></div>
@@ -770,8 +832,14 @@
                         <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του μαθητή/-τριας.</p>
                     </div>
                 </div>
+                <div class="reviews-more-wrap" id="reviewsMoreWrap" style="display:none;">
+                    <button class="reviews-more-btn" id="reviewsMoreBtn" type="button">
+                        <span id="reviewsMoreLabel">Περισσότερες αξιολογήσεις</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
                 <div class="google-review-cta">
-                    <a href="https://search.google.com/local/writereview?placeid=ChIJ2a_9kO-rrhQR-p3-XvrsxME" target="_blank" rel="noopener" class="google-review-btn">
+                    <a href="https://www.google.com/maps/place//data=!4m3!3m2!1s0x14aeabef90fdafd9:0xc1c4ecfa5efe9dfa!12e1" target="_blank" rel="noopener" class="google-review-btn">
                         <i class="fab fa-google"></i>
                         <span>Αξιολογήστε μας στο Google</span>
                     </a>
@@ -842,6 +910,9 @@
                 <button class="modal-btn" onclick="openClassicPdf()" title="Άνοιγμα κλασικού PDF σε νέα καρτέλα">
                     <i class="fas fa-external-link-alt"></i>
                 </button>
+                <button class="modal-btn" onclick="downloadPdfFile()" title="Λήψη αρχείου PDF">
+                    <i id="pdfDownloadIcon" class="fas fa-download"></i>
+                </button>
                 <button class="modal-btn" id="wordBtn" onclick="downloadWordFile()" title="Λήψη αρχείου Word">
                     <i id="wordIcon" class="fas fa-file-word"></i>
                 </button>
@@ -896,6 +967,36 @@
                     this.querySelector('i').className = isOpen ? 'fas fa-plus' : 'fas fa-minus'; 
                 }); 
             });
+
+            // Αξιολογήσεις Μαθητών - προσαρμοστικό grid + "Περισσότερες αξιολογήσεις" όταν πληθαίνουν οι κριτικές
+            (function setupReviews() {
+                const grid = document.getElementById('reviewsGrid');
+                if (!grid) return;
+                const REVIEWS_VISIBLE_LIMIT = 6;
+
+                const cards = Array.from(grid.querySelectorAll('.review-card'));
+                grid.setAttribute('data-count', String(cards.length));
+
+                const moreWrap = document.getElementById('reviewsMoreWrap');
+                const moreBtn = document.getElementById('reviewsMoreBtn');
+                const moreLabel = document.getElementById('reviewsMoreLabel');
+
+                if (cards.length > REVIEWS_VISIBLE_LIMIT) {
+                    cards.forEach((card, i) => { if (i >= REVIEWS_VISIBLE_LIMIT) card.classList.add('review-hidden'); });
+                    moreWrap.style.display = 'flex';
+
+                    let expanded = false;
+                    moreBtn.addEventListener('click', () => {
+                        expanded = !expanded;
+                        cards.forEach((card, i) => {
+                            if (i >= REVIEWS_VISIBLE_LIMIT) card.classList.toggle('review-hidden', !expanded);
+                        });
+                        moreBtn.classList.toggle('expanded', expanded);
+                        moreLabel.textContent = expanded ? 'Λιγότερες αξιολογήσεις' : 'Περισσότερες αξιολογήσεις';
+                        if (!expanded) grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    });
+                }
+            })();
 
             // --- ΕΞΥΠΝΗ ΑΝΑΖΗΤΗΣΗ ΑΡΧΕΙΩΝ ---
             function normalizeGreekString(text) {
@@ -1182,6 +1283,43 @@
             }
         }
 
+        function decodeFileName(url) {
+            const raw = url.split('/').pop();
+            try {
+                return decodeURIComponent(raw);
+            } catch (e) {
+                return raw;
+            }
+        }
+
+        async function downloadPdfFile() {
+            if (!activePdfUrl) return;
+
+            const pdfIcon = document.getElementById('pdfDownloadIcon');
+            const originalClass = pdfIcon.className;
+            pdfIcon.className = 'fas fa-spinner fa-spin';
+
+            try {
+                const response = await fetch(activePdfUrl);
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = decodeFileName(activePdfUrl);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+
+            } catch (err) {
+                console.error("Σφάλμα δικτύου:", err);
+                window.open(activePdfUrl, '_blank');
+            } finally {
+                pdfIcon.className = originalClass;
+            }
+        }
+
         async function downloadWordFile() {
             if (!activePdfUrl) return;
             
@@ -1209,7 +1347,7 @@
 
                 const a = document.createElement('a');
                 a.href = finalUrl;
-                a.download = finalUrl.split('/').pop(); 
+                a.download = decodeFileName(finalUrl); 
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
