@@ -13,9 +13,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" type="image/png">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';</script>
-    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/dflip.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/themify-icons.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/js/dflip.min.js"></script>
 
     <style>
         /* --- CSS VARIABLES --- */
@@ -227,29 +230,51 @@
         .map-container iframe { display: block; width: 100%; height: 400px; border-radius: var(--radius); box-shadow: 0 8px 30px var(--shadow); border: 4px solid var(--bg-card); background: #e0e0e0; }
         .copyright { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; text-align: center; padding: 20px 0; font-size: 0.9rem; line-height: 1.6;}
 
-        /* --- MODALS & 3D FLIPBOOK --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-container { width: 95%; max-width: 1200px; height: 90vh; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .modal-close { position: absolute; top: 0px; right: 0px; width: 40px; height: 40px; background: var(--primary); color: white; border: 2px solid white; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10; display: flex; align-items: center; justify-content: center; transition: var(--transition); padding: 0; line-height: 0; }
-        .modal-close:hover { background: var(--primary-dark); transform: rotate(90deg); }
+        /* --- MODALS & 3D FLIPBOOK (DEARFLIP CSS) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         
-        /* Container has overflow to allow panning when zoomed inside */
-        #flipbook-container { width: 100%; height: calc(100% - 70px); position: relative; overflow: auto; display: block; text-align: center; white-space: nowrap; }
+        .modal-container { width: 95vw; height: 90vh; display: block; position: relative; border-radius: 8px; background: transparent; margin-top: 20px; }
         
-        /* Flipbook itself */
-        #flipbook { display: inline-block; margin: 20px auto; transition: transform 0.2s ease; transform-origin: top center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        /* ΘΕΣΕΙΣ ΚΟΥΜΠΙΩΝ - DESKTOP */
+        .modal-controls-right { position: absolute; top: -10px; right: 10px; display: flex; gap: 15px; z-index: 9999; }
+        .modal-controls-bottom { position: absolute; bottom: 20px; right: 20px; display: flex; gap: 15px; z-index: 9999; }
         
-        .flip-controls { display: flex; gap: 15px; margin-top: 15px; justify-content: center; width: 100%; z-index: 10; flex-wrap: wrap; }
-        .flip-btn { background: white; color: var(--primary-dark); border: 2px solid var(--primary); padding: 10px 15px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.1rem; flex-shrink: 0; }
-        .flip-btn:hover { background: var(--primary); color: white; }
-        .page { background-color: white; overflow: hidden; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
-        .page canvas { width: 100%; height: 100%; object-fit: contain; }
+        /* Ενιαίος Σχεδιασμός Κουμπιών */
+        .modal-btn { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: var(--transition); 
+            border: 2px solid white; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+            padding: 0; 
+            background: var(--primary); 
+            color: white; 
+            font-size: 1.3rem; 
+        }
+        .modal-btn:hover { background: var(--primary-dark); transform: scale(1.1); }
+        .btn-close:hover { transform: rotate(90deg) scale(1.1); }
         
-        #pdfLoading { margin: auto; color: white; font-size: 1.2rem; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
-        #pdfError { display: none; margin: auto; flex-direction: column; align-items: center; justify-content: center; gap: 20px; color: white; font-size: 1.2rem; text-align: center; height: 100%; }
-        
-        /* The True Circular Loupe Lens */
-        #loupe-lens { position: absolute; width: 250px; height: 250px; border: 4px solid var(--primary); border-radius: 50%; pointer-events: none; display: none; z-index: 1500; box-shadow: 0 15px 35px rgba(0,0,0,0.6); background: white; }
+        /* ΚΡΥΒΟΥΜΕ ΤΟ SHARE BUTTON ΤΟΥ DEARFLIP */
+        .df-ui-share { display: none !important; }
+
+        #df-flipbook-ui { width: 100%; height: 100%; display: block; }
+
+        /* CUSTOM TOAST NOTIFICATION */
+        .custom-toast {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: var(--bg-card); color: var(--text); padding: 15px 25px; border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-left: 5px solid #E53935;
+            display: flex; align-items: center; gap: 12px; font-weight: 600; z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            opacity: 0; pointer-events: none;
+        }
+        .custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .custom-toast i { color: #E53935; font-size: 1.5rem; }
 
         @media screen and (max-width: 768px) {
             .nav-toggle { display: none !important; }
@@ -259,70 +284,30 @@
             .theme-toggle { width: 42px; height: 42px; font-size: 1.2rem; bottom: 20px; left: 20px; }
             .back-to-top { display: none !important; }
             .mobile-media-title { display: block; margin-top: 10px;} 
-            .flip-controls { gap: 10px; }
-            .flip-btn span { display: none; } /* Κρύβει το κείμενο στα κουμπιά για χώρο στο κινητό */
+            
+            /* ΘΕΣΕΙΣ ΚΟΥΜΠΙΩΝ - MOBILE (Όλα πάνε ψηλά για να μην κόβουν το flipbook controls) */
+            .modal-controls-right { top: -45px; right: 0px; gap: 8px;} 
+            .modal-controls-bottom { top: -45px; left: 0px; bottom: auto; right: auto; gap: 10px; }
+            .modal-btn { width: 40px; height: 40px; font-size: 1.1rem; }
+            
+            /* Κατεβάζουμε το flipbook λίγο πιο κάτω στο κινητό για να χωρέσουν τα κουμπιά απ' έξω */
+            .modal-container { margin-top: 60px; height: calc(100vh - 80px); }
         }
+
         /* --- BANNER ΥΠΟ ΚΑΤΑΣΚΕΥΗ --- */
-        .construction-banner {
-            background: linear-gradient(45deg, var(--accent), #ffeb3b);
-            color: #333;
-            text-align: center;
-            padding: 12px 40px 12px 20px;
-            position: relative;
-            z-index: 1005;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        /* Προσαρμογή για το Σκοτεινό Θέμα */
-        [data-theme="dark"] .construction-banner {
-            background: linear-gradient(45deg, #ccaa00, #b39500);
-            color: #fff;
-        }
-        .construction-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.05rem;
-        }
-        .construction-content i {
-            font-size: 1.3rem;
-            animation: hammer 1.5s infinite alternate ease-in-out;
-        }
-        .construction-close {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            color: inherit;
-            font-size: 1.4rem;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-            padding: 0;
-            line-height: 0;
-        }
-        .construction-close:hover {
-            opacity: 1;
-        }
-        @keyframes hammer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-30deg); }
-        }
-        @media screen and (max-width: 768px) {
-            .construction-content { font-size: 0.9rem; text-align: left; }
-            .construction-banner { padding: 10px 40px 10px 15px; }
-        }
+        .construction-banner { background: linear-gradient(45deg, var(--accent), #ffeb3b); color: #333; text-align: center; padding: 12px 40px 12px 20px; position: relative; z-index: 1005; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: flex; justify-content: center; align-items: center; }
+        [data-theme="dark"] .construction-banner { background: linear-gradient(45deg, #ccaa00, #b39500); color: #fff; }
+        .construction-content { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; }
+        .construction-content i { font-size: 1.3rem; animation: hammer 1.5s infinite alternate ease-in-out; }
+        .construction-close { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: inherit; font-size: 1.4rem; cursor: pointer; opacity: 0.6; transition: opacity 0.3s; padding: 0; line-height: 0; }
+        .construction-close:hover { opacity: 1; }
+        @keyframes hammer { 0% { transform: rotate(0deg); } 100% { transform: rotate(-30deg); } }
+        @media screen and (max-width: 768px) { .construction-content { font-size: 0.9rem; text-align: left; } .construction-banner { padding: 10px 40px 10px 15px; } }
     </style>
 </head>
 
 <body>
 
-<!-- BANNER ΥΠΟ ΚΑΤΑΣΚΕΥΗ (Για αφαίρεση: διαγράψτε απλώς αυτό το div) -->
     <div id="construction-banner" class="construction-banner">
         <div class="construction-content">
             <i class="fas fa-tools"></i>
@@ -330,7 +315,6 @@
         </div>
         <button class="construction-close" onclick="document.getElementById('construction-banner').style.display='none'" title="Κλείσιμο"><i class="fas fa-times"></i></button>
     </div>
-<!-- ΤΕΛΟΣ BANNER -->
     
     <header class="full-width">
         <div class="container header-content">
@@ -362,9 +346,7 @@
     <button class="back-to-top" id="backToTop" aria-label="Πήγαινε πάνω"><i class="fas fa-chevron-up"></i></button>
 
     <main id="main-content">
-        
         <div class="container main-layout">
-            
             <div class="column-left">
 
                 <section id="yliko">
@@ -480,9 +462,9 @@
                             <button class="acc-btn">Γενικό Λύκειο <i class="fas fa-chevron-down"></i></button>
                             <div class="acc-content">
                                 <div class="program-grid">
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Lykeio/A_Lykeiou.pdf/A_Lykeiou.pdf">Α' Λυκείου</div>
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Lykeio/B_Lykeiou.pdf/B_Lykeiou.pdf">Β' Λυκείου</div>
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Lykeio/G_Lykeiou.pdf/G_Lykeiou.pdf">Γ' Λυκείου</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Lykeio/A_Lykeiou.pdf">Α' Λυκείου</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Lykeio/B_Lykeiou.pdf">Β' Λυκείου</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Lykeio/G_Lykeiou.pdf">Γ' Λυκείου</div>
                                 </div>
                             </div>
                         </div>
@@ -491,9 +473,9 @@
                             <button class="acc-btn">ΕΠΑΛ <i class="fas fa-chevron-down"></i></button>
                             <div class="acc-content">
                                 <div class="program-grid">
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/EPAL/A_EPAL/A_EPAL.pdf">Α' ΕΠΑΛ</div>
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/EPAL/B_EPAL/B_EPAL.pdf">Β' ΕΠΑΛ</div>
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/EPAL/G_EPAL/G_EPAL.pdf">Γ' ΕΠΑΛ</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/EPAL/A_EPAL.pdf">Α' ΕΠΑΛ</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/EPAL/B_EPAL.pdf">Β' ΕΠΑΛ</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/EPAL/G_EPAL.pdf">Γ' ΕΠΑΛ</div>
                                 </div>
                             </div>
                         </div>
@@ -502,9 +484,9 @@
                             <button class="acc-btn">Γυμνάσιο <i class="fas fa-chevron-down"></i></button>
                             <div class="acc-content">
                                 <div class="program-grid">
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Gymnasio/A_Gymnasiou/A_Gymnasiou.pdf">Α' Γυμνασίου</div>
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Gymnasio/B_Gymnasiou/B_Gymnasiou.pdf">Β' Γυμνασίου</div>
-                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Gymnasio/G_Gymnasiou/G_Gymnasiou.pdf">Γ' Γυμνασίου</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Gymnasio/A_Gymnasiou.pdf">Α' Γυμνασίου</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Gymnasio/B_Gymnasiou.pdf">Β' Γυμνασίου</div>
+                                    <div class="pdf-link program-btn" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Programma_Spoudon/Gymnasio/G_Gymnasiou.pdf">Γ' Γυμνασίου</div>
                                 </div>
                             </div>
                         </div>
@@ -709,38 +691,40 @@
 
     <div class="modal-overlay" id="pdfModal">
         <div class="modal-container">
-            <button class="modal-close" onclick="closeFlipbook()" title="Κλείσιμο"><i class="fas fa-times"></i></button>
             
-            <div id="pdfLoading">
-                <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 15px; color: var(--primary-light);"></i>
-                <p>Φόρτωση βιβλίου...</p>
-            </div>
-            <div id="pdfError">
-                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ffcc00;"></i>
-                <p>Δεν ήταν δυνατή η φόρτωση του 3D Βιβλίου.</p>
+            <div class="modal-controls-right">
+                <button class="modal-btn btn-close" onclick="closeFlipbook()" title="Κλείσιμο">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
 
-            <div id="flipbook-container">
-                <div id="flipbook"></div>
-                <canvas id="loupe-lens"></canvas>
+            <div class="modal-controls-bottom">
+                <button class="modal-btn" onclick="openClassicPdf()" title="Άνοιγμα κλασικού PDF σε νέα καρτέλα">
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+                <button class="modal-btn" id="wordBtn" onclick="downloadWordFile()" title="Λήψη αρχείου Word">
+                    <i id="wordIcon" class="fas fa-file-word"></i>
+                </button>
             </div>
-            
-            <div class="flip-controls" id="flipControls">
-                <button class="flip-btn" id="flipPrev" title="Προηγούμενη Σελίδα"><i class="fas fa-arrow-left"></i> <span>Προηγούμενη</span></button>
-                <button class="flip-btn" id="zoomOutBtn" title="Σμίκρυνση (Zoom Out)"><i class="fas fa-search-minus"></i></button>
-                <button class="flip-btn" id="loupeBtn" title="Μεγεθυντικός Φακός (Λούπα)"><i class="fas fa-search"></i></button>
-                <button class="flip-btn" id="zoomInBtn" title="Μεγέθυνση (Zoom In)"><i class="fas fa-search-plus"></i></button>
-                <button class="flip-btn" id="openClassicBtn" title="Άνοιγμα / Λήψη PDF"><i class="fas fa-file-pdf"></i></button>
-                <button class="flip-btn" id="flipNext" title="Επόμενη Σελίδα"><span>Επόμενη</span> <i class="fas fa-arrow-right"></i></button>
-            </div>
+
+            <div id="df-flipbook-ui"></div>
         </div>
     </div>
 
     <div class="modal-overlay" id="imageModal" style="z-index: 3000;">
         <div class="modal-container" style="background: transparent; box-shadow: none; height: auto;">
-            <button class="modal-close" onclick="closeImageModal()" style="top: -20px; right: 0px;" title="Κλείσιμο"><i class="fas fa-times"></i></button>
+            <div class="modal-controls-right">
+                <button class="modal-btn btn-close" onclick="closeImageModal()" title="Κλείσιμο">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             <img id="lightboxImg" src="" style="max-width: 100%; max-height: 85vh; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); object-fit: contain;">
         </div>
+    </div>
+
+    <div id="custom-toast" class="custom-toast">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="toast-message">Το αρχείο δεν βρέθηκε.</span>
     </div>
 
     <script>
@@ -771,7 +755,7 @@
                 }); 
             });
 
-            // --- ΕΞΥΠΝΗ ΑΝΑΖΗΤΗΣΗ ΑΡΧΕΙΩΝ (PDF) ---
+            // --- ΕΞΥΠΝΗ ΑΝΑΖΗΤΗΣΗ ΑΡΧΕΙΩΝ ---
             function normalizeGreekString(text) {
                 return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9α-ω]/gi, "");
             }
@@ -878,16 +862,21 @@
                 if (!tree || tree.length === 0) return;
 
                 const ylikoFiles = tree.filter(item => item.path.startsWith('Yliko/') && item.type === 'blob' && item.path.endsWith('.pdf'));
+                
                 ylikoFiles.forEach(file => {
                     const parts = file.path.split('/');
                     const fileName = parts.pop();
+                    
+                    const displayName = fileName.replace(/\.pdf$/i, ''); 
+                    
                     const folderPath = parts.join('/'); 
                     const container = document.querySelector(`[data-folder="${folderPath}"]`);
                     if (container) {
                         const link = document.createElement('div');
                         link.className = 'pdf-link';
                         link.setAttribute('data-pdf', getRawUrl(file.path));
-                        link.innerHTML = `<i class="fas fa-file-pdf"></i> ${fileName}`;
+                        // ΑΛΛΑΓΗ ΕΙΚΟΝΙΔΙΟΥ ΣΤΙΣ ΛΙΣΤΕΣ ΣΕ fa-file-lines ΓΙΑ ΝΑ ΜΗΝ ΜΟΙΑΖΕΙ ΜΕ PNG
+                        link.innerHTML = `<i class="fas fa-file-lines"></i> ${displayName}`;
                         container.appendChild(link);
                     }
                 });
@@ -1013,197 +1002,87 @@
             document.body.style.overflow = '';
         }
 
-        // --- 3D BOOK & CONTROLS LOGIC ---
-        const flipSound = new Audio('https://raw.githubusercontent.com/frontistirio/logos/main/Assets/page-flip.mp3');
-        flipSound.volume = 0.6;
+        // Συνάρτηση εμφάνισης Custom Toast αντί για alert
+        function showCustomToast(msg) {
+            const toast = document.getElementById('custom-toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
 
-        let pageFlipInstance = null; 
-        let currentPdfUrl = '';
-        let isPdfLoading = false; 
+        let dfFlipbookInstance = null;
+        let activePdfUrl = ''; 
 
-        // ZOOM LOGIC (Μεγεθύνει το στοιχείο μέσα στο scrollable container)
-        let currentZoom = 1;
-        const fbContainer = document.getElementById('flipbook-container');
-        const flipbookEl = document.getElementById('flipbook');
-
-        document.getElementById('zoomInBtn').onclick = () => { 
-            currentZoom += 0.2; 
-            flipbookEl.style.transform = `scale(${currentZoom})`; 
-        };
-        
-        document.getElementById('zoomOutBtn').onclick = () => { 
-            currentZoom = Math.max(0.4, currentZoom - 0.2); 
-            flipbookEl.style.transform = `scale(${currentZoom})`; 
-        };
-
-        // LOUPE LOGIC (Πραγματικός Κυκλικός Μεγεθυντικός Φακός Canvas)
-        let isLoupeActive = false;
-        const loupeLens = document.getElementById('loupe-lens');
-        const loupeCtx = loupeLens.getContext('2d');
-        const LOUPE_SIZE = 250; 
-        const LOUPE_MAGNIFICATION = 2.0;
-
-        document.getElementById('loupeBtn').onclick = function() {
-            isLoupeActive = !isLoupeActive;
-            this.style.background = isLoupeActive ? 'var(--primary)' : 'white';
-            this.style.color = isLoupeActive ? 'white' : 'var(--primary-dark)';
-            loupeLens.style.display = isLoupeActive ? 'block' : 'none';
-        };
-
-        fbContainer.addEventListener('mousemove', (e) => {
-            if(!isLoupeActive) return;
-
-            const rect = fbContainer.getBoundingClientRect();
-            // Τοποθετούμε το φακό (κέντρο του στο ποντίκι) λαμβάνοντας υπόψη το scroll
-            loupeLens.style.left = (e.clientX - rect.left - (LOUPE_SIZE / 2) + fbContainer.scrollLeft) + 'px';
-            loupeLens.style.top = (e.clientY - rect.top - (LOUPE_SIZE / 2) + fbContainer.scrollTop) + 'px';
-
-            // Καθαρισμός του φακού (άσπρο φόντο)
-            loupeCtx.fillStyle = 'white';
-            loupeCtx.fillRect(0, 0, LOUPE_SIZE, LOUPE_SIZE);
-
-            // Βρίσκουμε τον καμβά της ενεργής σελίδας από το Flipbook
-            const activeCanvases = document.querySelectorAll('.page.--active canvas');
-            activeCanvases.forEach(canvas => {
-                const cRect = canvas.getBoundingClientRect();
-                
-                // Ελέγχουμε αν το ποντίκι είναι πάνω από αυτόν τον καμβά
-                if(e.clientX >= cRect.left && e.clientX <= cRect.right &&
-                   e.clientY >= cRect.top && e.clientY <= cRect.bottom) {
-                    
-                    // Υπολογισμός σχετικής θέσης ποντικιού στον καμβά (οθόνης)
-                    const relX = e.clientX - cRect.left;
-                    const relY = e.clientY - cRect.top;
-
-                    // Λόγω του scale() το μέγεθος της οθόνης μπορεί να διαφέρει από τα εσωτερικά pixels του canvas
-                    const scaleX = canvas.width / cRect.width;
-                    const scaleY = canvas.height / cRect.height;
-
-                    // Μέγεθος του "κομματιού" της πηγής που θα δείξουμε (πιο μικρό = μεγαλύτερο zoom)
-                    const srcW = LOUPE_SIZE / LOUPE_MAGNIFICATION;
-                    const srcH = LOUPE_SIZE / LOUPE_MAGNIFICATION;
-                    
-                    const srcX = (relX - (srcW / 2)) * scaleX;
-                    const srcY = (relY - (srcH / 2)) * scaleY;
-
-                    loupeCtx.drawImage(
-                        canvas, 
-                        srcX, srcY, srcW * scaleX, srcH * scaleY, // Αποκοπή από το πρωτότυπο
-                        0, 0, LOUPE_SIZE, LOUPE_SIZE // Σχέδιο στο φακό
-                    );
-                }
-            });
-        });
-
-        fbContainer.addEventListener('mouseleave', () => {
-            if(isLoupeActive) loupeLens.style.display = 'none';
-        });
-        fbContainer.addEventListener('mouseenter', () => {
-            if(isLoupeActive) loupeLens.style.display = 'block';
-        });
-
-        // Κουμπί Κανονικής Προβολής (Ανοίγει Ασφαλώς το PDF σε νέα καρτέλα)
-        document.getElementById('openClassicBtn').onclick = () => {
-            window.open(currentPdfUrl, '_blank');
-        };
-
-        // ΒΑΣΙΚΗ ΣΥΝΑΡΤΗΣΗ ΑΝΟΙΓΜΑΤΟΣ
-        async function openFlipbook(pdfUrl) {
-            if (isPdfLoading) return; 
-            isPdfLoading = true;
-            currentPdfUrl = pdfUrl; 
-            
-            currentZoom = 1;
-            isLoupeActive = false;
-            document.getElementById('loupeBtn').style.background = 'white';
-            document.getElementById('loupeBtn').style.color = 'var(--primary-dark)';
-            loupeLens.style.display = 'none';
-            flipbookEl.style.transform = `scale(1)`;
-            
+        function openFlipbook(pdfUrl) {
+            activePdfUrl = pdfUrl; 
             document.getElementById('pdfModal').style.display = 'flex'; 
             document.body.style.overflow = 'hidden';
             
-            document.getElementById('pdfLoading').style.display = 'flex'; 
-            document.getElementById('pdfError').style.display = 'none'; 
-            document.getElementById('flipbook-container').style.display = 'none'; 
-            document.getElementById('flipControls').style.display = 'none'; 
-            
-            if (pageFlipInstance) { 
-                try { pageFlipInstance.destroy(); } catch(e){} 
-                pageFlipInstance = null; 
+            // Έλεγχος: Κρύβουμε το Word αν είναι Πρόγραμμα Σπουδών
+            const wordBtn = document.getElementById('wordBtn');
+            if (pdfUrl.includes('Programma_Spoudon')) {
+                wordBtn.style.display = 'none';
+            } else {
+                wordBtn.style.display = 'flex';
             }
-            flipbookEl.innerHTML = '';
+
+            const container = document.getElementById('df-flipbook-ui');
+            container.innerHTML = ''; 
+
+            dfFlipbookInstance = $(container).flipBook(pdfUrl, {
+                webgl: false, 
+                height: '100%',
+                backgroundColor: 'transparent',
+                direction: 1
+            });
+        }
+
+        function openClassicPdf() {
+            if (activePdfUrl) {
+                window.open(activePdfUrl, '_blank');
+            }
+        }
+
+        async function downloadWordFile() {
+            if (!activePdfUrl) return;
+            
+            const wordIcon = document.getElementById('wordIcon');
+            const originalClass = wordIcon.className;
+            wordIcon.className = 'fas fa-spinner fa-spin'; // Εμφάνιση loading spinner
+
+            const docxUrl = activePdfUrl.replace(/\.pdf$/i, '.docx');
+            const docUrl = activePdfUrl.replace(/\.pdf$/i, '.doc');
             
             try {
-                const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-                const numPages = pdf.numPages;
-                
-                // Δημιουργία όλων των σελίδων του PDF
-                const scale = numPages > 50 ? 1.0 : 1.3;
-                for (let i = 1; i <= numPages; i++) {
-                    const page = await pdf.getPage(i); 
-                    const viewport = page.getViewport({ scale: scale });
-                    const canvas = document.createElement('canvas'); 
-                    canvas.height = viewport.height; 
-                    canvas.width = viewport.width;
-                    
-                    await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
-                    
-                    const pageDiv = document.createElement('div'); 
-                    pageDiv.className = 'page'; 
-                    pageDiv.appendChild(canvas); 
-                    flipbookEl.appendChild(pageDiv);
+                // Έλεγχος αν υπάρχει το .docx αρχείο στο GitHub
+                let response = await fetch(docxUrl, { method: 'HEAD' });
+                let finalUrl = docxUrl;
 
-                    if (i % 5 === 0) await new Promise(r => setTimeout(r, 10)); // Anti-freeze
+                if (!response.ok) {
+                    // Αν δεν υπάρχει, δοκιμάζουμε το .doc
+                    response = await fetch(docUrl, { method: 'HEAD' });
+                    if (response.ok) {
+                        finalUrl = docUrl;
+                    } else {
+                        // Αν δεν υπάρχει κανένα, βγάζουμε το ΟΜΟΡΦΟ μήνυμα Toast
+                        showCustomToast('Το αντίστοιχο αρχείο Word δεν βρέθηκε.');
+                        wordIcon.className = originalClass;
+                        return;
+                    }
                 }
 
-                // ΕΠΙΔΙΟΡΘΩΣΗ ΓΙΑ ΜΙΚΡΑ PDF: Αν το PDF έχει 1, 2 ή 3 σελίδες προσθέτουμε κενές
-                // Αυτό εξασφαλίζει ότι το 3D βιβλίο θα δημιουργηθεί ΠΑΝΤΑ (απαιτεί μίνιμουμ 4 σελίδες)
-                let totalPagesCount = numPages;
-                while (totalPagesCount < 4) {
-                    const emptyDiv = document.createElement('div');
-                    emptyDiv.className = 'page';
-                    emptyDiv.innerHTML = '<div style="background:white; width:100%; height:100%;"></div>';
-                    flipbookEl.appendChild(emptyDiv);
-                    totalPagesCount++;
-                }
+                const a = document.createElement('a');
+                a.href = finalUrl;
+                a.download = finalUrl.split('/').pop(); 
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
                 
-                document.getElementById('pdfLoading').style.display = 'none'; 
-                document.getElementById('flipbook-container').style.display = 'block'; 
-                document.getElementById('flipControls').style.display = 'flex';
-                
-                pageFlipInstance = new St.PageFlip(flipbookEl, { 
-                    width: 420, 
-                    height: 594, 
-                    size: "stretch", 
-                    minWidth: 300, 
-                    maxWidth: 1000, 
-                    minHeight: 400, 
-                    maxHeight: 1350, 
-                    showCover: true, 
-                    usePortrait: true, 
-                    maxShadowOpacity: 0.6, 
-                    flippingTime: 1200, 
-                    swipeDistance: 30
-                });
-                
-                pageFlipInstance.loadFromHTML(document.querySelectorAll('.page'));
-                
-                document.getElementById('flipNext').onclick = () => pageFlipInstance.flipNext(); 
-                document.getElementById('flipPrev').onclick = () => pageFlipInstance.flipPrev();
-
-                pageFlipInstance.on('flip', (e) => {
-                    flipSound.currentTime = 0; 
-                    // Πιάνουμε τυχόν error αν ο browser μπλοκάρει autoplay (αν και επειδή υπάρχει interaction είναι ΟΚ)
-                    flipSound.play().catch(err => { console.warn('Audio blocked:', err); });
-                });
-
-            } catch (error) { 
-                console.error("Σφάλμα κατά τη φόρτωση του PDF:", error);
-                document.getElementById('pdfLoading').style.display = 'none'; 
-                document.getElementById('pdfError').style.display = 'flex'; 
+            } catch (err) {
+                console.error("Σφάλμα δικτύου:", err);
+                window.open(docxUrl, '_blank');
             } finally {
-                isPdfLoading = false; 
+                wordIcon.className = originalClass; 
             }
         }
 
@@ -1211,25 +1090,15 @@
             document.getElementById('pdfModal').style.display = 'none'; 
             document.body.style.overflow = ''; 
             
-            try {
-                if (pageFlipInstance) { 
-                    pageFlipInstance.destroy(); 
-                    pageFlipInstance = null; 
-                } 
-                flipbookEl.innerHTML = '';
-            } catch(e) { console.error("Σφάλμα κλεισίματος:", e); }
-            
-            flipSound.pause();
-            flipSound.currentTime = 0;
-            isPdfLoading = false;
+            if (dfFlipbookInstance && typeof dfFlipbookInstance.dispose === 'function') {
+                try { dfFlipbookInstance.dispose(); } catch(e) {}
+            }
+            document.getElementById('df-flipbook-ui').innerHTML = '';
+            dfFlipbookInstance = null;
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { closeFlipbook(); closeImageModal(); }
-            if (document.getElementById('pdfModal').style.display === 'flex' && pageFlipInstance && document.getElementById('flipControls').style.display !== 'none') {
-                if (e.key === 'ArrowRight') pageFlipInstance.flipNext();
-                if (e.key === 'ArrowLeft') pageFlipInstance.flipPrev();
-            }
         });
     </script>
 </body>
