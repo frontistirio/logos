@@ -1273,7 +1273,12 @@
                 webgl: false, 
                 height: '100%',
                 backgroundColor: 'transparent',
-                direction: 1
+                direction: 1,
+                // Όταν ο χρήστης επιλέξει "Single Page Mode" από το μενού (τρεις τελίτσες),
+                // να δείχνει ΜΙΑ σελίδα σε πλήρες πλάτος (Booklet), όχι "zoom" μέσα
+                // στο διπλό spread — αυτό ήταν το bug που άφηνε τη δεύτερη σελίδα
+                // να κρέμεται στην άκρη αντί να εξαφανίζεται.
+                singlePageMode: DFLIP.SINGLE_PAGE_MODE.BOOKLET
             });
         }
 
