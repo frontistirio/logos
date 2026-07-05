@@ -25,42 +25,42 @@
 ├── 📂 Gymnasio/
 │   ├── 📂 A_Gymnasiou/
 │   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   └── 📂 Odisseia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   ├── 📂 B_Gymnasiou/
 │   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   └── 📂 Iliada/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   └── 📂 G_Gymnasiou/
 │   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   └── 📂 Eleni/
-│           └── 📄 ... (αρχεία PDF)
+│           └── 📄 ... (αρχεία PDF και Word)
 │
 ├── 📂 Lykeio/
 │   ├── 📂 A_Lykeiou/
 │   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   │   ├── 📂 Latinika/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   ├── 📂 B_Lykeiou/
 │   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
 │   └── 📂 G_Lykeiou/
@@ -69,7 +69,7 @@
 └── 📂 EPAL/
 │   ├── 📂 A_EPAL/
 │   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF)
+│   │   │   ├── 📄 ... (αρχεία PDF και Word)
 │   ├── 📂 B_EPAL/
 │   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
 │   └── 📂 G_EPAL/
