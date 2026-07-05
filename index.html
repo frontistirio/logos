@@ -372,7 +372,7 @@
         /* ΣΤΗΛΕΣ FOOTER - Απαλό γαλάζιο περίγραμμα */
         .footer_column { flex: 1 1 170px; max-width: 220px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); }
         .footer_column:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
-        .footer_column h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+        .footer_column h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--accent-blue); }
         .footer_column p { font-size: 0.9rem; margin: 8px 0; }
         .footer_column a { color: var(--secondary-dark); }
         .footer_column a:hover { color: var(--primary); }
@@ -811,25 +811,25 @@
                         <div class="review-header">
                             <div class="review-info"><div class="review-name">Ονοματεπώνυμο</div><div class="review-date">Μήνας Έτος</div></div>
                         </div>
-                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του μαθητή/-τριας.</p>
+                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του/της μαθητή/-τριας.</p>
                     </div>
                     <div class="review-card">
                         <div class="review-header">
                             <div class="review-info"><div class="review-name">Ονοματεπώνυμο</div><div class="review-date">Μήνας Έτος</div></div>
                         </div>
-                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του μαθητή/-τριας.</p>
+                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του/της μαθητή/-τριας.</p>
                     </div>
                     <div class="review-card">
                         <div class="review-header">
                             <div class="review-info"><div class="review-name">Ονοματεπώνυμο</div><div class="review-date">Μήνας Έτος</div></div>
                         </div>
-                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του μαθητή/-τριας.</p>
+                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του/της μαθητή/-τριας.</p>
                     </div>
                     <div class="review-card">
                         <div class="review-header">
                             <div class="review-info"><div class="review-name">Ονοματεπώνυμο</div><div class="review-date">Μήνας Έτος</div></div>
                         </div>
-                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του μαθητή/-τριας.</p>
+                        <p class="review-text">Εδώ θα γραφτεί η αξιολόγηση του/της μαθητή/-τριας.</p>
                     </div>
                 </div>
                 <div class="reviews-more-wrap" id="reviewsMoreWrap" style="display:none;">
@@ -1374,6 +1374,7 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { closeFlipbook(); closeImageModal(); }
         });
+        
     </script>
 </body>
 </html>
