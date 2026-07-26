@@ -139,10 +139,12 @@
         .mobile-media-title { display: none; color: var(--primary-dark); text-align: center; font-size: 1.8rem; margin-bottom: 40px; position: relative; }
         .mobile-media-title::after { content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--accent-purple)); border-radius: 2px; }
 
-        .media-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-height: 580px; overflow-y: auto; padding-right: 8px; padding-bottom: 20px; }
-        .media-grid::-webkit-scrollbar { width: 6px; }
-        .media-grid::-webkit-scrollbar-track { background: var(--primary-soft); border-radius: 10px; }
-        .media-grid::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+        .media-grid-wrapper { position: relative; display: flex; gap: 6px; }
+        .media-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-height: var(--media-grid-max-height, 580px); overflow-y: scroll; padding-bottom: 20px; flex: 1; min-width: 0; scrollbar-width: none; -ms-overflow-style: none; }
+        .media-grid::-webkit-scrollbar { display: none; width: 0; height: 0; }
+        .custom-scrollbar-track { position: relative; width: 4px; flex: 0 0 4px; border-radius: 10px; background: var(--border); align-self: stretch; overflow: hidden; }
+        .custom-scrollbar-thumb { position: absolute; left: 0; top: 0; width: 100%; border-radius: 10px; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple, #8b5cf6) 50%, var(--accent-blue)); transition: box-shadow var(--transition), width var(--transition); }
+        .custom-scrollbar-track:hover .custom-scrollbar-thumb, .custom-scrollbar-thumb.is-scrolling { box-shadow: 0 0 8px var(--accent-blue-glow); }
         .media-item { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px var(--shadow); aspect-ratio: 1; border: 2px solid var(--border); transition: box-shadow var(--transition); cursor: pointer; position: relative; }
         .media-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.4s ease; }
 
@@ -687,8 +689,13 @@
 
                 <div id="media-section">
                     <h2 class="mobile-media-title">Φωτογραφικό Υλικό</h2>
-                    <div class="media-grid" id="dynamicMediaGrid">
-                        <p style="grid-column: span 2; text-align: center; color: var(--text-light); font-size: 0.9rem;">Φόρτωση εικόνων...</p>
+                    <div class="media-grid-wrapper">
+                        <div class="media-grid" id="dynamicMediaGrid">
+                            <p style="grid-column: span 2; text-align: center; color: var(--text-light); font-size: 0.9rem;">Φόρτωση εικόνων...</p>
+                        </div>
+                        <div class="custom-scrollbar-track" id="customScrollTrack">
+                            <div class="custom-scrollbar-thumb" id="customScrollThumb"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -744,6 +751,16 @@
                         <strong style="color:var(--accent-purple);">Όλα τα βιβλία παρέχονται δωρεάν!</strong></p>
                     </div>
                     <div class="post-it">
+                        <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-users"></i></span>
+                        <b>Ολιγομελή Τμήματα</b>
+                        <p>Μικρές ομάδες για μεγαλύτερη προσοχή!</p>
+                        <p style="margin-top:8px;font-size:0.9rem;">
+                            • 3-5 μαθητές ανά τμήμα<br>
+                            • Προσωποποιημένη διδασκαλία<br>
+                            • Ομαδική αλληλεπίδραση
+                        </p>
+                    </div>
+                    <div class="post-it">
                         <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-laptop-house"></i></span>
                         <b>Διαδικτυακά Μαθήματα</b>
                         <p>Πλέον μπορείτε να μαθαίνετε από οπουδήποτε!</p>
@@ -753,16 +770,6 @@
                             • Κατόπιν συνεννόησης
                         </p>
                         <p><a href="#contact" style="font-weight:600; color: var(--accent-purple);">Επικοινωνήστε μαζί μας</a></p>
-                    </div>
-                    <div class="post-it">
-                        <span class="icon" style="color: var(--accent-purple);"><i class="fas fa-users"></i></span>
-                        <b>Ολιγομελή Τμήματα</b>
-                        <p>Μικρές ομάδες για μεγαλύτερη προσοχή!</p>
-                        <p style="margin-top:8px;font-size:0.9rem;">
-                            • 3-5 μαθητές ανά τμήμα<br>
-                            • Προσωποποιημένη διδασκαλία<br>
-                            • Ομαδική αλληλεπίδραση
-                        </p>
                     </div>
                     <div class="post-it">
                         <span class="icon" style="color: var(--accent-blue);"><i class="fas fa-clock"></i></span>
@@ -843,7 +850,7 @@
         <section class="contact-intro full-width" id="contact">
             <div class="container">
                 <h2 class="section-title">Επικοινωνία</h2>
-                <p>Είμαστε πάντα στη διάθεσή σας για οποιαδήποτε πληροφορία ή απορία.<br>Επικοινωνήστε μαζί μας για να μάθετε περισσότερα σχετικά με τα προγράμματα σπουδών και τις υπηρεσίες μας.</p>
+                <p>Είμαστε πάντα στη διάθεσή σας για οποιαδήποτε πληροφορία ή απορία.<br>Επικοινωνήστε μαζί μας για να μάθετε περισσότερα σχετικά με τα μαθήματα, τις υπηρεσίες μας και τα προγράμματα σπουδών.</p>
             </div>
         </section>
 
@@ -853,13 +860,9 @@
         <div class="container">
             <div class="footer-columns">
                 <div class="footer_column">
-                    <h3><i class="fas fa-phone"></i> ΤΗΛΕΦΩΝΟ</h3>
+                    <h3><i class="fas fa-phone"></i> ΤΗΛΕΦΩΝΑ</h3>
                     <p><a href="tel:+302521058231">25210 58231</a></p>
                     <p><a href="tel:+306943213947">694 321 3947</a></p>
-                </div>
-                <div class="footer_column">
-                    <h3><i class="fas fa-envelope"></i> E-MAIL</h3>
-                    <p><a href="mailto:frontistiriologos@gmail.com">frontistiriologos@gmail.com</a></p>
                 </div>
                 <div class="footer_column">
                     <h3><i class="fas fa-map-marker-alt"></i> ΔΙΕΥΘΥΝΣΗ</h3>
@@ -870,7 +873,11 @@
                     <p>Δευτέρα έως Παρασκευή: 15:00 - 20:00<br>Σάββατο: 09:00 - 13:00</p>
                 </div>
                 <div class="footer_column">
-                    <h3><i class="fas fa-share-alt"></i> SOCIAL</h3>
+                    <h3><i class="fas fa-envelope"></i> E-MAIL</h3>
+                    <p><a href="mailto:frontistiriologos@gmail.com">frontistiriologos@gmail.com</a></p>
+                </div>
+                <div class="footer_column">
+                    <h3><i class="fas fa-share-alt"></i> SOCIAL MEDIA</h3>
                     <div class="social-icons">
                         <a href="https://www.instagram.com/logosfrontistirio/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="viber://chat?number=+306943213947" target="_blank" rel="noopener" aria-label="Viber"><i class="fab fa-viber"></i></a>
@@ -1122,9 +1129,23 @@
 
                 const mediaFiles = tree.filter(item => item.path.startsWith('Media/') && item.type === 'blob' && (item.path.endsWith('.png') || item.path.endsWith('.jpg') || item.path.endsWith('.jpeg')));
                 const mediaGrid = document.getElementById('dynamicMediaGrid');
+
+                const fixedFirstImages = [
+                    getRawUrl('Assets/firstimage.png'),
+                    getRawUrl('Assets/logoslogo.png')
+                ];
+
+                mediaGrid.innerHTML = '';
+                let gallerySources = [...fixedFirstImages];
+
+                fixedFirstImages.forEach(rawUrl => {
+                    const div = document.createElement('div');
+                    div.className = 'media-item';
+                    div.innerHTML = `<img src="${rawUrl}" loading="lazy" onerror="this.style.backgroundColor='#ddd'"><i class="fas fa-search-plus media-play-btn"></i>`;
+                    mediaGrid.appendChild(div);
+                });
+
                 if(mediaFiles.length > 0) {
-                    mediaGrid.innerHTML = ''; 
-                    let gallerySources = [];
                     mediaFiles.forEach(file => {
                         const rawUrl = getRawUrl(file.path);
                         gallerySources.push(rawUrl);
@@ -1133,10 +1154,10 @@
                         div.innerHTML = `<img src="${rawUrl}" loading="lazy" onerror="this.style.backgroundColor='#ddd'"><i class="fas fa-search-plus media-play-btn"></i>`;
                         mediaGrid.appendChild(div);
                     });
-                    initCarousel(gallerySources);
-                } else {
-                    mediaGrid.innerHTML = '<p style="grid-column: span 2; text-align: center; color: var(--text-light); font-size: 0.9rem;">Δεν βρέθηκαν φωτογραφίες στο αποθετήριο.</p>';
                 }
+                initCarousel(gallerySources);
+                setupCustomScrollbar();
+                balanceColumnHeights();
             }
             loadDynamicContent();
 
@@ -1145,7 +1166,8 @@
                 const carouselSlide = document.querySelector('.carousel-slide');
                 const counterDisplay = document.querySelector('.carousel-counter');
                 const firstImageSrc = gallerySources[0] || 'https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png'; 
-                let remainingSources = gallerySources.slice(1);
+                const secondImageSrc = gallerySources[1] || 'https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png';
+                let remainingSources = gallerySources.slice(2);
 
                 function shuffleArray(array) {
                     let shuffled = array.slice();
@@ -1156,7 +1178,7 @@
                     return shuffled;
                 }
 
-                let currentCarouselSources = [firstImageSrc, ...shuffleArray(remainingSources)];
+                let currentCarouselSources = [firstImageSrc, secondImageSrc, ...shuffleArray(remainingSources)];
                 const max = currentCarouselSources.length;
                 carouselSlide.innerHTML = '';
 
@@ -1178,7 +1200,7 @@
                 }
 
                 function reshuffleCarousel() {
-                    currentCarouselSources = [firstImageSrc, ...shuffleArray(remainingSources)];
+                    currentCarouselSources = [firstImageSrc, secondImageSrc, ...shuffleArray(remainingSources)];
                     carouselDOMImages.forEach((img, index) => { img.src = currentCarouselSources[index]; });
                 }
 
@@ -1206,6 +1228,116 @@
                     if (touchendX < touchstartX - 40) document.querySelector('.next').click();
                     if (touchendX > touchstartX + 40) document.querySelector('.prev').click();
                 }
+            }
+
+            function setupCustomScrollbar() {
+                const grid = document.getElementById('dynamicMediaGrid');
+                const track = document.getElementById('customScrollTrack');
+                const thumb = document.getElementById('customScrollThumb');
+                if (!grid || !track || !thumb) return;
+
+                let hideTimeout;
+
+                function updateThumb() {
+                    const scrollable = grid.scrollHeight - grid.clientHeight;
+                    if (scrollable <= 1) {
+                        track.style.visibility = 'hidden';
+                        return;
+                    }
+                    track.style.visibility = 'visible';
+                    const trackHeight = track.clientHeight;
+                    const thumbHeight = Math.max((grid.clientHeight / grid.scrollHeight) * trackHeight, 24);
+                    const maxThumbTop = trackHeight - thumbHeight;
+                    const thumbTop = (grid.scrollTop / scrollable) * maxThumbTop;
+                    thumb.style.height = `${thumbHeight}px`;
+                    thumb.style.transform = `translateY(${thumbTop}px)`;
+                }
+
+                function flashThumb() {
+                    thumb.classList.add('is-scrolling');
+                    clearTimeout(hideTimeout);
+                    hideTimeout = setTimeout(() => thumb.classList.remove('is-scrolling'), 600);
+                }
+
+                grid.addEventListener('scroll', () => { updateThumb(); flashThumb(); }, { passive: true });
+                window.addEventListener('resize', updateThumb);
+
+                let isDragging = false; let dragStartY = 0; let dragStartScrollTop = 0;
+                thumb.addEventListener('mousedown', (e) => {
+                    isDragging = true; dragStartY = e.clientY; dragStartScrollTop = grid.scrollTop;
+                    document.body.style.userSelect = 'none';
+                });
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    const scrollable = grid.scrollHeight - grid.clientHeight;
+                    const trackHeight = track.clientHeight;
+                    const thumbHeight = thumb.clientHeight;
+                    const deltaY = e.clientY - dragStartY;
+                    const scrollDelta = (deltaY / (trackHeight - thumbHeight)) * scrollable;
+                    grid.scrollTop = dragStartScrollTop + scrollDelta;
+                });
+                window.addEventListener('mouseup', () => { isDragging = false; document.body.style.userSelect = ''; });
+
+                track.addEventListener('click', (e) => {
+                    if (e.target === thumb) return;
+                    const rect = track.getBoundingClientRect();
+                    const clickY = e.clientY - rect.top;
+                    const thumbHeight = thumb.clientHeight;
+                    const scrollable = grid.scrollHeight - grid.clientHeight;
+                    const targetTop = clickY - thumbHeight / 2;
+                    const ratio = targetTop / (track.clientHeight - thumbHeight);
+                    grid.scrollTop = Math.max(0, Math.min(1, ratio)) * scrollable;
+                });
+
+                const resizeObserver = new ResizeObserver(updateThumb);
+                resizeObserver.observe(grid);
+
+                updateThumb();
+            }
+
+            function balanceColumnHeights() {
+                const columnLeft = document.querySelector('.column-left');
+                const columnRight = document.querySelector('.column-right');
+                const mediaGrid = document.getElementById('dynamicMediaGrid');
+                const mediaSection = document.getElementById('media-section');
+                if (!columnLeft || !columnRight || !mediaGrid || !mediaSection) return;
+
+                function isStackedLayout() {
+                    return getComputedStyle(columnLeft).display === 'contents';
+                }
+
+                function recalc() {
+                    if (isStackedLayout()) {
+                        mediaGrid.style.setProperty('--media-grid-max-height', '580px');
+                        return;
+                    }
+                    const carousel = columnRight.querySelector('.carousel-container');
+                    const statsGrid = columnRight.querySelector('.stats-grid');
+                    const mediaTitle = mediaSection.querySelector('.mobile-media-title');
+
+                    const leftHeight = columnLeft.getBoundingClientRect().height;
+                    const rightGapCount = 2; 
+                    const rightGap = parseFloat(getComputedStyle(columnRight).gap) || 30;
+
+                    let usedHeight = 0;
+                    if (carousel) usedHeight += carousel.getBoundingClientRect().height;
+                    if (mediaTitle) usedHeight += mediaTitle.getBoundingClientRect().height;
+                    if (statsGrid) usedHeight += statsGrid.getBoundingClientRect().height;
+                    usedHeight += rightGap * rightGapCount;
+
+                    const available = leftHeight - usedHeight;
+                    const minHeight = 300;
+                    const finalHeight = Math.max(available, minHeight);
+                    mediaGrid.style.setProperty('--media-grid-max-height', `${finalHeight}px`);
+                }
+
+                recalc();
+                setTimeout(recalc, 150);
+
+                window.addEventListener('resize', () => { recalc(); });
+
+                const resizeObserver = new ResizeObserver(() => recalc());
+                resizeObserver.observe(columnLeft);
             }
 
             document.body.addEventListener('click', (e) => {
