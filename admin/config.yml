@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: frontistirio/logos
+  branch: main
+
+media_folder: "Media"
+public_folder: "Media"
+
+collections:
+  - name: "settings"
+    label: "Ρυθμίσεις"
+    files:
+      - file: "settings.json"
+        label: "Ενότητες & Εμφάνιση"
+        name: "visibility"
+        fields:
+          - { label: "Εμφάνιση: Εκπαιδευτικό Υλικό", name: "show_yliko", widget: "boolean", default: true }
+          - { label: "Εμφάνιση: Για εμάς", name: "show_about", widget: "boolean", default: true }
+          - { label: "Εμφάνιση: Καθηγητές", name: "show_teacher", widget: "boolean", default: true }
+          - { label: "Εμφάνιση: Πρόγραμμα Σπουδών", name: "show_program", widget: "boolean", default: true }
+          - { label: "Εμφάνιση: Υπηρεσίες", name: "show_services", widget: "boolean", default: true }
+          - { label: "Εμφάνιση: Βιβλία", name: "show_books", widget: "boolean", default: true }
+          - { label: "Εμφάνιση: Αξιολογήσεις", name: "show_reviews", widget: "boolean", default: true }

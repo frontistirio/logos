@@ -1567,6 +1567,45 @@
                 if (e.key === 'ArrowRight') lightboxNavigate(1);
             }
         });
+
+        // --- Φόρτωση ρυθμίσεων CMS για απόκρυψη ενοτήτων ---
+            async function loadSiteSettings() {
+                try {
+                    // Βάζουμε το Date.now() για να παρακάμψουμε την cache και να βλέπεις άμεσα την αλλαγή
+                    const response = await fetch('settings.json?v=' + Date.now());
+                    if (!response.ok) return;
+                    const settings = await response.json();
+                    
+                    const sections = [
+                        { id: 'yliko', key: 'show_yliko' },
+                        { id: 'about', key: 'show_about' },
+                        { id: 'teacher', key: 'show_teacher' },
+                        { id: 'program', key: 'show_program' },
+                        { id: 'services', key: 'show_services' },
+                        { id: 'books', key: 'show_books' },
+                        { id: 'reviews', key: 'show_reviews' }
+                    ];
+
+                    sections.forEach(sec => {
+                        // Αν στο πάνελ το έχεις κλείσει (false)
+                        if (settings[sec.key] === false) {
+                            // Κρύβουμε την ενότητα
+                            const sectionEl = document.getElementById(sec.id);
+                            if (sectionEl) sectionEl.style.display = 'none';
+                            
+                            // Κρύβουμε και το αντίστοιχο link από το μπλε μενού της κορυφής
+                            const navLink = document.querySelector(`.nav a[href="#${sec.id}"]`);
+                            if (navLink && navLink.parentElement) navLink.parentElement.style.display = 'none';
+                        }
+                    });
+                } catch (error) {
+                    console.log('Συνεχίζουμε με την προεπιλεγμένη εμφάνιση (δεν βρέθηκε αρχείο ρυθμίσεων).');
+                }
+            }
+            
+            // Εκτέλεση της συνάρτησης αμέσως μόλις φορτώσει η σελίδα
+            loadSiteSettings();
+            // ---------------------------------------------------
         
     </script>
 </body>
