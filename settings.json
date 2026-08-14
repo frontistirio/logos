@@ -2,7 +2,7 @@
   "show_yliko": false,
   "show_about": true,
   "show_teacher": true,
-  "show_program": false,
+  "show_program": true,
   "show_services": true,
   "show_books": false,
   "show_reviews": false
