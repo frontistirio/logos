@@ -18,6 +18,7 @@
 📂 **Books:** Βιβλία και εξώφυλλα<br>
 📂 **admin:** Sveltia CMS<br>
 📄 **index.html:** Το κεντρικό και μοναδικό αρχείο της ιστοσελίδας<br>
+📄 **legal.html:** Υποσελίδα: Νομικές Πληροφορίες<br>
 📄 **settings.json:** Sveltia CMS
 
 ## Δομή Φακέλου Yliko και Υποφακέλων
