@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="el">
+<head>
+    <meta charset="utf-8">
+    <title>Όροι Χρήσης & Πολιτική Απορρήτου - Φροντιστήριο Λόγος</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#B02763">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" type="image/png">
+
+    <style>
+        :root {
+            --primary: #B02763;
+            --primary-light: #D481A8;
+            --primary-dark: #7A1A42;
+            --primary-soft: #F5E6EE;
+            --primary-bg: #f0eef5;
+            
+            --accent-blue: #3b82f6;   
+            --accent-blue-glow: rgba(59, 130, 246, 0.4);
+            --accent-purple: #8b5cf6;
+            --accent-gold: #f59e0b;
+            --accent-light: #FFE88A;
+
+            --bg: #f0eef5;
+            --bg-section: #f0eef5;
+            --bg-card: #ffffff;
+            --secondary-dark: #6B4A60;
+            --text: #2A2A2A;
+            --text-light: #5A5A5A;
+            --text-inverse: #ffffff;
+            --border: rgba(176, 39, 99, 0.15);
+            --shadow: rgba(176, 39, 99, 0.12);
+            --shadow-hover: rgba(176, 39, 99, 0.25);
+            --radius: 16px;
+            --radius-circle: 50px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Source Sans Pro', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1c1519; 
+            --bg-section: #1c1519; 
+            --bg-card: #2a1f26; 
+            --text: #f0f0f0;
+            --text-light: #b0b0b0;
+            --primary-dark: #e88eb7; 
+            --primary: #d65893;      
+            --secondary-dark: #d2b4c8;
+            --border: rgba(176, 39, 99, 0.2);
+            --shadow: rgba(0, 0, 0, 0.4);
+            --shadow-hover: rgba(176, 39, 99, 0.35);
+            --primary-soft: #2d1a25;
+            --accent-blue: #60a5fa;
+            --accent-purple: #a78bfa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; transition: background var(--transition), color var(--transition); }
+        a { color: var(--secondary-dark); text-decoration: none; transition: color var(--transition); }
+        a:hover { color: var(--primary); }
+        img { max-width: 100%; height: auto; display: block; }
+        .full-width { width: 100%; }
+        .container { max-width: 1272px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER & NAV --- */
+        header { background: linear-gradient(135deg, #cc3675, #b02763); padding: 10px 0; text-align: center; color: var(--text-inverse); border-bottom:1px solid rgba(255,255,255,.12); }
+        .header-content { display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .header-content .logo { height: 110px; filter: drop-shadow(0 8px 20px rgba(0,0,0,.25)); cursor: pointer; transition: transform var(--transition); }
+        .header-content .logo:hover { transform: scale(1.03); }
+        .header-text h1 { font-weight: 700; font-size: 2.4rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); margin: 0; letter-spacing:1px; }
+        .header-text .subtitle { font-weight: 300; font-size: 1.4rem; color: rgba(255,255,255,0.9); margin-top: 4px; }
+        .header-text .tagline { font-weight: 400; font-size: 1.1rem; color: var(--accent-light); margin-top: 2px; letter-spacing: 1px; }
+
+        .nav { background: linear-gradient(135deg, #3b82f6, #1d4ed8); position: sticky; top: 0; z-index: 1000; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
+        .nav-content { display: flex; justify-content: center; align-items: center; padding: 6px 20px; } 
+        .nav-content ul { list-style: none; display: flex; gap: 4px; }
+        .nav-content ul li a { display: block; color: var(--text-inverse); font-weight: 600; font-size: 1rem; padding: 12px 18px; border-radius: 8px; transition: all var(--transition); }
+        .nav-content ul li a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+        /* --- STYLES ΓΙΑ ΤΟ ΝΟΜΙΚΟ ΚΕΙΜΕΝΟ --- */
+        .section-title { color: var(--primary-dark); font-size: 2.2rem; text-align: center; margin-bottom: 40px; position: relative; }
+        .section-title::after { content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--accent-purple)); border-radius: 2px; }
+
+        .legal-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+            border-top: 5px solid var(--primary);
+            margin: 50px auto;
+            max-width: 900px;
+        }
+
+        .legal-card h2 { color: var(--primary-dark); font-size: 1.5rem; margin-top: 35px; margin-bottom: 15px; border-bottom: 2px solid var(--primary-soft); padding-bottom: 10px; }
+        .legal-card h2:first-child { margin-top: 0; }
+        .legal-card p { color: var(--text); font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        .legal-card ul { margin-left: 20px; margin-bottom: 15px; color: var(--text); line-height: 1.8; font-size: 1.05rem; }
+        .legal-card li { margin-bottom: 8px; }
+
+        /* --- FLOATING BUTTONS (Theme & Back to Top) --- */
+        .theme-toggle, .back-to-top { position: fixed; z-index: 999; width: 48px; height: 48px; border-radius: var(--radius-circle); background: linear-gradient(135deg, #cc3675, #b02763); color: white; border: 2.5px solid var(--accent-blue); box-shadow: 0 4px 20px var(--shadow-hover); cursor: pointer; transition: all var(--transition); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+        .theme-toggle { bottom: 30px; left: 30px; }
+        .back-to-top { bottom: 30px; right: 30px; opacity: 0; visibility: hidden; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .theme-toggle:hover, .back-to-top:hover { transform: translateY(-3px) scale(1.05); }
+
+        /* --- FOOTER & COLUMNS --- */
+        .footer_banner { background: var(--bg-section); padding: 50px 0 30px; margin-top: 50px;}
+        .footer-columns { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        
+        /* Εφέ Hover στο Footer (όπως στην αρχική) */
+        .footer_column { flex: 1 1 170px; max-width: 220px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow); border: 1px solid var(--border); transition: all var(--transition); }
+        .footer_column:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); border-color: var(--accent-blue-glow); }
+        
+        .footer_column h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--accent-blue); }
+        .footer_column p { font-size: 0.9rem; margin: 8px 0; }
+        
+        /* Social Media Icons */
+        .social-icons { display: flex; gap: 16px; align-items: center; margin-top: 12px; }
+        .social-icons a { font-size: 1.6rem; color: var(--primary); transition: all var(--transition); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+        
+        .copyright { background: linear-gradient(135deg, #cc3675, #b02763); color: white; text-align: center; padding: 20px 0; font-size: 0.9rem; line-height: 1.6;}
+        /* Copyright responsive separator */
+        .copyright-br { display: none; }
+        @media (max-width: 768px) {
+            .copyright-separator { display: none; }
+            .copyright-br { display: inline; }
+        }
+
+        @media screen and (max-width: 768px) {
+            .legal-card { padding: 25px; margin: 30px 15px; }
+            .theme-toggle { width: 42px; height: 42px; font-size: 1.2rem; bottom: 20px; left: 20px; }
+            /* Κρύβουμε το βελάκι "Επιστροφή στην κορυφή" στα κινητά */
+            .back-to-top { display: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="full-width">
+        <div class="container header-content">
+            <a href="index.html">
+                <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" alt="Λογότυπο Φροντιστηρίου Λόγος" class="logo">
+            </a>
+            <div class="header-text">
+                <h1>Φροντιστήριο Λόγος</h1>
+                <p class="subtitle">Φιλολογικό Φροντιστήριο</p>
+                <p class="tagline">Λόγος μας η επιτυχία σου!</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav full-width">
+        <div class="container nav-content">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-arrow-left"></i> Επιστροφή στην Αρχική</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Εναλλαγή θέματος"><i class="fas fa-moon"></i></button>
+    <button class="back-to-top" id="backToTop" aria-label="Πήγαινε πάνω"><i class="fas fa-chevron-up"></i></button>
+
+    <main id="main-content">
+        <div class="container">
+            <h1 class="section-title" style="margin-top: 50px;">Νομικές Πληροφορίες</h1>
+            
+            <div class="legal-card">
+
+                <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 30px;">Τελευταία ενημέρωση: Αύγουστος 2026</p>
+
+                <h2>1. Υπεύθυνος Επιχείρησης</h2>
+                <p>Υπεύθυνος του Φιλολογικού Φροντιστηρίου Λόγος είναι:</p>
+                <ul>
+                    <li><strong>Ονοματεπώνυμο:</strong> Γεώργιος Μελισσίδης</li>
+                    <li><strong>Επωνυμία:</strong> Φιλολογικό Φροντιστήριο Λόγος</li>
+                    <li><strong>Διεύθυνση:</strong> Εθ. Επαναστάσεως 1821 15, Δράμα 66133</li>
+                    <li><strong>Τηλέφωνο:</strong> 25210 58231 / 694 321 3947</li>
+                    <li><strong>Email:</strong> <a href="mailto:frontistiriologos@gmail.com">frontistiriologos@gmail.com</a></li>
+                </ul>
+
+                <h2>2. Όροι Χρήσης Εκπαιδευτικού Υλικού</h2>
+                <p>Το εκπαιδευτικό υλικό που διατίθεται στην ιστοσελίδα μας (σημειώσεις, βιβλία, δείγματα βιβλίων, προγράμματα σπουδών, αρχεία PDF και Word) αποτελεί πνευματική ιδιοκτησία του Φροντιστηρίου Λόγος και προστατεύεται από την ισχύουσα νομοθεσία (Ν. 2121/1993). Το διαθέτουμε ελεύθερα, επειδή πιστεύουμε στη διάχυση της γνώσης — με μία μόνο ουσιαστική προϋπόθεση.</p>
+                <p>Η χρήση του υλικού είναι ελεύθερη για οποιονδήποτε εκπαιδευτικό, μαθησιακό ή δημιουργικό σκοπό. Δεν θέτουμε περιορισμούς στον τρόπο που κάποιος αξιοποιεί τη γνώση που αποκομίζει από το περιεχόμενό μας.</p>
+                <p>Το μόνο που δεν επιτρέπεται είναι η <strong>αυτούσια, μαζική αναπαραγωγή του υλικού μας ως έχει, με εμπορικό σκοπό</strong> — δηλαδή η ολική ή σχεδόν ολική αντιγραφή του περιεχομένου μας για εμπορική διανομή ή πώληση, χωρίς καμία προσθήκη ή επεξεργασία. Οτιδήποτε πέρα από αυτό εμπίπτει στο πνεύμα της ελεύθερης εκπαίδευσης που υπηρετούμε.</p>
+
+                <h2>3. Πολιτική Απορρήτου</h2>
+                <p>Η ιστοσελίδα του Φροντιστηρίου Λόγος έχει αποκλειστικά ενημερωτικό χαρακτήρα. <strong>Δεν διαθέτουμε φόρμες επικοινωνίας, δεν απαιτούμε δημιουργία λογαριασμού και δεν ζητάμε την καταχώρηση προσωπικών στοιχείων</strong> (όπως ονοματεπώνυμο ή email) για την περιήγησή σας ή για τη λήψη του εκπαιδευτικού υλικού.</p>
+                <p>Η οποιαδήποτε επικοινωνία μαζί μας γίνεται εθελοντικά, με δική σας πρωτοβουλία, μέσω των στοιχείων (τηλέφωνο, email, social media) που παραθέτουμε. Τα στοιχεία αυτά χρησιμοποιούνται αποκλειστικά για την ανταπόκριση στο αίτημά σας και δεν διαβιβάζονται σε τρίτους.</p>
+
+                <h2>4. Υπηρεσίες Τρίτων</h2>
+                <p>Η ιστοσελίδα μας κάνει χρήση των παρακάτω υπηρεσιών τρίτων, οι οποίες ενδέχεται να επεξεργάζονται τεχνικά δεδομένα (όπως η διεύθυνση IP σας) σύμφωνα με τις δικές τους πολιτικές απορρήτου:</p>
+                <ul>
+                    <li><strong>GitHub Pages:</strong> Φιλοξενία της ιστοσελίδας. Ενδέχεται να καταγράφει τεχνικά δεδομένα για λόγους ασφάλειας. (<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Πολιτική Απορρήτου GitHub</a>)</li>
+                    <li><strong>Google Fonts:</strong> Φόρτωση γραμματοσειρών. Κατά τη φόρτωση της σελίδας, ο περιηγητής σας συνδέεται με τους servers της Google. (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Πολιτική Απορρήτου Google</a>)</li>
+                    <li><strong>Google Maps:</strong> Ενσωματωμένος χάρτης τοποθεσίας. Η χρήση του υπόκειται στην Πολιτική Απορρήτου της Google.</li>
+                    <li><strong>Cloudflare CDN (Font Awesome):</strong> Φόρτωση εικονιδίων. Τεχνικά δεδομένα ενδέχεται να καταγράφονται από την Cloudflare.</li>
+                </ul>
+
+                <h2>5. Πολιτική Cookies & Τοπική Αποθήκευση</h2>
+                <p>Στην ιστοσελίδα μας <strong>δεν χρησιμοποιούμε cookies παρακολούθησης (tracking) ή διαφημιστικά cookies</strong>. Χρησιμοποιούμε αποκλειστικά τον Τοπικό Χώρο Αποθήκευσης (Local Storage) του περιηγητή σας, ο οποίος είναι απαραίτητος για τη βασική λειτουργικότητα της σελίδας. Συγκεκριμένα τον χρησιμοποιούμε για:</p>
+                <ul>
+                    <li>Την αποθήκευση της προτίμησής σας σχετικά με την εμφάνιση της σελίδας (Φωτεινό ή Σκοτεινό Θέμα).</li>
+                    <li>Την προσωρινή αποθήκευση (caching) της δομής των εκπαιδευτικών αρχείων, ώστε η σελίδα να φορτώνει γρηγορότερα στις επόμενες επισκέψεις σας.</li>
+                </ul>
+                <p>Ο ενσωματωμένος χάρτης Google Maps ενδέχεται να τοποθετεί δικά του cookies για την παροχή της υπηρεσίας πλοήγησης, σύμφωνα με τους όρους της Google.</p>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer_banner full-width">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer_column">
+                    <h3><i class="fas fa-phone"></i> ΤΗΛΕΦΩΝΑ</h3>
+                    <p><a href="tel:+302521058231">25210 58231</a></p>
+                    <p><a href="tel:+306943213947">694 321 3947</a></p>
+                </div>
+                <div class="footer_column">
+                    <h3><i class="fas fa-map-marker-alt"></i> ΔΙΕΥΘΥΝΣΗ</h3>
+                    <p><a href="https://maps.app.goo.gl/qb8HczLjuUwfrfYB6" target="_blank" rel="noopener">Εθ. Επαναστάσεως 1821 15<br>Δράμα, 66133</a></p>
+                </div>
+                <div class="footer_column">
+                    <h3><i class="fas fa-clock"></i> ΩΡΑΡΙΟ</h3>
+                    <p>Δευτέρα έως Παρασκευή: 15:00 - 20:00<br>Σάββατο: 09:00 - 13:00</p>
+                </div>
+                <div class="footer_column">
+                    <h3><i class="fas fa-envelope"></i> E-MAIL</h3>
+                    <p><a href="mailto:frontistiriologos@gmail.com">frontistiriologos@gmail.com</a></p>
+                </div>
+                <div class="footer_column">
+                    <h3><i class="fas fa-share-alt"></i> SOCIAL MEDIA</h3>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/logosfrontistirio/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="viber://chat?number=+306943213947" target="_blank" rel="noopener" aria-label="Viber"><i class="fab fa-viber"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <section class="copyright full-width">
+        <div class="container">
+            <p>© <span id="currentYear"></span> - Φιλολογικό Φροντιστήριο ΛΟΓΟΣ<br>Όλα τα δικαιώματα διατηρούνται<span class="copyright-separator"> - </span><br class="copyright-br"><a href="legal.html" style="color: white; text-decoration: underline;">Όροι Χρήσης & Πολιτική Απορρήτου</a>
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Λειτουργία Σκοτεινού Θέματος (Dark Mode)
+        (function() {
+            const themeToggle = document.getElementById('themeToggle');
+            function setTheme(theme) {
+                if (theme === 'dark') { 
+                    document.documentElement.setAttribute('data-theme', 'dark'); 
+                    themeToggle.querySelector('i').className = 'fas fa-sun'; 
+                    localStorage.setItem('theme', 'dark'); 
+                } else { 
+                    document.documentElement.removeAttribute('data-theme'); 
+                    themeToggle.querySelector('i').className = 'fas fa-moon'; 
+                    localStorage.setItem('theme', 'light'); 
+                }
+            }
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                setTheme('dark');
+            }
+            themeToggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+            // Ενημέρωση της τρέχουσας χρονολογίας στο copyright
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Λειτουργία για το κουμπί Επιστροφής στην Κορυφή (Scroll Top)
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 300));
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        })();
+    </script>
+</body>
+</html>

@@ -81,6 +81,13 @@
         [data-theme="dark"] .services-section .post-it { background: rgba(42, 31, 38, 0.95); backdrop-filter: blur(8px); }
         [data-theme="dark"] .services-section .post-it p { color: var(--text); }
 
+        /* Copyright responsive separator */
+        .copyright-br { display: none; }
+        @media (max-width: 768px) {
+            .copyright-separator { display: none; }
+            .copyright-br { display: inline; }
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
         body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; transition: background var(--transition), color var(--transition); overflow-x: hidden; }
@@ -914,7 +921,10 @@
         </div>
     </footer>
     <section class="copyright full-width">
-        <div class="container"><p>© <span id="currentYear"></span> - Φιλολογικό Φροντιστήριο ΛΟΓΟΣ<br>Όλα τα δικαιώματα διατηρούνται</p></div>
+        <div class="container">
+            <p>© <span id="currentYear"></span> - Φιλολογικό Φροντιστήριο Λόγος<br>Όλα τα δικαιώματα διατηρούνται<!--<span class="copyright-separator"> - </span><br class="copyright-br"><a href="legal.html" style="color: white; text-decoration: underline;">Όροι Χρήσης & Πολιτική Απορρήτου</a>-->
+            </p>
+        </div>
     </section>
 
     <div class="modal-overlay" id="pdfModal">
