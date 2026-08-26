@@ -1,6 +1,6 @@
 # Φιλολογικό Φροντιστήριο Λόγος - Ιστοσελίδα
 <p align="center">
-  <img src="Assets/logoslogo.png" alt="Frontistirio Logos" width="200" height="200">
+  <img src="Assets/logoslogo.webp" alt="Frontistirio Logos" width="200" height="200">
 </p>
 
 <p align="center">
