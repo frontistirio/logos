@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="el">
+<head>
+    <meta charset="utf-8">
+    <title>Εκπαιδευτικό Υλικό - Φροντιστήριο Λόγος</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Εύκολη πλοήγηση στο εκπαιδευτικό υλικό του Φροντιστηρίου ΛΟΓΟΣ στη Δράμα.">
+    <meta name="theme-color" content="#B02763">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" type="image/png">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/dflip.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/themify-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/js/dflip.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #B02763;
+            --primary-light: #D481A8;
+            --primary-dark: #7A1A42;
+            --primary-glow: rgba(176, 39, 99, 0.25);
+            --primary-soft: #F5E6EE;
+            --primary-bg: #f0eef5;
+
+            --accent-blue: #3b82f6;
+            --accent-blue-glow: rgba(59, 130, 246, 0.4);
+            --accent-purple: #8b5cf6;
+            --accent-gold: #f59e0b;
+
+            --bg: #f0eef5;
+            --bg-section: #f0eef5;
+            --bg-card: #ffffff;
+            --secondary: #9B6B8E;
+            --secondary-light: #C9A8C0;
+            --secondary-dark: #6B4A60;
+            --text: #2A2A2A;
+            --text-light: #5A5A5A;
+            --text-inverse: #ffffff;
+            --border: rgba(176, 39, 99, 0.15);
+            --shadow: rgba(176, 39, 99, 0.12);
+            --shadow-hover: rgba(176, 39, 99, 0.25);
+            --radius: 16px;
+            --radius-circle: 50px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Source Sans Pro', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1c1519;
+            --bg-section: #1c1519;
+            --primary-bg: #1c1519;
+            --bg-card: #2a1f26;
+            --text: #f0f0f0;
+            --text-light: #b0b0b0;
+            --primary-dark: #e88eb7;
+            --primary: #d65893;
+            --secondary-dark: #d2b4c8;
+            --border: rgba(176, 39, 99, 0.2);
+            --shadow: rgba(0, 0, 0, 0.4);
+            --shadow-hover: rgba(176, 39, 99, 0.35);
+            --primary-soft: #2d1a25;
+            --accent-blue: #60a5fa;
+            --accent-blue-glow: rgba(96, 165, 250, 0.4);
+            --accent-purple: #a78bfa;
+            --accent-gold: #fbbf24;
+        }
+
+        [data-theme="dark"] .pdf-link { background: var(--bg-card); color: var(--text); border-color: var(--border); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; transition: background var(--transition), color var(--transition); overflow-x: hidden; }
+        a { color: var(--secondary-dark); text-decoration: none; transition: color var(--transition); }
+        a:hover { color: var(--primary); }
+        img { max-width: 100%; height: auto; display: block; }
+        .full-width { width: 100%; }
+
+        /* ---- Header (μικρή/ελαφριά εκδοχή) ---- */
+        header { background: linear-gradient(135deg, #cc3675, #b02763); padding: 10px 0; text-align: center; color: var(--text-inverse); border-bottom: 1px solid rgba(255,255,255,.12); position: relative; z-index: 1002; }
+        .header-content { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+        .header-content .logo { height: 62px; filter: drop-shadow(0 8px 20px rgba(0,0,0,.25)); cursor: pointer; transition: transform var(--transition); }
+        .header-content .logo:hover { transform: scale(1.03); }
+        .header-text h1 { font-weight: 700; font-size: 1.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); margin: 0; letter-spacing: 0.5px; }
+        .header-text .subtitle { font-weight: 300; font-size: 0.95rem; color: rgba(255,255,255,0.9); margin-top: 2px; }
+        .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.92); font-weight: 600; font-size: 0.9rem; padding: 6px 14px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 20px; transition: var(--transition); }
+        .back-link:hover { background: rgba(255,255,255,0.15); color: white; }
+
+        .page-title-bar { background: linear-gradient(135deg, #3b82f6, #1d4ed8); padding: 18px 20px; text-align: center; color: white; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .page-title-bar h2 { font-size: 1.5rem; font-weight: 700; }
+        .page-title-bar p { font-size: 0.95rem; color: rgba(255,255,255,0.9); margin-top: 4px; }
+
+        .theme-toggle, .back-to-top { position: fixed; z-index: 999; width: 48px; height: 48px; border-radius: var(--radius-circle); background: linear-gradient(135deg, #cc3675, #b02763); color: white; border: 2.5px solid var(--accent-blue); box-shadow: 0 4px 20px var(--shadow-hover); cursor: pointer; transition: all var(--transition); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+        .theme-toggle { bottom: 30px; left: 30px; }
+        .back-to-top { bottom: 30px; right: 30px; opacity: 0; visibility: hidden; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .theme-toggle:hover, .back-to-top:hover { transform: translateY(-3px) scale(1.05); }
+
+        /* ---- Layout: Sidebar + Content ---- */
+        .yliko-layout { display: flex; align-items: flex-start; max-width: 1400px; margin: 0 auto; padding: 30px 20px 80px; gap: 24px; position: relative; }
+
+        .sidebar { flex: 0 0 320px; position: sticky; top: 20px; background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius); padding: 18px; max-height: calc(100vh - 40px); overflow-y: auto; transition: var(--transition); overflow-x: hidden; }
+        .sidebar.collapsed { flex: 0 0 0; width: 0; padding-left: 0; padding-right: 0; border-width: 0; opacity: 0; pointer-events: none; }
+        .sidebar h3 { color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+
+        .sidebar-toggle { position: sticky; top: 20px; flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; box-shadow: 0 4px 14px var(--shadow-hover); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: var(--transition); flex-shrink: 0; }
+        .sidebar-toggle:hover { transform: scale(1.08); }
+        .sidebar-toggle i { transition: transform var(--transition); }
+        .sidebar-toggle.is-collapsed i { transform: rotate(180deg); }
+
+        @media (max-width: 900px) {
+            .sidebar.collapsed { display: none; }
+        }
+
+        .breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-light); margin-bottom: 18px; padding: 10px 14px; background: var(--primary-soft); border-radius: 10px; }
+        .breadcrumb .crumb { cursor: pointer; font-weight: 600; color: var(--secondary-dark); }
+        .breadcrumb .crumb:hover { color: var(--primary); }
+        .breadcrumb .crumb.current { color: var(--primary-dark); cursor: default; }
+        .breadcrumb .sep { color: var(--text-light); opacity: 0.6; }
+
+        .tree-level { display: flex; flex-direction: column; gap: 6px; }
+        .tree-btn { width: 100%; text-align: left; padding: 12px 14px; background: transparent; border: 1.5px solid transparent; border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 0.98rem; font-weight: 600; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .tree-btn:hover { background: var(--primary-soft); border-color: var(--border); }
+        .tree-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 14px var(--shadow-hover); }
+        .tree-btn .tree-icon { width: 22px; text-align: center; opacity: 0.85; }
+        .tree-btn .chev { font-size: 0.8rem; opacity: 0.6; transition: transform var(--transition); }
+        .tree-btn.active .chev { transform: translateX(3px); }
+
+        .tree-sub { margin-left: 14px; padding-left: 12px; border-left: 2px solid var(--border); display: flex; flex-direction: column; gap: 5px; margin-top: 4px; margin-bottom: 8px; }
+        .tree-sub .tree-btn { font-size: 0.92rem; padding: 9px 12px; font-weight: 600; color: var(--secondary-dark); }
+        .tree-sub .tree-btn.active { background: linear-gradient(135deg, var(--accent-blue), #1d4ed8); }
+
+        .tree-sub-2 { margin-left: 14px; padding-left: 12px; border-left: 2px solid rgba(139, 92, 246, 0.3); display: flex; flex-direction: column; gap: 4px; margin-top: 4px; margin-bottom: 6px; }
+        .tree-sub-2 .tree-btn { font-size: 0.88rem; padding: 8px 12px; font-weight: 600; color: var(--text-light); }
+        .tree-sub-2 .tree-btn.active { background: linear-gradient(135deg, var(--accent-purple), #6d28d9); color: white; }
+
+        .content-area { flex: 1 1 auto; min-width: 0; }
+
+        .welcome-card, .content-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius); padding: 34px; }
+        .welcome-card { text-align: center; }
+        .welcome-card i { font-size: 2.6rem; color: var(--primary); margin-bottom: 14px; }
+        .welcome-card h3 { color: var(--primary-dark); font-size: 1.4rem; margin-bottom: 10px; }
+        .welcome-card p { color: var(--text-light); max-width: 520px; margin: 0 auto; }
+
+        .quick-picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 26px; }
+        .quick-pick { background: var(--primary-soft); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; transition: var(--transition); font-weight: 700; color: var(--primary-dark); }
+        .quick-pick i { display: block; font-size: 1.4rem; margin-bottom: 8px; color: var(--accent-blue); }
+        .quick-pick:hover { transform: translateY(-3px); box-shadow: 0 8px 20px var(--shadow-hover); border-color: var(--accent-blue-glow); }
+
+        /* Αρχική: Ένα σχολείο ανά γραμμή, με τις τάξεις του δίπλα-δίπλα */
+        .all-schools { display: flex; flex-direction: column; gap: 18px; margin-top: 26px; text-align: left; }
+        .school-row { background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+        .school-row-header { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--primary-dark); font-size: 1.05rem; margin-bottom: 12px; }
+        .school-row-header i { color: var(--accent-blue); font-size: 1.2rem; }
+        .school-classes { display: flex; flex-wrap: wrap; gap: 10px; }
+        .class-chip { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 30px; padding: 10px 20px; font-weight: 600; color: var(--secondary-dark); cursor: pointer; transition: var(--transition); }
+        .class-chip:hover { background: linear-gradient(135deg, var(--accent-blue), #1d4ed8); color: white; border-color: transparent; transform: translateY(-2px); box-shadow: 0 6px 16px var(--shadow-hover); }
+        @media (max-width: 600px) { .school-classes { flex-direction: column; } .class-chip { text-align: center; } }
+
+        .content-card h3 { color: var(--primary-dark); font-size: 1.3rem; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+        .content-card .subject-meta { color: var(--text-light); font-size: 0.9rem; margin-bottom: 20px; }
+
+        .pdf-search-input { width: 100%; padding: 12px 16px; margin-bottom: 18px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 1rem; outline: none; transition: var(--transition); }
+        .pdf-search-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue-glow); }
+
+        .files-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+        .pdf-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px; color: var(--text); font-weight: 600; cursor: pointer; transition: var(--transition); box-shadow: 0 2px 5px var(--shadow); }
+        .pdf-link i { color: #E53935; font-size: 1.3rem; flex-shrink: 0; }
+        .pdf-link:hover { transform: translateY(-2px); border-color: var(--accent-blue-glow); color: var(--accent-blue); box-shadow: 0 5px 15px var(--shadow-hover), 0 0 0 1px var(--accent-blue-glow); }
+        .pdf-link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .no-files-msg, .loading-msg { font-size: 0.95rem; color: var(--text-light); font-style: italic; padding: 20px 5px; text-align: center; }
+
+        @media (max-width: 900px) {
+            .yliko-layout { flex-direction: column; }
+            .sidebar { position: static; flex: 1 1 100%; max-height: none; width: 100%; }
+        }
+
+        /* ---- Modal (flipbook viewer) ---- */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; }
+        .modal-container { position: relative; width: 92vw; height: 88vh; background: #1c1c1c; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .modal-controls-right { position: absolute; top: 16px; right: 16px; z-index: 10; }
+        .modal-controls-bottom { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 10px; }
+        .modal-btn { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #cc3675, #b02763); color: white; border: 2px solid var(--accent-blue); box-shadow: 0 4px 16px rgba(0,0,0,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: var(--transition); }
+        .modal-btn:hover { transform: translateY(-2px) scale(1.05); }
+        .btn-close { background: linear-gradient(135deg, #444, #222) !important; }
+        #df-flipbook-ui { width: 100%; height: 100%; display: block; }
+
+        .custom-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #B02763; color: white; padding: 14px 24px; border-radius: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 4000; opacity: 0; transition: all 0.4s ease; }
+        .custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <header class="full-width">
+        <div class="header-content">
+            <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" alt="Λογότυπο Φροντιστηρίου Λόγος" class="logo">
+            <div class="header-text">
+                <h1>Φροντιστήριο Λόγος</h1>
+                <p class="subtitle">Φιλολογικό Φροντιστήριο</p>
+            </div>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Αρχική Σελίδα</a>
+        </div>
+    </header>
+
+    <div class="page-title-bar">
+        <h2><i class="fas fa-book-open"></i> Εκπαιδευτικό Υλικό</h2>
+        <p>Διάλεξε βαθμίδα, τάξη και μάθημα από το μενού για να βρεις γρήγορα ό,τι χρειάζεσαι</p>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Εναλλαγή θέματος"><i class="fas fa-moon"></i></button>
+    <button class="back-to-top" id="backToTop" aria-label="Πήγαινε πάνω"><i class="fas fa-chevron-up"></i></button>
+
+    <main>
+        <div class="yliko-layout">
+
+            <aside class="sidebar" id="sidebar">
+                <h3><i class="fas fa-sitemap"></i> Πλοήγηση Υλικού</h3>
+                <div class="tree-level" id="treeRoot"></div>
+            </aside>
+
+            <button class="sidebar-toggle" id="sidebarToggle" title="Εμφάνιση/Απόκρυψη μενού" aria-label="Εμφάνιση/Απόκρυψη μενού">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="content-area">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="crumb current" data-level="0"><i class="fas fa-home"></i> Αρχή</span>
+                </div>
+
+                <div id="contentArea">
+                    <div class="welcome-card" id="welcomeCard">
+                        <i class="fas fa-hand-point-left"></i>
+                        <h3>Καλωσόρισες!</h3>
+                        <p>Επίλεξε τάξη παρακάτω, ή χρησιμοποίησε το μενού αριστερά για να φτάσεις κατευθείαν σε συγκεκριμένο μάθημα.</p>
+                        <div class="all-schools" id="allSchools"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="pdfModal">
+        <div class="modal-container">
+            <div class="modal-controls-right">
+                <button class="modal-btn btn-close" onclick="closeFlipbook()" title="Κλείσιμο">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-controls-bottom">
+                <button class="modal-btn" onclick="openClassicPdf()" title="Άνοιγμα κλασικού PDF σε νέα καρτέλα">
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+                <button class="modal-btn" onclick="downloadPdfFile()" title="Λήψη αρχείου PDF">
+                    <i id="pdfDownloadIcon" class="fas fa-download"></i>
+                </button>
+                <button class="modal-btn" id="wordBtn" onclick="downloadWordFile()" title="Λήψη αρχείου Word">
+                    <i id="wordIcon" class="fas fa-file-word"></i>
+                </button>
+            </div>
+            <div id="df-flipbook-ui"></div>
+        </div>
+    </div>
+
+    <div id="custom-toast" class="custom-toast">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="toast-message">Το αρχείο δεν βρέθηκε.</span>
+    </div>
+
+    <script>
+    (function() {
+        // ---- Theme ----
+        const themeToggle = document.getElementById('themeToggle');
+        function setTheme(theme) {
+            if (theme === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeToggle.querySelector('i').className = 'fas fa-sun'; localStorage.setItem('theme', 'dark'); }
+            else { document.documentElement.removeAttribute('data-theme'); themeToggle.querySelector('i').className = 'fas fa-moon'; localStorage.setItem('theme', 'light'); }
+        }
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) setTheme('dark');
+        themeToggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+        // ---- Back to top ----
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 300));
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ---- Sidebar collapse toggle ----
+        const sidebarEl = document.getElementById('sidebar');
+        const sidebarToggleBtn = document.getElementById('sidebarToggle');
+        function setSidebarCollapsed(collapsed) {
+            sidebarEl.classList.toggle('collapsed', collapsed);
+            sidebarToggleBtn.classList.toggle('is-collapsed', collapsed);
+            try { localStorage.setItem('yliko_sidebar_collapsed', collapsed ? '1' : '0'); } catch (e) {}
+        }
+        let sidebarStartCollapsed = false;
+        try { sidebarStartCollapsed = localStorage.getItem('yliko_sidebar_collapsed') === '1' || window.innerWidth <= 900; } catch (e) {}
+        setSidebarCollapsed(sidebarStartCollapsed);
+        sidebarToggleBtn.addEventListener('click', () => setSidebarCollapsed(!sidebarEl.classList.contains('collapsed')));
+    })();
+
+    // ---- Data structure describing the navigation tree ----
+    // Βαθμίδα -> Τάξη -> Μάθημα -> folder path (στο GitHub, μέσα σε Yliko/...)
+    const DATA_TREE = {
+        "Γενικό Λύκειο": {
+            icon: "fa-graduation-cap",
+            classes: {
+                "Α' Λυκείου": {
+                    folderBase: "Yliko/Lykeio/A_Lykeiou",
+                    subjects: {
+                        "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia",
+                        "Ιστορία": "Istoria",
+                        "Αρχαία Ελληνικά": "Arxaia",
+                        "Λατινικά": "Latinika"
+                    }
+                },
+                "Β' Λυκείου": {
+                    folderBase: "Yliko/Lykeio/B_Lykeiou",
+                    subjects: {
+                        "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia",
+                        "Ιστορία": "Istoria",
+                        "Αρχαία Ελληνικά": "Arxaia",
+                        "Λατινικά": "Latinika"
+                    }
+                },
+                "Γ' Λυκείου": {
+                    folderBase: "Yliko/Lykeio/G_Lykeiou",
+                    subjects: {
+                        "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia",
+                        "Ιστορία": "Istoria",
+                        "Αρχαία Ελληνικά": "Arxaia",
+                        "Λατινικά": "Latinika"
+                    }
+                }
+            }
+        },
+        "ΕΠΑΛ": {
+            icon: "fa-toolbox",
+            classes: {
+                "Α' ΕΠΑΛ": { folderBase: "Yliko/EPAL/A_EPAL", subjects: { "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia" } },
+                "Β' ΕΠΑΛ": { folderBase: "Yliko/EPAL/B_EPAL", subjects: { "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia" } },
+                "Γ' ΕΠΑΛ": { folderBase: "Yliko/EPAL/G_EPAL", subjects: { "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia" } }
+            }
+        },
+        "Γυμνάσιο": {
+            icon: "fa-child-reaching",
+            classes: {
+                "Α' Γυμνασίου": {
+                    folderBase: "Yliko/Gymnasio/A_Gymnasiou",
+                    subjects: {
+                        "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia",
+                        "Ιστορία": "Istoria",
+                        "Αρχαία Ελληνικά": "Arxaia",
+                        "Οδύσσεια": "Odisseia"
+                    }
+                },
+                "Β' Γυμνασίου": {
+                    folderBase: "Yliko/Gymnasio/B_Gymnasiou",
+                    subjects: {
+                        "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia",
+                        "Ιστορία": "Istoria",
+                        "Αρχαία Ελληνικά": "Arxaia",
+                        "Ιλιάδα": "Iliada"
+                    }
+                },
+                "Γ' Γυμνασίου": {
+                    folderBase: "Yliko/Gymnasio/G_Gymnasiou",
+                    subjects: {
+                        "Νέα Ελληνικά & Λογοτεχνία": "Nea_Ellinika_Logotexnia",
+                        "Ιστορία": "Istoria",
+                        "Αρχαία Ελληνικά": "Arxaia",
+                        "Ελένη": "Eleni"
+                    }
+                }
+            }
+        }
+    };
+
+    const SUBJECT_ICONS = {
+        "Nea_Ellinika_Logotexnia": "fa-feather-pointed",
+        "Istoria": "fa-landmark",
+        "Arxaia": "fa-scroll",
+        "Latinika": "fa-language",
+        "Odisseia": "fa-anchor",
+        "Iliada": "fa-shield-halved",
+        "Eleni": "fa-mask"
+    };
+
+    let currentLevel = { grade: null, cls: null, subject: null, folder: null };
+
+    // ---- Build sidebar tree ----
+    const treeRoot = document.getElementById('treeRoot');
+
+    function buildTree() {
+        treeRoot.innerHTML = '';
+        Object.keys(DATA_TREE).forEach(gradeName => {
+            const gradeData = DATA_TREE[gradeName];
+            const gradeWrap = document.createElement('div');
+
+            const gradeBtn = document.createElement('button');
+            gradeBtn.className = 'tree-btn';
+            gradeBtn.innerHTML = `<span><i class="fas ${gradeData.icon} tree-icon"></i> ${gradeName}</span><i class="fas fa-chevron-down chev"></i>`;
+            gradeWrap.appendChild(gradeBtn);
+
+            const classSub = document.createElement('div');
+            classSub.className = 'tree-sub';
+            classSub.style.display = 'none';
+
+            Object.keys(gradeData.classes).forEach(clsName => {
+                const clsData = gradeData.classes[clsName];
+                const clsWrap = document.createElement('div');
+
+                const clsBtn = document.createElement('button');
+                clsBtn.className = 'tree-btn';
+                clsBtn.innerHTML = `<span><i class="fas fa-layer-group tree-icon"></i> ${clsName}</span><i class="fas fa-chevron-down chev"></i>`;
+                clsWrap.appendChild(clsBtn);
+
+                const subjSub = document.createElement('div');
+                subjSub.className = 'tree-sub-2';
+                subjSub.style.display = 'none';
+
+                Object.keys(clsData.subjects).forEach(subjName => {
+                    const folderSuffix = clsData.subjects[subjName];
+                    const folderPath = `${clsData.folderBase}/${folderSuffix}`;
+                    const icon = SUBJECT_ICONS[folderSuffix] || 'fa-book';
+
+                    const subjBtn = document.createElement('button');
+                    subjBtn.className = 'tree-btn';
+                    subjBtn.innerHTML = `<span><i class="fas ${icon} tree-icon"></i> ${subjName}</span><i class="fas fa-chevron-right chev"></i>`;
+                    subjBtn.addEventListener('click', () => {
+                        selectSubject(gradeName, clsName, subjName, folderPath, subjBtn);
+                    });
+                    subjSub.appendChild(subjBtn);
+                });
+
+                clsBtn.addEventListener('click', () => {
+                    const isOpen = subjSub.style.display === 'flex';
+                    document.querySelectorAll('.tree-sub-2').forEach(el => el.style.display = 'none');
+                    document.querySelectorAll('.tree-sub .tree-btn').forEach(b => b.classList.remove('active'));
+                    if (!isOpen) {
+                        subjSub.style.display = 'flex';
+                        clsBtn.classList.add('active');
+                        selectClass(gradeName, clsName);
+                    } else {
+                        clearSelectionBelow('class');
+                    }
+                });
+
+                clsWrap.appendChild(subjSub);
+                classSub.appendChild(clsWrap);
+            });
+
+            gradeBtn.addEventListener('click', () => {
+                const isOpen = classSub.style.display === 'flex';
+                document.querySelectorAll('.tree-sub').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.tree-sub-2').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('#treeRoot > div > .tree-btn').forEach(b => b.classList.remove('active'));
+                if (!isOpen) {
+                    classSub.style.display = 'flex';
+                    gradeBtn.classList.add('active');
+                    selectGrade(gradeName);
+                } else {
+                    clearSelectionBelow('grade');
+                }
+            });
+
+            gradeWrap.appendChild(classSub);
+            treeRoot.appendChild(gradeWrap);
+        });
+    }
+
+    function clearSelectionBelow(level) {
+        // level = 'grade' means collapse everything
+        currentLevel = { grade: null, cls: null, subject: null, folder: null };
+        renderBreadcrumb();
+        showWelcome();
+    }
+
+    // ---- Breadcrumb ----
+    const breadcrumbEl = document.getElementById('breadcrumb');
+    function renderBreadcrumb() {
+        let html = `<span class="crumb ${!currentLevel.grade ? 'current' : ''}" onclick="window.goHome()"><i class="fas fa-home"></i> Αρχή</span>`;
+        if (currentLevel.grade) {
+            const isCurrent = !currentLevel.cls;
+            html += `<span class="sep">›</span><span class="crumb ${isCurrent ? 'current' : ''}" ${isCurrent ? '' : `onclick="window.goToGrade('${escapeAttr(currentLevel.grade)}')"`}>${currentLevel.grade}</span>`;
+        }
+        if (currentLevel.cls) {
+            const isCurrent = !currentLevel.subject;
+            html += `<span class="sep">›</span><span class="crumb ${isCurrent ? 'current' : ''}" ${isCurrent ? '' : `onclick="window.goToClass('${escapeAttr(currentLevel.grade)}','${escapeAttr(currentLevel.cls)}')"`}>${currentLevel.cls}</span>`;
+        }
+        if (currentLevel.subject) {
+            html += `<span class="sep">›</span><span class="crumb current">${currentLevel.subject}</span>`;
+        }
+        breadcrumbEl.innerHTML = html;
+    }
+
+    function escapeAttr(str) {
+        return String(str).replace(/'/g, "\\'");
+    }
+
+    window.goHome = function() {
+        document.querySelectorAll('.tree-sub, .tree-sub-2').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.tree-btn').forEach(b => b.classList.remove('active'));
+        clearSelectionBelow('grade');
+    };
+
+    window.goToGrade = function(gradeName) {
+        const gradeNames = Object.keys(DATA_TREE);
+        const gradeIdx = gradeNames.indexOf(gradeName);
+        if (gradeIdx === -1) return;
+        const gradeWrap = treeRoot.children[gradeIdx];
+        const gradeBtn = gradeWrap.querySelector(':scope > .tree-btn');
+        const classSub = gradeWrap.querySelector(':scope > .tree-sub');
+
+        document.querySelectorAll('.tree-sub').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.tree-sub-2').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('#treeRoot > div > .tree-btn').forEach(b => b.classList.remove('active'));
+
+        classSub.style.display = 'flex';
+        gradeBtn.classList.add('active');
+        selectGrade(gradeName);
+    };
+
+    window.goToClass = function(gradeName, clsName) {
+        const gradeNames = Object.keys(DATA_TREE);
+        const gradeIdx = gradeNames.indexOf(gradeName);
+        if (gradeIdx === -1) return;
+        const gradeWrap = treeRoot.children[gradeIdx];
+        const gradeBtn = gradeWrap.querySelector(':scope > .tree-btn');
+        const classSub = gradeWrap.querySelector(':scope > .tree-sub');
+
+        document.querySelectorAll('.tree-sub').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.tree-sub-2').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('#treeRoot > div > .tree-btn').forEach(b => b.classList.remove('active'));
+
+        classSub.style.display = 'flex';
+        gradeBtn.classList.add('active');
+
+        const clsNames = Object.keys(DATA_TREE[gradeName].classes);
+        const clsIdx = clsNames.indexOf(clsName);
+        if (clsIdx === -1) return;
+        const clsWrap = classSub.children[clsIdx];
+        const clsBtn = clsWrap.querySelector(':scope > .tree-btn');
+        const subjSub = clsWrap.querySelector(':scope > .tree-sub-2');
+
+        document.querySelectorAll('.tree-sub .tree-btn').forEach(b => b.classList.remove('active'));
+        subjSub.style.display = 'flex';
+        clsBtn.classList.add('active');
+        selectClass(gradeName, clsName);
+    };
+
+    function selectGrade(gradeName) {
+        currentLevel = { grade: gradeName, cls: null, subject: null, folder: null };
+        renderBreadcrumb();
+        showGradeOverview(gradeName);
+    }
+
+    function selectClass(gradeName, clsName) {
+        currentLevel = { grade: gradeName, cls: clsName, subject: null, folder: null };
+        renderBreadcrumb();
+        showClassOverview(gradeName, clsName);
+    }
+
+    function selectSubject(gradeName, clsName, subjName, folderPath, btnEl) {
+        document.querySelectorAll('.tree-sub-2 .tree-btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+        currentLevel = { grade: gradeName, cls: clsName, subject: subjName, folder: folderPath };
+        renderBreadcrumb();
+        showSubjectFiles(subjName, folderPath);
+    }
+
+    // ---- Content area rendering ----
+    const contentArea = document.getElementById('contentArea');
+
+    function showWelcome() {
+        contentArea.innerHTML = `
+            <div class="welcome-card" id="welcomeCard">
+                <i class="fas fa-hand-point-left"></i>
+                <h3>Καλωσόρισες!</h3>
+                <p>Επίλεξε τάξη παρακάτω, ή χρησιμοποίησε το μενού αριστερά για να φτάσεις κατευθείαν σε συγκεκριμένο μάθημα.</p>
+                <div class="all-schools" id="allSchools"></div>
+            </div>`;
+        buildAllSchools();
+    }
+
+    function buildAllSchools() {
+        const wrap = document.getElementById('allSchools');
+        if (!wrap) return;
+        wrap.innerHTML = '';
+        Object.keys(DATA_TREE).forEach(gradeName => {
+            const gradeData = DATA_TREE[gradeName];
+            const row = document.createElement('div');
+            row.className = 'school-row';
+
+            const header = document.createElement('div');
+            header.className = 'school-row-header';
+            header.innerHTML = `<i class="fas ${gradeData.icon}"></i> ${gradeName}`;
+            row.appendChild(header);
+
+            const classesWrap = document.createElement('div');
+            classesWrap.className = 'school-classes';
+            Object.keys(gradeData.classes).forEach(clsName => {
+                const chip = document.createElement('div');
+                chip.className = 'class-chip';
+                chip.textContent = clsName;
+                chip.addEventListener('click', () => openTreePath(gradeName, clsName));
+                classesWrap.appendChild(chip);
+            });
+            row.appendChild(classesWrap);
+
+            wrap.appendChild(row);
+        });
+    }
+
+    // Programmatically open sidebar to a grade/class (used by quick picks)
+    function openTreePath(gradeName, clsName) {
+        if (clsName) {
+            window.goToClass(gradeName, clsName);
+        } else {
+            window.goToGrade(gradeName);
+        }
+        setTimeout(() => {
+            const gradeIdx = Object.keys(DATA_TREE).indexOf(gradeName);
+            const gradeWrap = treeRoot.children[gradeIdx];
+            if (gradeWrap) gradeWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+    }
+
+    function showGradeOverview(gradeName) {
+        const gradeData = DATA_TREE[gradeName];
+        let cardsHtml = '';
+        Object.keys(gradeData.classes).forEach(clsName => {
+            cardsHtml += `<div class="quick-pick" data-cls="${clsName}"><i class="fas fa-layer-group"></i>${clsName}</div>`;
+        });
+        contentArea.innerHTML = `
+            <div class="welcome-card">
+                <i class="fas ${gradeData.icon}"></i>
+                <h3>${gradeName}</h3>
+                <p>Επίλεξε τάξη για να δεις τα διαθέσιμα μαθήματα.</p>
+                <div class="quick-picks">${cardsHtml}</div>
+            </div>`;
+        contentArea.querySelectorAll('.quick-pick').forEach(el => {
+            el.addEventListener('click', () => openTreePath(gradeName, el.getAttribute('data-cls')));
+        });
+    }
+
+    function showClassOverview(gradeName, clsName) {
+        const clsData = DATA_TREE[gradeName].classes[clsName];
+        let cardsHtml = '';
+        Object.keys(clsData.subjects).forEach(subjName => {
+            const folderSuffix = clsData.subjects[subjName];
+            const icon = SUBJECT_ICONS[folderSuffix] || 'fa-book';
+            cardsHtml += `<div class="quick-pick" data-subj="${subjName}"><i class="fas ${icon}"></i>${subjName}</div>`;
+        });
+        contentArea.innerHTML = `
+            <div class="welcome-card">
+                <i class="fas fa-layer-group"></i>
+                <h3>${clsName}</h3>
+                <p>Επίλεξε μάθημα για να δεις το διαθέσιμο υλικό.</p>
+                <div class="quick-picks">${cardsHtml}</div>
+            </div>`;
+        contentArea.querySelectorAll('.quick-pick').forEach(el => {
+            el.addEventListener('click', () => {
+                const subjName = el.getAttribute('data-subj');
+                const folderPath = `${clsData.folderBase}/${clsData.subjects[subjName]}`;
+                // find and click the matching sidebar subject button for consistent highlighting
+                const subjButtons = document.querySelectorAll('.tree-sub-2.is-open .tree-btn, .tree-sub-2 .tree-btn');
+                selectSubject(gradeName, clsName, subjName, folderPath, el);
+                document.querySelectorAll('.tree-sub-2 .tree-btn').forEach(b => {
+                    if (b.textContent.trim().includes(subjName)) b.classList.add('active');
+                });
+            });
+        });
+    }
+
+    function showSubjectFiles(subjName, folderPath) {
+        contentArea.innerHTML = `
+            <div class="content-card">
+                <h3><i class="fas fa-folder-open"></i> ${subjName}</h3>
+                <p class="subject-meta">${currentLevel.grade} · ${currentLevel.cls}</p>
+                <input type="text" class="pdf-search-input" id="fileSearchInput" placeholder="Αναζήτηση αρχείου...">
+                <div class="files-grid" id="filesGrid" data-folder="${folderPath}">
+                    <div class="loading-msg"><i class="fas fa-spinner fa-spin"></i> Φόρτωση αρχείων...</div>
+                </div>
+            </div>`;
+
+        populateFiles(folderPath);
+
+        document.getElementById('fileSearchInput').addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            document.querySelectorAll('#filesGrid .pdf-link').forEach(link => {
+                const name = link.textContent.toLowerCase();
+                link.style.display = name.includes(term) ? 'flex' : 'none';
+            });
+        });
+    }
+
+    // ---- GitHub data fetching (shared cache with main site) ----
+    const GITHUB = { owner: 'frontistirio', repo: 'logos', branch: 'main', cacheTime: 15 * 60 * 1000 };
+    function getRawUrl(path) { return `https://raw.githubusercontent.com/${GITHUB.owner}/${GITHUB.repo}/${GITHUB.branch}/${encodeURI(path)}`; }
+
+    let githubTreeCache = null;
+
+    async function fetchGitHubTree() {
+        if (githubTreeCache) return githubTreeCache;
+        const cacheKey = 'github_tree_cache';
+        const cacheTimeKey = 'github_tree_cache_time';
+        const now = Date.now();
+        const cached = localStorage.getItem(cacheKey);
+        const cachedTime = localStorage.getItem(cacheTimeKey);
+        if (cached && cachedTime && (now - cachedTime < GITHUB.cacheTime)) {
+            githubTreeCache = JSON.parse(cached);
+            return githubTreeCache;
+        }
+        try {
+            const response = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/git/trees/${GITHUB.branch}?recursive=1`);
+            if (!response.ok) throw new Error('GitHub API rate limit or error');
+            const data = await response.json();
+            try { localStorage.setItem(cacheKey, JSON.stringify(data.tree)); localStorage.setItem(cacheTimeKey, now.toString()); } catch (e) {}
+            githubTreeCache = data.tree;
+            return githubTreeCache;
+        } catch (error) {
+            githubTreeCache = cached ? JSON.parse(cached) : [];
+            return githubTreeCache;
+        }
+    }
+
+    async function populateFiles(folderPath) {
+        const tree = await fetchGitHubTree();
+        const grid = document.getElementById('filesGrid');
+        if (!grid || grid.getAttribute('data-folder') !== folderPath) return; // user navigated away
+
+        const files = (tree || []).filter(item => item.path.startsWith(folderPath + '/') && item.type === 'blob' && item.path.endsWith('.pdf'));
+
+        grid.innerHTML = '';
+        if (files.length === 0) {
+            grid.innerHTML = '<div class="no-files-msg">Δεν υπάρχει διαθέσιμο υλικό ακόμα.</div>';
+            return;
+        }
+
+        files.forEach(file => {
+            const fileName = file.path.split('/').pop();
+            const displayName = fileName.replace(/\.pdf$/i, '');
+            const link = document.createElement('div');
+            link.className = 'pdf-link';
+            link.innerHTML = `<i class="fas fa-file-lines"></i><span>${displayName}</span>`;
+            link.addEventListener('click', () => openFlipbook(getRawUrl(file.path)));
+            grid.appendChild(link);
+        });
+    }
+
+    // ---- PDF Flipbook modal (shared logic with main site) ----
+    let dfFlipbookInstance = null;
+    let activePdfUrl = '';
+
+    function openFlipbook(pdfUrl) {
+        activePdfUrl = pdfUrl;
+        document.getElementById('pdfModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        const wordBtn = document.getElementById('wordBtn');
+        wordBtn.style.display = 'flex';
+
+        const container = document.getElementById('df-flipbook-ui');
+        container.innerHTML = '';
+
+        dfFlipbookInstance = $(container).flipBook(pdfUrl, {
+            webgl: false,
+            height: '100%',
+            backgroundColor: 'transparent',
+            direction: 1,
+            singlePageMode: DFLIP.SINGLE_PAGE_MODE.BOOKLET
+        });
+    }
+    window.closeFlipbook = function() {
+        document.getElementById('pdfModal').style.display = 'none';
+        document.body.style.overflow = '';
+        if (dfFlipbookInstance && typeof dfFlipbookInstance.dispose === 'function') {
+            try { dfFlipbookInstance.dispose(); } catch (e) {}
+        }
+        document.getElementById('df-flipbook-ui').innerHTML = '';
+        dfFlipbookInstance = null;
+    };
+
+    window.openClassicPdf = function() {
+        if (activePdfUrl) window.open(activePdfUrl, '_blank');
+    };
+
+    function decodeFileName(url) {
+        const raw = url.split('/').pop();
+        try { return decodeURIComponent(raw); } catch (e) { return raw; }
+    }
+
+    window.downloadPdfFile = async function() {
+        if (!activePdfUrl) return;
+        const pdfIcon = document.getElementById('pdfDownloadIcon');
+        const originalClass = pdfIcon.className;
+        pdfIcon.className = 'fas fa-spinner fa-spin';
+        try {
+            const response = await fetch(activePdfUrl);
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = decodeFileName(activePdfUrl);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+        } catch (err) {
+            console.error("Σφάλμα δικτύου:", err);
+            window.open(activePdfUrl, '_blank');
+        } finally {
+            pdfIcon.className = originalClass;
+        }
+    };
+
+    window.downloadWordFile = async function() {
+        if (!activePdfUrl) return;
+        const wordIcon = document.getElementById('wordIcon');
+        const originalClass = wordIcon.className;
+        wordIcon.className = 'fas fa-spinner fa-spin';
+
+        const docxUrl = activePdfUrl.replace(/\.pdf$/i, '.docx');
+        const docUrl = activePdfUrl.replace(/\.pdf$/i, '.doc');
+
+        try {
+            let response = await fetch(docxUrl, { method: 'HEAD' });
+            let finalUrl = docxUrl;
+            if (!response.ok) {
+                response = await fetch(docUrl, { method: 'HEAD' });
+                if (response.ok) {
+                    finalUrl = docUrl;
+                } else {
+                    showCustomToast('Το αντίστοιχο αρχείο Word δεν βρέθηκε.');
+                    wordIcon.className = originalClass;
+                    return;
+                }
+            }
+            const a = document.createElement('a');
+            a.href = finalUrl;
+            a.download = decodeFileName(finalUrl);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } catch (err) {
+            console.error("Σφάλμα δικτύου:", err);
+            window.open(docxUrl, '_blank');
+        } finally {
+            wordIcon.className = originalClass;
+        }
+    };
+
+    function showCustomToast(msg) {
+        const toast = document.getElementById('custom-toast');
+        document.getElementById('toast-message').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeFlipbook();
+    });
+
+    // ---- Init ----
+    buildTree();
+    buildAllSchools();
+    </script>
+</body>
+</html>
