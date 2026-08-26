@@ -402,19 +402,69 @@
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         
         .modal-container { width: 95vw; height: 90vh; display: block; position: relative; border-radius: 8px; background: transparent; margin-top: 20px; }
-        #pdfModalContainer:fullscreen { width: 100vw; height: 100vh; margin-top: 0; background: #1a1a1a; display: flex; align-items: center; justify-content: center; }
-        #pdfModalContainer:-webkit-full-screen { width: 100vw; height: 100vh; margin-top: 0; background: #1a1a1a; }
-        /* Σε πλήρη οθόνη, τα κουμπιά που κανονικά "πατάνε" έξω από το modal-container
-           (top: -10px, ή -45px σε mobile media query) πρέπει να μπουν πάντα μέσα στα
-           ορατά όρια της οθόνης. !important ώστε να υπερισχύει του mobile media query. */
+        #pdfModalContainer:fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            margin-top: 0 !important;
+            background: #1a1a1a;
+            display: block; /* το κεντράρισμα του περιεχομένου γίνεται ήδη εσωτερικά από #df-flipbook-ui, οπότε ΔΕΝ ξαναβάζουμε flex εδώ — έτσι τα absolute-positioned κουμπιά (siblings) δεν επηρεάζονται ποτέ από flex alignment */
+            position: relative;
+        }
+        #pdfModalContainer:-webkit-full-screen {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            margin-top: 0 !important;
+            background: #1a1a1a;
+            display: block;
+            position: relative;
+        }
+
         #pdfModalContainer:fullscreen .modal-controls-right,
-        #pdfModalContainer:-webkit-full-screen .modal-controls-right { top: 15px !important; right: 15px !important; bottom: auto !important; left: auto !important; }
+        #pdfModalContainer:-webkit-full-screen .modal-controls-right {
+            position: fixed !important; /* Firefox forces the fullscreen element itself to position:fixed
+                                            per spec (it only supports 'fixed', not 'absolute', for top-layer
+                                            elements), which changes the containing block for 'absolute'
+                                            children and breaks offsets there. 'fixed' is always relative to
+                                            the viewport regardless, so it's consistent across browsers. */
+            top: calc(15px + env(safe-area-inset-top, 0px)) !important;
+            right: calc(15px + env(safe-area-inset-right, 0px)) !important;
+            bottom: auto !important;
+            left: auto !important;
+            align-self: auto !important;
+            margin: 0 !important;
+        }
         #pdfModalContainer:fullscreen .modal-controls-bottom,
-        #pdfModalContainer:-webkit-full-screen .modal-controls-bottom { bottom: 15px !important; right: 15px !important; top: auto !important; left: auto !important; }
+        #pdfModalContainer:-webkit-full-screen .modal-controls-bottom {
+            position: fixed !important;
+            bottom: calc(15px + env(safe-area-inset-bottom, 0px)) !important;
+            right: calc(15px + env(safe-area-inset-right, 0px)) !important;
+            top: auto !important;
+            left: auto !important;
+            align-self: auto !important;
+            margin: 0 !important;
+        }
         #pdfModalContainer:fullscreen .flipbook-nav-prev,
-        #pdfModalContainer:-webkit-full-screen .flipbook-nav-prev { left: 15px !important; }
+        #pdfModalContainer:-webkit-full-screen .flipbook-nav-prev {
+            position: fixed !important;
+            top: 50% !important;
+            left: calc(15px + env(safe-area-inset-left, 0px)) !important;
+            transform: translateY(-50%) !important;
+            align-self: auto !important;
+            margin: 0 !important;
+        }
         #pdfModalContainer:fullscreen .flipbook-nav-next,
-        #pdfModalContainer:-webkit-full-screen .flipbook-nav-next { right: 15px !important; }
+        #pdfModalContainer:-webkit-full-screen .flipbook-nav-next {
+            position: fixed !important;
+            top: 50% !important;
+            right: calc(15px + env(safe-area-inset-right, 0px)) !important;
+            transform: translateY(-50%) !important;
+            align-self: auto !important;
+            margin: 0 !important;
+        }
         
         /* ΘΕΣΕΙΣ ΚΟΥΜΠΙΩΝ - DESKTOP */
         .modal-controls-right { position: absolute; top: -10px; right: 10px; display: flex; gap: 15px; z-index: 9999; }
@@ -1525,27 +1575,46 @@
         let currentPdfDoc = null;
         let currentPageEls = []; // κρατάμε τα ήδη-renderισμένα canvas pages για re-init στο resize
 
-        // --- Ήχος γυρίσματος σελίδας (τοπικό αρχείο, self-hosted) ---
+
         const FLIP_SOUND_SRC = 'Assets/vendor/pageflip/flip-sound.mp3';
         const FLIP_SOUND_POOL_SIZE = 4; // επιτρέπει επικαλυπτόμενα flip χωρίς να κόβεται ο ήχος
-        const flipSoundPool = Array.from({ length: FLIP_SOUND_POOL_SIZE }, () => {
-            const audio = new Audio(FLIP_SOUND_SRC);
-            audio.preload = 'auto';
-            audio.volume = 0.6;
-            return audio;
-        });
+        let flipSoundPool = null;
         let flipSoundPoolIndex = 0;
+
+        function getFlipSoundPool() {
+            if (!flipSoundPool) {
+                flipSoundPool = Array.from({ length: FLIP_SOUND_POOL_SIZE }, () => {
+                    const audio = new Audio(FLIP_SOUND_SRC);
+                    audio.preload = 'auto';
+                    audio.volume = 0.6;
+                    return audio;
+                });
+            }
+            return flipSoundPool;
+        }
 
         function playFlipSound() {
             if (!flipSoundEnabled) return;
             try {
-                const audio = flipSoundPool[flipSoundPoolIndex];
-                flipSoundPoolIndex = (flipSoundPoolIndex + 1) % flipSoundPool.length;
+                const pool = getFlipSoundPool();
+                const audio = pool[flipSoundPoolIndex];
+                flipSoundPoolIndex = (flipSoundPoolIndex + 1) % pool.length;
                 audio.currentTime = 0;
                 audio.play().catch(e => console.warn('[flipbook] flip sound play blocked:', e));
             } catch (e) {
                 console.warn('[flipbook] flip sound failed:', e);
             }
+        }
+
+        // Σταματάει κάθε ήχο flip που μπορεί να παίζει (π.χ. όταν κλείνει το modal).
+        function stopFlipSounds() {
+            if (!flipSoundPool) return;
+            flipSoundPool.forEach(audio => {
+                try {
+                    audio.pause();
+                    audio.currentTime = 0;
+                } catch (e) { /* no-op */ }
+            });
         }
 
         function toggleFlipSound() {
@@ -1623,10 +1692,6 @@
                 wordBtn.style.display = 'flex';
             }
 
-            // Destroy πρώτα, ΟΣΟ το εσωτερικό element ακόμα υπάρχει στο DOM — το destroy()
-            // της StPageFlip κάνει internally this.block.remove(), δηλαδή αφαιρεί το ίδιο
-            // το element που του δώσαμε ως root. Γι' αυτό ΠΟΤΕ δεν δίνουμε στο PageFlip
-            // το μόνιμο #df-flipbook-ui shell, μόνο ένα αναλώσιμο εσωτερικό div.
             if (pageFlipInstance) {
                 try {
                     pageFlipInstance.destroy();
@@ -1638,8 +1703,6 @@
                 pageFlipElement = null;
             }
 
-            // Καθαρίζουμε επίσης το προηγούμενο PDF.js document ώστε να μη μείνει ανοιχτό
-            // background worker/transport που θα μπλοκάρει τη φόρτωση του επόμενου PDF.
             if (currentPdfDoc) {
                 try { await currentPdfDoc.destroy(); } catch (e) { console.warn('[flipbook] pdf doc destroy failed:', e); }
                 currentPdfDoc = null;
@@ -1666,10 +1729,12 @@
                 console.log('[flipbook] pdf loaded, pages:', pdf.numPages);
                 if (myToken !== flipbookLoadToken) return; // ο χρήστης έφυγε/άλλαξε PDF στο μεταξύ
 
-                const pageEls = [];
                 const scale = 1.5;
 
-                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const PAGE_RENDER_BATCH_SIZE = 6;
+                const pageEls = new Array(pdf.numPages);
+
+                async function renderSinglePage(pageNum) {
                     const page = await pdf.getPage(pageNum);
                     if (myToken !== flipbookLoadToken) return;
 
@@ -1685,7 +1750,17 @@
                     const pageDiv = document.createElement('div');
                     pageDiv.className = 'flipbook-page';
                     pageDiv.appendChild(canvas);
-                    pageEls.push(pageDiv);
+                    pageEls[pageNum - 1] = pageDiv;
+                }
+
+                for (let batchStart = 1; batchStart <= pdf.numPages; batchStart += PAGE_RENDER_BATCH_SIZE) {
+                    const batchEnd = Math.min(batchStart + PAGE_RENDER_BATCH_SIZE - 1, pdf.numPages);
+                    const batchPromises = [];
+                    for (let pageNum = batchStart; pageNum <= batchEnd; pageNum++) {
+                        batchPromises.push(renderSinglePage(pageNum));
+                    }
+                    await Promise.all(batchPromises);
+                    if (myToken !== flipbookLoadToken) return;
                 }
 
                 if (myToken !== flipbookLoadToken) return;
@@ -1711,8 +1786,6 @@
             }
         }
 
-        // Υπολογίζει τις διαστάσεις μιας σελίδας ώστε να χωράει (spread δύο σελίδων σε
-        // desktop) μέσα στα τρέχοντα όρια του modal, διατηρώντας τον λόγο διαστάσεων του PDF.
         let currentPdfAspect = null;
         function computeFlipbookSize(pdfAspect) {
             const shell = document.getElementById('df-flipbook-ui');
@@ -1729,10 +1802,6 @@
             return { pageWidth, pageHeight };
         }
 
-        // Δημιουργεί (ή ξανά-δημιουργεί) το St.PageFlip instance μέσα στο μόνιμο shell,
-        // με τις δοσμένες διαστάσεις. Χρησιμοποιείται τόσο στην αρχική φόρτωση όσο και
-        // στο resize/fullscreen, αφού η βιβλιοθήκη δεν υποστηρίζει αλλαγή width/height
-        // σε ήδη-υπάρχον instance (το update() δεν δέχεται καν παραμέτρους μεγέθους).
         function createPageFlipInstance(shell, pageEls, pageWidth, pageHeight, startPage) {
             if (pageFlipInstance) {
                 try { pageFlipInstance.destroy(); } catch (e) { console.warn('[flipbook] destroy before recreate failed:', e); }
@@ -1740,9 +1809,6 @@
             }
             shell.innerHTML = '';
 
-            // Δημιουργούμε ένα ΝΕΟ εσωτερικό div μέσα στο μόνιμο shell και το δίνουμε
-            // εμείς στο St.PageFlip — αυτό είναι το element που θα αφαιρέσει το δικό
-            // του destroy() (this.block.remove()), ποτέ το ίδιο το #df-flipbook-ui.
             pageFlipElement = document.createElement('div');
             shell.appendChild(pageFlipElement);
 
@@ -1777,9 +1843,6 @@
             updateFlipbookNavButtons();
         }
 
-        // Ξανά-υπολογίζει και εφαρμόζει το μέγεθος του ενεργού flipbook (π.χ. μετά από
-        // αλλαγή σε/από πλήρη οθόνη ή αλλαγή μεγέθους παραθύρου). Αφού η βιβλιοθήκη δεν
-        // υποστηρίζει live resize, κάνουμε πλήρες destroy+recreate διατηρώντας τη σελίδα.
         let resizeDebounceTimer = null;
         function resizeActiveFlipbook() {
             if (!pageFlipInstance || !currentPdfAspect || currentPageEls.length === 0) return;
@@ -1793,8 +1856,12 @@
             }, 120);
         }
 
+        let lastFlipbookResizeWidth = window.innerWidth;
         window.addEventListener('resize', () => {
-            if (pageFlipInstance) resizeActiveFlipbook();
+            if (!pageFlipInstance) return;
+            if (window.innerWidth === lastFlipbookResizeWidth) return;
+            lastFlipbookResizeWidth = window.innerWidth;
+            resizeActiveFlipbook();
         });
 
         function openClassicPdf() {
@@ -1884,6 +1951,9 @@
             console.log('[flipbook] closeFlipbook called');
             document.getElementById('pdfModal').style.display = 'none';
             document.body.style.overflow = '';
+
+            // Σταματάμε τυχόν ήχο flip που παίζει ακόμα στο background.
+            stopFlipSounds();
 
             // Αν είμαστε σε πλήρη οθόνη, βγαίνουμε καθαρά πριν κλείσουμε το modal.
             if (document.fullscreenElement) {
