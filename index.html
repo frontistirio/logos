@@ -8,18 +8,15 @@
     <meta name="description" content="Φροντιστήριο ΛΟΓΟΣ στη Δράμα - Μαθήματα Μέσης Εκπαίδευσης: Νέα Ελληνικά, Αρχαία, Λατινικά, Ιστορία. Προετοιμασία για Πανελλήνιες.">
     <meta name="theme-color" content="#B02763">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="Assets/vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="Assets/vendor/fontawesome/css/all.min.css">
     <link rel="icon" href="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.webp">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/dflip.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/css/themify-icons.min.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@dearhive/dearflip-jquery-flipbook/dflip/js/dflip.min.js"></script>
+    <script src="Assets/vendor/js/jquery.min.js"></script>
+
+    <script src="Assets/vendor/pageflip/pdf.min.js"></script>
+    <script src="Assets/vendor/pageflip/page-flip.browser.js"></script>
 
     <style>
         /* --- CSS VARIABLES --- */
@@ -405,6 +402,19 @@
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         
         .modal-container { width: 95vw; height: 90vh; display: block; position: relative; border-radius: 8px; background: transparent; margin-top: 20px; }
+        #pdfModalContainer:fullscreen { width: 100vw; height: 100vh; margin-top: 0; background: #1a1a1a; display: flex; align-items: center; justify-content: center; }
+        #pdfModalContainer:-webkit-full-screen { width: 100vw; height: 100vh; margin-top: 0; background: #1a1a1a; }
+        /* Σε πλήρη οθόνη, τα κουμπιά που κανονικά "πατάνε" έξω από το modal-container
+           (top: -10px, ή -45px σε mobile media query) πρέπει να μπουν πάντα μέσα στα
+           ορατά όρια της οθόνης. !important ώστε να υπερισχύει του mobile media query. */
+        #pdfModalContainer:fullscreen .modal-controls-right,
+        #pdfModalContainer:-webkit-full-screen .modal-controls-right { top: 15px !important; right: 15px !important; bottom: auto !important; left: auto !important; }
+        #pdfModalContainer:fullscreen .modal-controls-bottom,
+        #pdfModalContainer:-webkit-full-screen .modal-controls-bottom { bottom: 15px !important; right: 15px !important; top: auto !important; left: auto !important; }
+        #pdfModalContainer:fullscreen .flipbook-nav-prev,
+        #pdfModalContainer:-webkit-full-screen .flipbook-nav-prev { left: 15px !important; }
+        #pdfModalContainer:fullscreen .flipbook-nav-next,
+        #pdfModalContainer:-webkit-full-screen .flipbook-nav-next { right: 15px !important; }
         
         /* ΘΕΣΕΙΣ ΚΟΥΜΠΙΩΝ - DESKTOP */
         .modal-controls-right { position: absolute; top: -10px; right: 10px; display: flex; gap: 15px; z-index: 9999; }
@@ -429,11 +439,46 @@
         }
         .modal-btn:hover { background: var(--primary-dark); transform: scale(1.1); }
         .btn-close:hover { transform: rotate(90deg) scale(1.1); }
+        .modal-btn.muted i.fa-volume-up::before { content: "\f6a9"; } /* εναλλαγή σε volume-mute glyph μέσω FA */
+
+        /* ΒΕΛΑΚΙΑ ΠΛΟΗΓΗΣΗΣ ΣΕΛΙΔΩΝ */
+        .flipbook-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-blue);
+            background: rgba(176, 39, 99, 0.85);
+            color: white;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: var(--transition);
+        }
+        .flipbook-nav-btn:hover { background: var(--primary-dark); transform: translateY(-50%) scale(1.1); }
+        .flipbook-nav-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+        .flipbook-nav-prev { left: 10px; }
+        .flipbook-nav-next { right: 10px; }
+        @media (max-width: 768px) {
+            .flipbook-nav-btn { width: 42px; height: 42px; font-size: 1.1rem; }
+            .flipbook-nav-prev { left: 4px; }
+            .flipbook-nav-next { right: 4px; }
+        }
         
         /* ΚΡΥΒΟΥΜΕ ΤΟ SHARE BUTTON ΤΟΥ DEARFLIP */
         .df-ui-share { display: none !important; }
 
-        #df-flipbook-ui { width: 100%; height: 100%; display: block; }
+        #df-flipbook-ui { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        #df-flipbook-ui .stf__parent { margin: 0 auto; }
+        #df-flipbook-ui .flipbook-page { background: #fff; overflow: hidden; }
+        #df-flipbook-ui .flipbook-page canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
+        #df-flipbook-ui .flipbook-loading { color: #fff; font-family: var(--font); font-size: 1.1rem; text-align: center; }
 
         /* CUSTOM TOAST NOTIFICATION */
         .custom-toast {
@@ -521,7 +566,7 @@
     
     <header class="full-width">
         <div class="container header-content">
-            <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png" alt="Λογότυπο Φροντιστηρίου Λόγος" class="logo" onerror="this.src='logoslogo.png'">
+            <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.webp" alt="Λογότυπο Φροντιστηρίου Λόγος" class="logo" onerror="this.src='logoslogo.webp'">
             <div class="header-text">
                 <h1>Φροντιστήριο Λόγος</h1>
                 <p class="subtitle">Φιλολογικό Φροντιστήριο</p>
@@ -820,12 +865,12 @@
                 <h2 class="section-title">Βιβλία</h2>
                 <div class="books-grid">
                     <div class="book-card" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.pdf">
-                        <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.png" alt="Εξώφυλλο βιβλίου Τεστ" class="book-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\' fill=\'%23F5E6EE\'><rect width=\'200\' height=\'300\'/></svg>'">
+                        <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.webp" alt="Εξώφυλλο βιβλίου Τεστ" class="book-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\' fill=\'%23F5E6EE\'><rect width=\'200\' height=\'300\'/></svg>'">
                         <h3 class="book-title">Βιβλίο Τεστ</h3>
                         <span class="book-badge">ΔΕΙΓΜΑ</span>
                     </div>
                     <div class="book-card" data-pdf="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.pdf">
-                        <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.png" alt="Εξώφυλλο βιβλίου Τεστ" class="book-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\' fill=\'%23F5E6EE\'><rect width=\'200\' height=\'300\'/></svg>'">
+                        <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Books/testbook.webp" alt="Εξώφυλλο βιβλίου Τεστ" class="book-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\' fill=\'%23F5E6EE\'><rect width=\'200\' height=\'300\'/></svg>'">
                         <h3 class="book-title">Βιβλίο Τεστ</h3>
                         <span class="book-badge">ΒΙΒΛΙΟ</span>
                     </div>
@@ -928,9 +973,15 @@
     </section>
 
     <div class="modal-overlay" id="pdfModal">
-        <div class="modal-container">
+        <div class="modal-container" id="pdfModalContainer">
             
             <div class="modal-controls-right">
+                <button class="modal-btn" id="fullscreenBtn" onclick="toggleFlipbookFullscreen()" title="Πλήρης οθόνη">
+                    <i class="fas fa-expand" id="fullscreenIcon"></i>
+                </button>
+                <button class="modal-btn" id="muteBtn" onclick="toggleFlipSound()" title="Σίγαση ήχου">
+                    <i class="fas fa-volume-up" id="muteIcon"></i>
+                </button>
                 <button class="modal-btn btn-close" onclick="closeFlipbook()" title="Κλείσιμο">
                     <i class="fas fa-times"></i>
                 </button>
@@ -947,6 +998,13 @@
                     <i id="wordIcon" class="fas fa-file-word"></i>
                 </button>
             </div>
+
+            <button class="flipbook-nav-btn flipbook-nav-prev" id="flipbookPrevBtn" onclick="flipbookGoPrev()" title="Προηγούμενη σελίδα">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="flipbook-nav-btn flipbook-nav-next" id="flipbookNextBtn" onclick="flipbookGoNext()" title="Επόμενη σελίδα">
+                <i class="fas fa-chevron-right"></i>
+            </button>
 
             <div id="df-flipbook-ui"></div>
         </div>
@@ -1165,12 +1223,12 @@
                     }
                 });
 
-                const mediaFiles = tree.filter(item => item.path.startsWith('Media/') && item.type === 'blob' && (item.path.endsWith('.png') || item.path.endsWith('.jpg') || item.path.endsWith('.jpeg')));
+                const mediaFiles = tree.filter(item => item.path.startsWith('Media/') && item.type === 'blob' && (item.path.endsWith('.webp') || item.path.endsWith('.png') || item.path.endsWith('.jpg') || item.path.endsWith('.jpeg')));
                 const mediaGrid = document.getElementById('dynamicMediaGrid');
 
                 const fixedFirstImages = [
-                    getRawUrl('Assets/firstimage.png'),
-                    getRawUrl('Assets/logoslogo.png')
+                    getRawUrl('Assets/firstimage.webp'),
+                    getRawUrl('Assets/logoslogo.webp')
                 ];
 
                 mediaGrid.innerHTML = '';
@@ -1203,8 +1261,8 @@
                 const carouselContainerEl = document.querySelector('.carousel-container');
                 const carouselSlide = document.querySelector('.carousel-slide');
                 const counterDisplay = document.querySelector('.carousel-counter');
-                const firstImageSrc = gallerySources[0] || 'https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png'; 
-                const secondImageSrc = gallerySources[1] || 'https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.png';
+                const firstImageSrc = gallerySources[0] || 'https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.webp'; 
+                const secondImageSrc = gallerySources[1] || 'https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.webp';
                 let remainingSources = gallerySources.slice(2);
 
                 function shuffleArray(array) {
@@ -1454,14 +1512,110 @@
             setTimeout(() => { toast.classList.remove('show'); }, 3500);
         }
 
-        let dfFlipbookInstance = null;
-        let activePdfUrl = ''; 
+        let pageFlipInstance = null;
+        let activePdfUrl = '';
+        let flipbookLoadToken = 0; // ακυρώνει render "σε εξέλιξη" αν ο χρήστης κλείσει/αλλάξει PDF γρήγορα
+        let flipSoundEnabled = true;
 
-        function openFlipbook(pdfUrl) {
-            activePdfUrl = pdfUrl; 
-            document.getElementById('pdfModal').style.display = 'flex'; 
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'Assets/vendor/pageflip/pdf.worker.min.js';
+        }
+
+        let pageFlipElement = null; // το εσωτερικό div που δίνουμε στο St.PageFlip (όχι το μόνιμο shell)
+        let currentPdfDoc = null;
+        let currentPageEls = []; // κρατάμε τα ήδη-renderισμένα canvas pages για re-init στο resize
+
+        // --- Ήχος γυρίσματος σελίδας (τοπικό αρχείο, self-hosted) ---
+        const FLIP_SOUND_SRC = 'Assets/vendor/pageflip/flip-sound.mp3';
+        const FLIP_SOUND_POOL_SIZE = 4; // επιτρέπει επικαλυπτόμενα flip χωρίς να κόβεται ο ήχος
+        const flipSoundPool = Array.from({ length: FLIP_SOUND_POOL_SIZE }, () => {
+            const audio = new Audio(FLIP_SOUND_SRC);
+            audio.preload = 'auto';
+            audio.volume = 0.6;
+            return audio;
+        });
+        let flipSoundPoolIndex = 0;
+
+        function playFlipSound() {
+            if (!flipSoundEnabled) return;
+            try {
+                const audio = flipSoundPool[flipSoundPoolIndex];
+                flipSoundPoolIndex = (flipSoundPoolIndex + 1) % flipSoundPool.length;
+                audio.currentTime = 0;
+                audio.play().catch(e => console.warn('[flipbook] flip sound play blocked:', e));
+            } catch (e) {
+                console.warn('[flipbook] flip sound failed:', e);
+            }
+        }
+
+        function toggleFlipSound() {
+            flipSoundEnabled = !flipSoundEnabled;
+            const icon = document.getElementById('muteIcon');
+            const btn = document.getElementById('muteBtn');
+            if (flipSoundEnabled) {
+                icon.className = 'fas fa-volume-up';
+                btn.title = 'Σίγαση ήχου';
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                btn.title = 'Ενεργοποίηση ήχου';
+            }
+        }
+
+        // --- Πλήρης οθόνη ---
+        function toggleFlipbookFullscreen() {
+            const el = document.getElementById('pdfModalContainer');
+            const icon = document.getElementById('fullscreenIcon');
+            if (!document.fullscreenElement) {
+                (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen)?.call(el);
+            } else {
+                (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen)?.call(document);
+            }
+        }
+
+        document.addEventListener('fullscreenchange', updateFullscreenIcon);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+        function updateFullscreenIcon() {
+            const icon = document.getElementById('fullscreenIcon');
+            if (!icon) return;
+            icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand';
+            // Το μέγεθος του flipbook πρέπει να ξανά-υπολογιστεί όταν αλλάζει η οθόνη.
+            if (pageFlipInstance) {
+                setTimeout(() => resizeActiveFlipbook(), 150);
+            }
+        }
+
+        // --- Πλοήγηση βελακιών ---
+        function flipbookGoPrev() {
+            if (pageFlipInstance) pageFlipInstance.flipPrev();
+        }
+        function flipbookGoNext() {
+            if (pageFlipInstance) pageFlipInstance.flipNext();
+        }
+        function updateFlipbookNavButtons() {
+            const prevBtn = document.getElementById('flipbookPrevBtn');
+            const nextBtn = document.getElementById('flipbookNextBtn');
+            if (!pageFlipInstance || !prevBtn || !nextBtn) return;
+            const current = pageFlipInstance.getCurrentPageIndex();
+            const total = pageFlipInstance.getPageCount();
+            prevBtn.disabled = current <= 0;
+            nextBtn.disabled = current >= total - 1;
+        }
+
+        // Πλήκτρα βέλους στο πληκτρολόγιο όσο είναι ανοιχτό το modal.
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('pdfModal');
+            if (modal && modal.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') flipbookGoPrev();
+                if (e.key === 'ArrowRight') flipbookGoNext();
+            }
+        });
+
+        async function openFlipbook(pdfUrl) {
+            console.log('[flipbook] openFlipbook called with', pdfUrl);
+            activePdfUrl = pdfUrl;
+            document.getElementById('pdfModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            
+
             const wordBtn = document.getElementById('wordBtn');
             if (pdfUrl.includes('Programma_Spoudon')) {
                 wordBtn.style.display = 'none';
@@ -1469,21 +1623,179 @@
                 wordBtn.style.display = 'flex';
             }
 
-            const container = document.getElementById('df-flipbook-ui');
-            container.innerHTML = ''; 
+            // Destroy πρώτα, ΟΣΟ το εσωτερικό element ακόμα υπάρχει στο DOM — το destroy()
+            // της StPageFlip κάνει internally this.block.remove(), δηλαδή αφαιρεί το ίδιο
+            // το element που του δώσαμε ως root. Γι' αυτό ΠΟΤΕ δεν δίνουμε στο PageFlip
+            // το μόνιμο #df-flipbook-ui shell, μόνο ένα αναλώσιμο εσωτερικό div.
+            if (pageFlipInstance) {
+                try {
+                    pageFlipInstance.destroy();
+                    console.log('[flipbook] previous instance destroyed');
+                } catch (e) {
+                    console.warn('[flipbook] destroy failed:', e);
+                }
+                pageFlipInstance = null;
+                pageFlipElement = null;
+            }
 
-            dfFlipbookInstance = $(container).flipBook(pdfUrl, {
-                webgl: false, 
-                height: '100%',
-                backgroundColor: 'transparent',
-                direction: 1,
-                // Όταν ο χρήστης επιλέξει "Single Page Mode" από το μενού (τρεις τελίτσες),
-                // να δείχνει ΜΙΑ σελίδα σε πλήρες πλάτος (Booklet), όχι "zoom" μέσα
-                // στο διπλό spread — αυτό ήταν το bug που άφηνε τη δεύτερη σελίδα
-                // να κρέμεται στην άκρη αντί να εξαφανίζεται.
-                singlePageMode: DFLIP.SINGLE_PAGE_MODE.BOOKLET
-            });
+            // Καθαρίζουμε επίσης το προηγούμενο PDF.js document ώστε να μη μείνει ανοιχτό
+            // background worker/transport που θα μπλοκάρει τη φόρτωση του επόμενου PDF.
+            if (currentPdfDoc) {
+                try { await currentPdfDoc.destroy(); } catch (e) { console.warn('[flipbook] pdf doc destroy failed:', e); }
+                currentPdfDoc = null;
+            }
+
+            // Το μόνιμο shell element ΠΟΤΕ δεν αφαιρείται από τη σελίδα.
+            const shell = document.getElementById('df-flipbook-ui');
+            shell.innerHTML = '';
+
+            const myToken = ++flipbookLoadToken;
+
+            const loadingEl = document.createElement('div');
+            loadingEl.className = 'flipbook-loading';
+            loadingEl.textContent = 'Φόρτωση εγγράφου...';
+            shell.appendChild(loadingEl);
+
+            try {
+                console.log('[flipbook] fetching pdf via pdfjsLib...');
+                // disableStream/disableAutoFetch + cache-busting query ώστε να μην ξαναδοθεί
+                // ποτέ ένα ήδη-destroyed PDFDocumentProxy από εσωτερική cache του PDF.js.
+                const cacheBustedUrl = pdfUrl + (pdfUrl.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+                const pdf = await pdfjsLib.getDocument({ url: cacheBustedUrl }).promise;
+                currentPdfDoc = pdf;
+                console.log('[flipbook] pdf loaded, pages:', pdf.numPages);
+                if (myToken !== flipbookLoadToken) return; // ο χρήστης έφυγε/άλλαξε PDF στο μεταξύ
+
+                const pageEls = [];
+                const scale = 1.5;
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    if (myToken !== flipbookLoadToken) return;
+
+                    const viewport = page.getViewport({ scale });
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
+
+                    await page.render({ canvasContext: ctx, viewport }).promise;
+                    if (myToken !== flipbookLoadToken) return;
+
+                    const pageDiv = document.createElement('div');
+                    pageDiv.className = 'flipbook-page';
+                    pageDiv.appendChild(canvas);
+                    pageEls.push(pageDiv);
+                }
+
+                if (myToken !== flipbookLoadToken) return;
+
+                shell.innerHTML = ''; // αφαιρεί το "Φόρτωση εγγράφου..."
+                currentPageEls = pageEls;
+
+                // Διαστάσεις της κάθε σελίδας βάσει της πρώτης σελίδας του PDF,
+                // διατηρώντας τον λόγο διαστάσεων μέσα στα όρια του modal.
+                const firstPage = await pdf.getPage(1);
+                const baseViewport = firstPage.getViewport({ scale: 1 });
+                currentPdfAspect = baseViewport.width / baseViewport.height;
+
+                const { pageWidth, pageHeight } = computeFlipbookSize(currentPdfAspect);
+                createPageFlipInstance(shell, pageEls, pageWidth, pageHeight, 0);
+                console.log('[flipbook] PageFlip initialized with', pageEls.length, 'pages');
+
+            } catch (err) {
+                console.error("[flipbook] Σφάλμα φόρτωσης PDF:", err);
+                if (myToken === flipbookLoadToken) {
+                    shell.innerHTML = '<div class="flipbook-loading">Δεν ήταν δυνατή η φόρτωση του εγγράφου.</div>';
+                }
+            }
         }
+
+        // Υπολογίζει τις διαστάσεις μιας σελίδας ώστε να χωράει (spread δύο σελίδων σε
+        // desktop) μέσα στα τρέχοντα όρια του modal, διατηρώντας τον λόγο διαστάσεων του PDF.
+        let currentPdfAspect = null;
+        function computeFlipbookSize(pdfAspect) {
+            const shell = document.getElementById('df-flipbook-ui');
+            const maxHeight = shell.clientHeight || window.innerHeight * 0.85;
+            const maxWidthForSpread = shell.clientWidth || window.innerWidth * 0.9;
+
+            let pageHeight = maxHeight;
+            let pageWidth = pageHeight * pdfAspect;
+
+            if (pageWidth * 2 > maxWidthForSpread) {
+                pageWidth = maxWidthForSpread / 2;
+                pageHeight = pageWidth / pdfAspect;
+            }
+            return { pageWidth, pageHeight };
+        }
+
+        // Δημιουργεί (ή ξανά-δημιουργεί) το St.PageFlip instance μέσα στο μόνιμο shell,
+        // με τις δοσμένες διαστάσεις. Χρησιμοποιείται τόσο στην αρχική φόρτωση όσο και
+        // στο resize/fullscreen, αφού η βιβλιοθήκη δεν υποστηρίζει αλλαγή width/height
+        // σε ήδη-υπάρχον instance (το update() δεν δέχεται καν παραμέτρους μεγέθους).
+        function createPageFlipInstance(shell, pageEls, pageWidth, pageHeight, startPage) {
+            if (pageFlipInstance) {
+                try { pageFlipInstance.destroy(); } catch (e) { console.warn('[flipbook] destroy before recreate failed:', e); }
+                pageFlipInstance = null;
+            }
+            shell.innerHTML = '';
+
+            // Δημιουργούμε ένα ΝΕΟ εσωτερικό div μέσα στο μόνιμο shell και το δίνουμε
+            // εμείς στο St.PageFlip — αυτό είναι το element που θα αφαιρέσει το δικό
+            // του destroy() (this.block.remove()), ποτέ το ίδιο το #df-flipbook-ui.
+            pageFlipElement = document.createElement('div');
+            shell.appendChild(pageFlipElement);
+
+            pageFlipInstance = new St.PageFlip(pageFlipElement, {
+                width: Math.round(pageWidth),
+                height: Math.round(pageHeight),
+                size: 'fixed',
+                minWidth: 250,
+                maxWidth: Math.round(pageWidth),
+                minHeight: 350,
+                maxHeight: Math.round(pageHeight),
+                maxShadowOpacity: 0.5,
+                showCover: false,
+                mobileScrollSupport: true,
+                usePortrait: window.innerWidth < 768
+            });
+
+            pageFlipInstance.loadFromHTML(pageEls);
+            if (startPage > 0) {
+                try { pageFlipInstance.turnToPage(startPage); } catch (e) { console.warn('[flipbook] turnToPage failed:', e); }
+            }
+
+            // "changeState" με state "flipping" πυροδοτείται ΤΗ ΣΤΙΓΜΗ που ξεκινά η
+            // κίνηση γυρίσματος — εκεί παίζουμε τον ήχο, ώστε να συμπίπτει οπτικά.
+            // Το "flip" πυροδοτείται στο ΤΕΛΟΣ της κίνησης, γι' αυτό ακουγόταν με καθυστέρηση.
+            pageFlipInstance.on('changeState', (e) => {
+                if (e.data === 'flipping') playFlipSound();
+            });
+            pageFlipInstance.on('flip', () => {
+                updateFlipbookNavButtons();
+            });
+            updateFlipbookNavButtons();
+        }
+
+        // Ξανά-υπολογίζει και εφαρμόζει το μέγεθος του ενεργού flipbook (π.χ. μετά από
+        // αλλαγή σε/από πλήρη οθόνη ή αλλαγή μεγέθους παραθύρου). Αφού η βιβλιοθήκη δεν
+        // υποστηρίζει live resize, κάνουμε πλήρες destroy+recreate διατηρώντας τη σελίδα.
+        let resizeDebounceTimer = null;
+        function resizeActiveFlipbook() {
+            if (!pageFlipInstance || !currentPdfAspect || currentPageEls.length === 0) return;
+            clearTimeout(resizeDebounceTimer);
+            resizeDebounceTimer = setTimeout(() => {
+                if (!pageFlipInstance) return;
+                const shell = document.getElementById('df-flipbook-ui');
+                const currentPage = pageFlipInstance.getCurrentPageIndex();
+                const { pageWidth, pageHeight } = computeFlipbookSize(currentPdfAspect);
+                createPageFlipInstance(shell, currentPageEls, pageWidth, pageHeight, currentPage);
+            }, 120);
+        }
+
+        window.addEventListener('resize', () => {
+            if (pageFlipInstance) resizeActiveFlipbook();
+        });
 
         function openClassicPdf() {
             if (activePdfUrl) {
@@ -1568,15 +1880,40 @@
             }
         }
 
-        function closeFlipbook() { 
-            document.getElementById('pdfModal').style.display = 'none'; 
-            document.body.style.overflow = ''; 
-            
-            if (dfFlipbookInstance && typeof dfFlipbookInstance.dispose === 'function') {
-                try { dfFlipbookInstance.dispose(); } catch(e) {}
+        function closeFlipbook() {
+            console.log('[flipbook] closeFlipbook called');
+            document.getElementById('pdfModal').style.display = 'none';
+            document.body.style.overflow = '';
+
+            // Αν είμαστε σε πλήρη οθόνη, βγαίνουμε καθαρά πριν κλείσουμε το modal.
+            if (document.fullscreenElement) {
+                (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
             }
-            document.getElementById('df-flipbook-ui').innerHTML = '';
-            dfFlipbookInstance = null;
+
+            flipbookLoadToken++; // ακυρώνει οποιοδήποτε render βρίσκεται σε εξέλιξη
+
+            if (pageFlipInstance && typeof pageFlipInstance.destroy === 'function') {
+                try {
+                    pageFlipInstance.destroy();
+                    console.log('[flipbook] instance destroyed on close');
+                } catch (e) {
+                    console.warn('[flipbook] destroy on close failed:', e);
+                }
+            }
+            pageFlipInstance = null;
+            pageFlipElement = null;
+            currentPdfAspect = null;
+            currentPageEls = [];
+
+            // Το μόνιμο shell element πάντα υπάρχει στη σελίδα (ποτέ δεν αφαιρείται),
+            // οπότε είναι ασφαλές να το καθαρίσουμε εδώ.
+            const shell = document.getElementById('df-flipbook-ui');
+            if (shell) shell.innerHTML = '';
+
+            if (currentPdfDoc) {
+                try { currentPdfDoc.destroy(); } catch (e) { console.warn('[flipbook] pdf doc destroy on close failed:', e); }
+                currentPdfDoc = null;
+            }
         }
 
         document.addEventListener('keydown', (e) => {
