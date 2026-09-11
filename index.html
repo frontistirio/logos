@@ -571,9 +571,9 @@
            1) Άλλαξε το κείμενο μέσα στο <span> του .site-banner (στο HTML).
            2) Άλλαξε το εικονίδιο (π.χ. fa-tools -> fa-bullhorn, fa-star, fa-gift).
            3) Διάλεξε θέμα χρώματος αλλάζοντας το class στο #site-banner:
-                .banner-warning       -> Κίτρινο  (τρέχον, "υπό κατασκευή")
-                .banner-info          -> Μπλε     (γενική ενημέρωση)
-                .banner-announcement  -> Μωβ      (ανακοίνωση / νέα)
+                .banner-warning       -> Κίτρινο  (π.χ. συμαμτική ενημέρωση, "υπό κατασκευή")
+                .banner-info          -> Μπλε     (π.χ. γενική ενημέρωση)
+                .banner-announcement  -> Μωβ      (π.χ. ανακοίνωση / νέα)
                 .banner-success       -> Πράσινο  (π.χ. επιτυχία/καλά νέα)
            Απλά άλλαξε το class στο #site-banner (π.χ. class="site-banner banner-info"). */
         .site-banner { text-align: center; padding: 12px 40px 12px 20px; position: relative; z-index: 1005; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: flex; justify-content: center; align-items: center; transition: background var(--transition), color var(--transition); }
@@ -600,20 +600,20 @@
 </head>
 
 <body>
-
     <!-- 
         SITE BANNER: Για μελλοντική ανακοίνωση, άλλαξε απλώς:
         - το class "banner-warning" σε "banner-info" / "banner-announcement" / "banner-success"
         - το εικονίδιο fa-tools σε ό,τι ταιριάζει
         - το κείμενο μέσα στο <span>
     -->
+    <!-- SITE BANNER
     <div id="site-banner" class="site-banner banner-warning">
         <div class="site-banner-content">
             <span>Εγγραφές: Δευτέρα έως Παρασκευή 8 π.μ. - 1 μ.μ. και 6 - 8 μ.μ.</span>
         </div>
         <button class="site-banner-close" onclick="document.getElementById('site-banner').style.display='none'" title="Κλείσιμο"><i class="fas fa-times"></i></button>
     </div>
-    
+    -->   
     <header class="full-width">
         <div class="container header-content">
             <img src="https://raw.githubusercontent.com/frontistirio/logos/main/Assets/logoslogo.webp" alt="Λογότυπο Φροντιστηρίου Λόγος" class="logo" onerror="this.src='logoslogo.webp'">
