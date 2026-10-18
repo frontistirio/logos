@@ -1,6 +1,6 @@
 # Φιλολογικό Φροντιστήριο Λόγος - Ιστοσελίδα
 <p align="center">
-  <img src="Assets/logoslogo.webp" alt="Frontistirio Logos" width="200" height="200">
+  <img src="logoslogo.webp" alt="Frontistirio Logos" width="200" height="200">
 </p>
 
 <p align="center">
@@ -8,134 +8,17 @@
 Ο ιστότοπος έχει σχεδιαστεί για να παρέχει πληροφορίες για το φροντιστήριο, τους καθηγητές, τις υπηρεσίες, καθώς και άμεση πρόσβαση σε εκπαιδευτικό υλικό.</strong><br>
 </p>
 
-## Σύνδεσμοι Σελίδας
-Υπάρχουν οι παρακάτω σύνδεσμοι για την ιστοσελίδα:<br>
-1. Αρχική/Βασική: https://frontistirio.github.io/logos/<br>
-2. Υποσελίδα Υλικού: https://frontistirio.github.io/logos/yliko.html<br>
-3. Υποσελίδα Πληροφοριών, Όρων Χρήσης & Πολιτικής Απορρήτου: https://frontistirio.github.io/logos/legal.html<br>
+<h1 align="center">Η σελίδα μεταφέρθηκε!</h1>
 
-## Συνοπτική Δομή Φακέλων
-Για να λειτουργεί σωστά η δυναμική ανάγνωση των αρχείων, τηρούμε την εξής δομή:
+<p align="center">
+  <strong>Η ανάπτυξη και η φιλοξενία της σελίδας μεταφέρθηκαν στο Codeberg.</strong><br>
+  Αυτό το αποθετήριο στο GitHub δεν ενημερώνεται πλέον. Λειτουργεί μόνο ως ανακατεύθυνση στο Codeberg.
+</p>
 
-📂 **Assets:** Λογότυπα, στατικές εικόνες σελίδας _(περιλαμβάνει και το `Assets/vendor/`, με τις τοπικά φιλοξενούμενες γραμματοσειρές, Font Awesome, και PDF.js/StPageFlip για το flipbook — δεν χρησιμοποιούνται εξωτερικά CDN)_<br>
-📂 **Media:** Φωτογραφίες που εμφανίζονται στο Carousel/Gallery _(Προτιμούνται οι φωτογραφίες .webp)_<br>
-📂 **Programma_Spoudon:** Αρχεία PDF με τα προγράμματα σπουδών ανά τάξη<br>
-📂 **Yliko:** Εκπαιδευτικό υλικό/σημειώσεις σε PDF ανά τάξη και μάθημα<br>
-📂 **Books:** Βιβλία και εξώφυλλα<br>
-📂 **admin:** Sveltia CMS<br>
-📄 **index.html:** Το κεντρικό αρχείο της ιστοσελίδας (Αρχική Σελίδα)<br>
-📄 **yliko.html:** Υποσελίδα: Πλοήγηση στο Εκπαιδευτικό Υλικό<br>
-📄 **legal.html:** Υποσελίδα: Νομικές Πληροφορίες<br>
-📄 **settings.json:** Sveltia CMS
+<h3 align="center">
+  <a href="https://frontistirio.codeberg.page/logos/">Επισκεφθείτε την Επίσημη Ιστοσελίδα</a>
+</h3>
 
-## Δομή Φακέλου Yliko και Υποφακέλων
-
-```
-📂 Yliko/
-├── 📂 Gymnasio/
-│   ├── 📂 A_Gymnasiou/
-│   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   └── 📂 Odisseia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   ├── 📂 B_Gymnasiou/
-│   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   └── 📂 Iliada/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   └── 📂 G_Gymnasiou/
-│   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   └── 📂 Eleni/
-│           └── 📄 ... (αρχεία PDF και Word)
-│
-├── 📂 Lykeio/
-│   ├── 📂 A_Lykeiou/
-│   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Arxaia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Istoria/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   │   ├── 📂 Latinika/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   ├── 📂 B_Lykeiou/
-│   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
-│   └── 📂 G_Lykeiou/
-│       └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
-│
-└── 📂 EPAL/
-│   ├── 📂 A_EPAL/
-│   │   ├── 📂 Nea_Ellinika_Logotexnia/
-│   │   │   ├── 📄 ... (αρχεία PDF και Word)
-│   ├── 📂 B_EPAL/
-│   │   └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
-│   └── 📂 G_EPAL/
-        └── ... (αντίστοιχοι φακέλοι μαθημάτων με αρχεία)
-```
-
-## Δομή Φακέλου Programma_Spoudon και Υποφακέλων
-
-```
-📂 Programma_Spoudon/
-├── 📂 Gymnasio/
-│   ├── 📂 A_Gymnasiou/
-│   │   ├── 📄 A_Gymnasiou.pdf
-│   ├── 📂 B_Gymnasiou/
-│   │   └── 📄 B_Gymnasiou.pdf
-│   └── 📂 G_Gymnasiou/
-│       └── 📄 G_Gymnasiou.pdf
-│
-├── 📂 Lykeio/
-│   ├── 📂 A_Lykeiou.pdf/
-│   │   ├── 📄 A_Lykeiou.pdf
-│   ├── 📂 B_Lykeiou.pdf/
-│   │   └── 📄 B_Lykeiou.pdf
-│   └── 📂 G_Lykeiou.pdf/
-│       └── 📄 G_Lykeiou.pdf
-│
-└── 📂 EPAL/
-│   ├── 📂 A_EPAL/
-│   │   ├── 📄 A_EPAL.pdf
-│   ├── 📂 B_EPAL/
-│   │   └── 📄 B_EPAL.pdf
-│   └── 📂 G_EPAL/
-│       └── 📄 G_EPAL.pdf
-```
-
-## Δομή Φακέλου Media
-```
- Όσα αρχεία τοποθετούνται στον φάκελο εμφανίζονται στο καρουζέλ φωτογραφιών και στην γκαλερί. Προτιμούνται οι φωτογραφίες .webp
-(Διαχείριση Sveltia CMS)
-```
-
-## Δομή Φακέλου Books
-```
- Τοποθετούνται αρχεία βιβλίων και εξωφύλλων.
- Τα ονόματα του βιβλίου και του εξωφύλλου πρέπει να είναι τα ίδια.
- (π.χ. Βιβλίο: ekthesi.pdf Εξώφυλλο: ekthesi.png ή ekthesi.jpg ή ekthesi.jpeg)
- Χρειάζεται χειροκίνητη προσθήκη στον κώδικα για την εισαγωγή ενός νέου βιβλίου στην ιστοσελίδα, δεν εισάγονται αυτόματα.
-```
-## Διαχείριση Sveltia CMS
-Sveltia CMS: https://frontistirio.github.io/logos/admin
-
-## Πνευματικά Δικαιώματα & Άδεια Χρήσης
-Το περιεχόμενο αυτού του repository διέπεται από **δύο διαφορετικά καθεστώτα δικαιωμάτων**, ανάλογα με το είδος του υλικού (κώδικας, λογότυπα/branding). Δείτε αναλυτικά το [LICENSE.md](LICENSE.md).
-
-Συνοπτικά:
-- **Κώδικας ιστοσελίδας:** Ελεύθερη χρήση/τροποποίηση **με αναφορά πηγής**.
-- **Λογότυπα, φωτογραφίες, branding** (`Assets/`, `Media/`, εξώφυλλα `Books/`): Όλα τα δικαιώματα διατηρούνται· απαγορεύεται η χρήση χωρίς ρητή άδεια.
-
-**Διαχείρηση Ιστοσελίδας: Φιλολογικό Φροντιστήριο Λόγος, [Konstantinos2106](https://github.com/Konstantinos2106).**
+<h3 align="center">
+  <a href="https://codeberg.org/frontistirio/logos">Επισκεφθείτε το νέο Αποθετήριο στο Codeberg</a>
+</h3>
