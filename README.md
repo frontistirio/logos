@@ -22,3 +22,5 @@
 <h3 align="center">
   <a href="https://codeberg.org/frontistirio/logos">Επισκεφθείτε το Αποθετήριο στο Codeberg</a>
 </h3>
+
+<sub><i>Διαχείρηση Ιστοσελίδας: Φιλολογικό Φροντιστήριο Λόγος, [Konstantinos2106](https://codeberg.org/Konstantinos2106)</i></sub>
