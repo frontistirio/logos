@@ -20,5 +20,5 @@
 </h3>
 
 <h3 align="center">
-  <a href="https://codeberg.org/frontistirio/logos">Επισκεφθείτε το νέο Αποθετήριο στο Codeberg</a>
+  <a href="https://codeberg.org/frontistirio/logos">Επισκεφθείτε το Αποθετήριο στο Codeberg</a>
 </h3>
